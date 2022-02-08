@@ -2,10 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.doranco</groupId>
-    <artifactId>ProjetRecette</artifactId>
+    <artifactId>RecetteServiceWeb</artifactId>
     <version>1.0</version>
     <packaging>war</packaging>
-    <name>ProjetRecette-1.0</name>
+    <name>RecetteServiceWeb-1.0</name>
     
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -17,47 +17,55 @@
     </properties>
     
     <dependencies>
-<!--        Ajout JSON      -->
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20160810</version>
-        </dependency>
-<!--        Ajout des methodes Jakarta        -->
         <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
             <version>${jakartaee}</version>
             <scope>provided</scope>
         </dependency>
-<!--        Ajout SQL       -->
+        
         <dependency>
-        <groupId>mysql</groupId>
+            <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.27</version>
         </dependency>
-<!--        Ajout JPA       -->
+        
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>5.6.1.Final</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.hibernate.javax.persistence/hibernate-jpa-2.1-api -->
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.1-api</artifactId>
             <version>1.0.2.Final</version>
         </dependency>
-<!--        Ajout Option Cryptage       -->
+        
+        <!-- https://mvnrepository.com/artifact/org.mindrot/jbcrypt -->
         <dependency>
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>
             <version>0.4</version>
         </dependency>
-<!--        Ajout validateur URL       -->
+        
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>2.0.1.Final</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20211205</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.12.2</version>
+            <type>jar</type>
         </dependency>
     </dependencies>
     
