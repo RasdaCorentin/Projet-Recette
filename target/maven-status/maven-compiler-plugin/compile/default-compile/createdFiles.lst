@@ -1,0 +1,15 @@
+com\doranco\controllers\RequestFilter.class
+com\doranco\dao\imp\RecetteDaoImp.class
+com\doranco\dao\DaoFactory.class
+com\doranco\entities\Ingredient.class
+com\doranco\controllers\UtilisateurController.class
+com\doranco\dao\imp\UtilisateurDaoImp.class
+com\doranco\dao\interfaces\IngredientInterface.class
+com\doranco\dao\interfaces\UtilisateurInterface.class
+com\doranco\entities\RoleUtilisateur.class
+com\doranco\entities\Recette.class
+com\doranco\dao\imp\IngredientDaoImp.class
+com\doranco\dao\interfaces\RecetteInterface.class
+com\doranco\controllers\RecetteController.class
+com\doranco\controllers\ResponseFilter.class
+com\doranco\entities\Utilisateur.class
