@@ -23,7 +23,7 @@
             <artifactId>json</artifactId>
             <version>20160810</version>
         </dependency>
-<!--        Ajout des methodes Jakarta        -->
+<!--        Ajout des méthodes Jakarta        -->
         <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
