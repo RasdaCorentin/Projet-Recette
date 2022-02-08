@@ -18,8 +18,8 @@ public interface UtilisateurInterface {
     Utilisateur findUserByEmail( Utilisateur user );
     boolean comparerPassword( String passwordTemp, Utilisateur user );
 
-    //, Va permettre à un utilisateur de modifier son profil.
-    Utilisateur updateUtilisateur( Utilisateur user, int id );
+    //, Va permettre à un administrateur de modifier un profil.
+    Utilisateur updateUtilisateur( Utilisateur user, String email );
 
     //, Va permettre à un administrateur de supprimer un utilisateur.
     Utilisateur deleteUtilisateur( int id );

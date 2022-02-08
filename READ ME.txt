@@ -2,8 +2,12 @@ Lister les utilisateurs : fonctionnel et uniquement accessible pour les administ
 
 Créer un nouvel utilisateur : fonctionnel, accessible sans être connecté au site.
 
-Mettre à jour un utilisateur : fonctionnel, uniquement par id. Message d'erreur si l'e-mail est déjà présent dans la base de donnée.
+Mettre à jour un utilisateur : fonctionnel, se fait par recherche d'e-mail, uniquement accessible pour les administrateurs. Message d'erreur si l'e-mail est déjà présent dans la base de donnée.
 
 Supprimer un utilisateur : fonctionnel, uniquement par id.
 
 Désactiver / activer un utilisateur : fonctionnels, accessible grâce à l'e-mail.
+
+/!\ À faire : /!\ 
+
+Update : Faire un update pour les utilisateurs, il faut vérifier si l'adresse e-mail qu'il tente de modifier est bien celle du compte.
