@@ -1,3 +1,4 @@
 Ceci est un projet de stagaires Doranco
 Stage du 7/02 au 28/02
 Formation Doranco
+creation du fichier de notes
