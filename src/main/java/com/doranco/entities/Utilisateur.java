@@ -133,12 +133,14 @@ public class Utilisateur implements Serializable{
                     + this.getNom()
                     + "\n Password: "
                     + this.getPassword()
-//                    + "\n Role: "
-//                    + this.getRole()
+                    + "\n Role: "
+                    + this.getRole()
                     + "\n Status: "
                     + this.isStatuts()
                     + "\n Date Creation: "
                     + this.getDateCrea()
+                    + "\n Info Recette: "
+                    + this.getListeRecettes()
                     + "\n Date Modification: "
                     + this.getDateModif();
         }

@@ -6,6 +6,7 @@ package com.doranco.controllers;
 
 import com.doranco.dao.DaoFactory;
 import com.doranco.dao.iinterface.UtilisateurDaoInterface;
+import com.doranco.dao.iinterface.UtilisateurDaoInterface;
 import com.doranco.entities.RoleUtilisateur;
 import com.doranco.entities.Utilisateur;
 import jakarta.json.bind.Jsonb;
@@ -20,6 +21,8 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.List;
 import org.json.JSONObject;
 
 /**
@@ -43,12 +46,11 @@ public class UtilisateurController {
     public Response getListeUtilisateur() {
 
         DaoFactory daoFactory = new DaoFactory();
-
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
-
         //Creation d'une réponse
         Response response = Response
                 .status(Response.Status.CREATED)
+                //Ajouter to To string pour info ciblé
                 .entity(utilisateurDaoInterface.getListeUtilisateurs())
                 .build();
 
@@ -156,7 +158,7 @@ public class UtilisateurController {
 
         Response response = Response
                 .status(Response.Status.CREATED)
-                .entity("Bienvenue : " + utilisateur.toString()+ " Tu peux maintenant publier tes recettes")
+                .entity("Bienvenue : " + utilisateur.toString() + " Tu peux maintenant publier tes recettes")
                 .build();
 
         return response;
@@ -189,6 +191,31 @@ public class UtilisateurController {
                 .status(Response.Status.CREATED)
                 .entity(utilisateur.toString2())
                 .build();
+
+        return response;
+    }
+
+    /*
+--------------------------------------------------------------------------------------------------------------------------
+                                                 Read Utilisateur
+--------------------------------------------------------------------------------------------------------------------------
+     */
+    @Path("/read/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response readUtilisateur(@PathParam(value = "id") int id) {
+
+        DaoFactory daoFactory = new DaoFactory();
+        UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
+        Utilisateur utilisateur = utilisateurDaoInterface.findUtilisateurById(id);
+
+        //Creation d'une réponse
+        Response response = Response
+                .status(Response.Status.CREATED)
+                .entity(utilisateur.toString())
+                .build();
+
+        daoFactory.closeEntityManagerFactory();
 
         return response;
     }

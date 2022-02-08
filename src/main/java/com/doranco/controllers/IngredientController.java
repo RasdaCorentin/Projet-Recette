@@ -40,7 +40,8 @@ public class IngredientController {
         //Creation d'une réponse
         Response response = Response
                 .status(Response.Status.CREATED)
-                .entity(ingredientDaoInterface.getListeIngredients().toString())
+                //Ajouter to To string pour info ciblé
+                .entity(ingredientDaoInterface.getListeIngredients())
                 .build();
 
         daoFactory.closeEntityManagerFactory();

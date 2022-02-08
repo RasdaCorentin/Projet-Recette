@@ -42,5 +42,6 @@ public interface UtilisateurDaoInterface {
 //---------------------------------------------ADMIN / USER-------------------------------------------------
     
     //Modifie un utilisateur
-    Utilisateur updateUtilisateur(Utilisateur utilisateur);        
+    Utilisateur updateUtilisateur(Utilisateur utilisateur);  
+    Utilisateur readUtilisateur(int id);  
 }

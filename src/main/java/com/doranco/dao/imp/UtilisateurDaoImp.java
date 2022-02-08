@@ -362,4 +362,20 @@ Fonction filtre Comparaison de Mot de passe : //
         }
         return null;
     }
+
+    @Override
+    public Utilisateur readUtilisateur(int id) {
+       EntityManager entityManager = null;
+        Utilisateur utilisateur = new Utilisateur();
+        entityManager = daoFactory.getEntityManager();
+        Query query = entityManager.createQuery("select util from Recette util where id=:id");
+        query.setParameter("id", id);
+        if (query.getResultList().isEmpty()) {
+            System.out.println("Cet id utilisateur n'existe pas");
+            return null;
+        }
+        utilisateur = (Utilisateur) query.getResultList().get(0);
+        utilisateur.toString();
+        return utilisateur;
+    }
 }
