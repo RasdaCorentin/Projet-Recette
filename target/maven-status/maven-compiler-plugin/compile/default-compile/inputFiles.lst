@@ -1,0 +1,15 @@
+C:\Users\Stagiaire developeur\Documents\NetBeansProjects\recette_service_web\src\main\java\com\doranco\interfaces\RecetteInterface.java
+C:\Users\Stagiaire developeur\Documents\NetBeansProjects\recette_service_web\src\main\java\com\doranco\interfaces\UtilisateurInterface.java
+C:\Users\Stagiaire developeur\Documents\NetBeansProjects\recette_service_web\src\main\java\com\doranco\interfaces\IngredientInterface.java
+C:\Users\Stagiaire developeur\Documents\NetBeansProjects\recette_service_web\src\main\java\com\doranco\v1\controllers\UtilisateurController.java
+C:\Users\Stagiaire developeur\Documents\NetBeansProjects\recette_service_web\src\main\java\com\doranco\v1\controllers\GuestController.java
+C:\Users\Stagiaire developeur\Documents\NetBeansProjects\recette_service_web\src\main\java\com\doranco\dao\imp\IngredientDaoImp.java
+C:\Users\Stagiaire developeur\Documents\NetBeansProjects\recette_service_web\src\main\java\com\doranco\v1\controllers\RecetteController.java
+C:\Users\Stagiaire developeur\Documents\NetBeansProjects\recette_service_web\src\main\java\com\doranco\entities\enums\RoleUtilisateur.java
+C:\Users\Stagiaire developeur\Documents\NetBeansProjects\recette_service_web\src\main\java\com\doranco\entities\Recette.java
+C:\Users\Stagiaire developeur\Documents\NetBeansProjects\recette_service_web\src\main\java\com\doranco\entities\Ingredient.java
+C:\Users\Stagiaire developeur\Documents\NetBeansProjects\recette_service_web\src\main\java\com\doranco\entities\Utilisateur.java
+C:\Users\Stagiaire developeur\Documents\NetBeansProjects\recette_service_web\src\main\java\com\doranco\dao\imp\RecetteDaoImp.java
+C:\Users\Stagiaire developeur\Documents\NetBeansProjects\recette_service_web\src\main\java\com\doranco\dao\imp\UtilisateurDaoImp.java
+C:\Users\Stagiaire developeur\Documents\NetBeansProjects\recette_service_web\src\main\java\com\doranco\dao\DaoFactory.java
+C:\Users\Stagiaire developeur\Documents\NetBeansProjects\recette_service_web\src\main\java\com\doranco\v1\controllers\IngredientController.java
