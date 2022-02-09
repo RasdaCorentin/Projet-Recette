@@ -1,7 +1,5 @@
 package com.yoann_bezard.controllers;
 
-import java.io.IOException;
-import java.util.Base64;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -10,8 +8,6 @@ import javax.persistence.Query;
 import com.yoann_bezard.dao.DaoFactory;
 import com.yoann_bezard.dao.entiites.Utilisateur;
 import com.yoann_bezard.dao.interfaces.UtilisateurInterface;
-import jakarta.ws.rs.container.ContainerRequestContext;
-import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -20,7 +16,6 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
@@ -42,7 +37,7 @@ public class UtilisateurController {
         }
 
         /**
-         * Fonction pour dire bonjour aux administrateurs.
+         * Afficher la liste des utilisateurs.
          * @return 
          */
         @Path("admin/liste")
@@ -135,6 +130,11 @@ public class UtilisateurController {
                 return response;
         }
 
+        /**
+         * Permet de désactiver un utilisateur.
+         * @param email
+         * @return
+         */
         @Path("/admin/deactivate/{email}")
         @PUT
         @Produces( MediaType.APPLICATION_JSON )
@@ -169,6 +169,12 @@ public class UtilisateurController {
                 return response;
         }
 
+        /**
+         * Permet d'activer un utilisateur.
+         * @param user
+         * @param email
+         * @return
+         */
         @Path("/admin/activate/{email}")
         @PUT
         @Produces( MediaType.APPLICATION_JSON )

@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import com.yoann_bezard.controllers.RequestFilter;
 import com.yoann_bezard.dao.DaoFactory;
 import com.yoann_bezard.dao.entiites.Utilisateur;
 import com.yoann_bezard.dao.interfaces.UtilisateurInterface;
@@ -23,6 +22,9 @@ public class UtilisateurDaoImp implements UtilisateurInterface {
         this.daoFactory = daoFactory;
     }
 
+    /**
+     * Afficher la liste des utilisateurs.
+     */
     @Override
     public List<Utilisateur> findAllUtilisateurs() {
         EntityManager entityManager = null;
@@ -201,6 +203,9 @@ public class UtilisateurDaoImp implements UtilisateurInterface {
         return user;
     }
 
+    /**
+     * Désactiver un utilisateur.
+     */
     @Override
     public Utilisateur deactivateUtilisateur(String email) {
         EntityManager entityManager = null;
@@ -240,6 +245,9 @@ public class UtilisateurDaoImp implements UtilisateurInterface {
         return null;
     }
 
+    /**
+     * Activer un utilisateur.
+     */
     @Override
     public Utilisateur reactivateUtilisateur(String email) {
         EntityManager entityManager = null;
