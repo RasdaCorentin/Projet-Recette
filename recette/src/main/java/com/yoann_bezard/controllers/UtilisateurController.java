@@ -112,14 +112,29 @@ public class UtilisateurController {
                 //§ Vérification de la disponibilité de l'e-mail demandé par l'utilisateur.
                 queryEmail.setParameter( "email", user.getEmail() );
 
+                //. Si la liste est vide, alors cette e-mail n'est pas encore attribué.
                 if( queryEmail.getResultList().isEmpty() ) {
                         userMaj = utilisateurInterface.updateUtilisateur( user, email );
-                } else { //ù Si l'adresse e-mail est déjà utilisé alors j'envoie une réponse pour prévenir l'utilisateur et mettre fin à l'update.
-                        Response responseErreur = Response
-                                .status( Status.FORBIDDEN )
-                                .entity( "L'adresse e-mail " + user.getEmail() + " est déjà utilisé par un autre utilisateur." )
-                                .build();
-                        return responseErreur;
+                }
+
+                //. Si je trouve une trace de l'adresse e-mail dans la base de donnée : je vérifie si c'est celle de l'utilisateur, et si il souhaite la conserver.
+                else {
+                        Utilisateur userBDD = (Utilisateur) queryEmail.getResultList().get(0);
+                        String emailUserBDD = userBDD.getEmail();
+
+                        //. Si oui alors je le laisse faire.
+                        if ( emailUserBDD.equals(user.getEmail()) ) {
+                                userMaj = utilisateurInterface.updateUtilisateur( user, email );
+                        }
+
+                        //. S'il veut en changer mais qu'il est déjà utilisé dans la base de donnée alors je le bloque.
+                        else {
+                                Response responseErreur = Response
+                                        .status( Status.FORBIDDEN )
+                                        .entity( "L'adresse e-mail " + user.getEmail() + " est déjà utilisé par un autre utilisateur." )
+                                        .build();
+                                return responseErreur;
+                        }
                 }
 
                 Response response = Response
