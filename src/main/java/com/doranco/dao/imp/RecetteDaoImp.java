@@ -35,7 +35,7 @@ public class RecetteDaoImp implements RecetteDaoInterface {
 
     /*
 --------------------------------------------------------------------------------------------------------------------------
-                                                 Liste Recette avec DAO FACTORY 
+                                                Liste Recette avec DAO FACTORY 
 --------------------------------------------------------------------------------------------------------------------------
      */
 //Utilise Jquery pour avoir une liste d'recette depuis la base de données
@@ -82,7 +82,7 @@ public class RecetteDaoImp implements RecetteDaoInterface {
             entityManager = daoFactory.getEntityManager();
             transaction = entityManager.getTransaction();
 
-// ------------------------------------------Methode--------------------------------------------------              
+// ------------------------------------------Méthode--------------------------------------------------              
 // Marche pour ajouter une recette / utilisateur
             UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
             utilisateur = utilisateurDaoInterface.findUtilisateurByNom(utilisateur);
@@ -113,7 +113,7 @@ public class RecetteDaoImp implements RecetteDaoInterface {
                 System.out.println("<----------- Creation Recette avec success ------->");
                 return recette;
             }
-// ---------------------------------------FIN Methode-------------------------------------------------- 
+// ---------------------------------------FIN Méthode-------------------------------------------------- 
 
         } catch (Exception ex) {
             transaction.rollback();
