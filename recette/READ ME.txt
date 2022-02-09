@@ -1,0 +1,9 @@
+Lister les utilisateurs : fonctionnel et uniquement accessible pour les administrateurs.
+
+Créer un nouvel utilisateur : fonctionnel, accessible sans être connecté au site.
+
+Mettre à jour un utilisateur : fonctionnel, uniquement par id. Message d'erreur si l'e-mail est déjà présent dans la base de donnée.
+
+Supprimer un utilisateur : fonctionnel, uniquement par id.
+
+Désactiver / activer un utilisateur : fonctionnels, accessible grâce à l'e-mail.
