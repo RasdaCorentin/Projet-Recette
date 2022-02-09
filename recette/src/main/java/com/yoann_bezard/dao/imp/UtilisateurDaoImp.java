@@ -199,7 +199,6 @@ public class UtilisateurDaoImp implements UtilisateurInterface {
         } finally {
             if ( entityManager != null ) entityManager.close();
         }
-
         return user;
     }
 

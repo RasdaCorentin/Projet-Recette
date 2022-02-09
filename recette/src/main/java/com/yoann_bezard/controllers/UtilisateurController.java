@@ -81,7 +81,6 @@ public class UtilisateurController {
         /**
          * Mettre à jour un utilisateur quand on n'est un administrateur.
          * @param user
-         * @param id
          * @return 
          */
         @Path("/admin/update/{email}")
@@ -94,11 +93,11 @@ public class UtilisateurController {
                 UtilisateurInterface utilisateurInterface = daoFactory.getUtilisateurInterface();
 
                 //$ Je cherche l'utilisateur ayant l'id qui m'a été fournie dans la base de donnée.
-                Query queryEmailBase = entityManager.createQuery( "SELECT user FROM Utilisateur user WHERE email=:email" );
-                queryEmailBase.setParameter( "email", email );
+                Query queryEmail = entityManager.createQuery( "SELECT user FROM Utilisateur user WHERE email=:email" );
+                queryEmail.setParameter( "email", email );
 
                 //: Si la liste me revient vide.
-                if( queryEmailBase.getResultList().isEmpty() ) {
+                if( queryEmail.getResultList().isEmpty() ) {
                         System.out.println( "<-----Cette adresse e-mail n'existe pas dans la base de donnée.----->" );
                         Response response = Response
                                 .status( Status.FORBIDDEN )
@@ -107,11 +106,10 @@ public class UtilisateurController {
                         return response;
                 }
 
-                Utilisateur userMaj = (Utilisateur) queryEmailBase.getResultList().get( 0 );
+                Utilisateur userMaj = (Utilisateur) queryEmail.getResultList().get( 0 );
                 System.out.println( "<-----Voici l'utilisateur qui est associé à cette adresse e-mail :----->\n" + userMaj.getEmail() );
 
                 //§ Vérification de la disponibilité de l'e-mail demandé par l'utilisateur.
-                Query queryEmail = entityManager.createQuery( "SELECT user FROM Utilisateur user WHERE email=:email" );
                 queryEmail.setParameter( "email", user.getEmail() );
 
                 if( queryEmail.getResultList().isEmpty() ) {
