@@ -146,7 +146,7 @@ public class RecetteDaoImp implements RecetteDaoInterface {
             return null;
         }
         recette = (Recette) query.getResultList().get(0);
-        recette.toString2();
+        recette.toString();
         return recette;
     }
 }

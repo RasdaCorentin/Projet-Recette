@@ -89,8 +89,8 @@ public class Ingredient implements Serializable{
                     + this.getLibelle()
                     + "\n Quantite: "
                     + this.getQuantite()
-                    + "\n Info Recette: "
-                    + this.getRecette().toString3();
+                    + "\nDATE CREA : " + this.DateCrea
+                    + "\nDATE MODIF : " + this.DateModif;
     }
     
     /*

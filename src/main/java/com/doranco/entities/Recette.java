@@ -88,41 +88,27 @@ public class Recette implements Serializable {
     
     */
 
-    @Override
+@Override
     public String toString() {
-            return "\n Id: "
-                    + this.getId()
-                    + "\n Info Utilisateur: "
-                    + this.getUtilisateur()
-                    + "\n Libelle: "
-                    + this.getLibelle()
-                    + "\n Description: "
-                    + this.getDescription()
-                    + "\n Date Creation: "
-                    + this.getDateCrea()
-                    + "\n Date Modification: "
-                    + this.getDateModif()
-                    + "\n Liste Ingredients: "
-                    + this.getListeIngredients();
+        
+        if (listeIngredients != null) {
+        
+        return "ID :" + this.getId()
+                + "\nLIBELLE : " + this.getLibelle()
+                + "\nDESCRIPTION : " + this.getDescription()
+                + "\nDATE CREA : " + this.DateCrea
+                + "\nDATE MODIF : " + this.DateModif
+                + "\nLISTE D'INGREDIENTS : " + this.getListeIngredients()
+                + "\n";
+    } else {
+        return "ID :" + this.getId()
+                + "\nLIBELLE : " + this.getLibelle()
+                + "\nDESCRIPTION : " + this.getDescription()
+                + "\nDATE CREA : " + this.DateCrea
+                + "\nDATE MODIF : " + this.DateModif
+                + "\n";
+        }
     }
-    public String toString2() {
-            return "\n Info Utilisateur: "
-                    + this.getUtilisateur()
-                    + "\n Libelle: "
-                    + this.getLibelle()
-                    + "\n Description: "
-                    + this.getDescription()
-                    + "\n Date Creation: "
-                    + this.getDateCrea()
-                    + "\n Date Modification: "
-                    + this.getDateModif();
-        }
-    public String toString3() {
-            return "\n Libelle: "
-                    + this.getLibelle()
-                    + "\n Description: "
-                    + this.getDescription();
-        }
     /*
     
     Getters & Setters

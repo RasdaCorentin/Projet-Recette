@@ -19,6 +19,9 @@ public interface IngredientDaoInterface {
     //Creer un Ingredient
     Ingredient createIngredient(Ingredient ingredient);
     
+    //Update (constructeur avec id)
+    Ingredient updateIngredient(Ingredient ingredient, int id);
+    
     //Supprime un Ingredient (COMMAND ADMIN)
     boolean deleteIngredient(int id);
     

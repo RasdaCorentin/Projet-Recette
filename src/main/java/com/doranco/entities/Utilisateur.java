@@ -125,37 +125,30 @@ public class Utilisateur implements Serializable{
     
     */
 
-        @Override
+    @Override
     public String toString() {
-            return "\n Id: "
-                    + this.getId()
-                    + "\n Nom: "
-                    + this.getNom()
-                    + "\n Password: "
-                    + this.getPassword()
-                    + "\n Role: "
-                    + this.getRole()
-                    + "\n Status: "
-                    + this.isStatuts()
-                    + "\n Date Creation: "
-                    + this.getDateCrea()
-                    + "\n Info Recette: "
-                    + this.getListeRecettes()
-                    + "\n Date Modification: "
-                    + this.getDateModif();
+        if (listeRecettes != null) {
+
+            return "ID :" + this.id
+                    + "\nNOM : " + this.nom
+                    + "\nEMAIL : " + this.email
+                    + "\nDATE CREA : " + this.DateCrea
+                    + "\nDATE MODIF : " + this.DateModif
+                    + "\nROLE : " + this.role
+                    + "\nLISTE DES RECETTES : " + this.listeRecettes
+                    + "\n";
+        } else {
+            return "ID :" + this.id
+                    + "\nNOM : " + this.nom
+                    + "\nEMAIL : " + this.email
+                    + "\nDATE CREA : " + this.DateCrea
+                    + "\nDATE MODIF : " + this.DateModif
+                    + "\nROLE : " + this.role
+                    + "\n";
         }
-    public String toString2() {
-            return "\n Nom: "
-                    + this.getNom()
-                    + "\n Email: "
-                    + this.getEmail()
-                    + "\n Status: "
-                    + this.isStatuts()
-                    + "\n Date Creation: "
-                    + this.getDateCrea()
-                    + "\n Date Modification: "
-                    + this.getDateModif();
-        }
+
+    }
+
     
     /*
     

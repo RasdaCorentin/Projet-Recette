@@ -6,10 +6,15 @@ package com.doranco.controllers;
 
 import com.doranco.dao.DaoFactory;
 import com.doranco.dao.iinterface.IngredientDaoInterface;
+import com.doranco.entities.Ingredient;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -20,7 +25,9 @@ import jakarta.ws.rs.core.Response;
  */
 @Path("/utilisateur/ingredient")
 public class IngredientController {
+        DaoFactory daoFactory = new DaoFactory();
 
+        IngredientDaoInterface ingredientDaoInterface = daoFactory.getIngredientDaoInterface();
     Jsonb jsonb = JsonbBuilder.create();
         /*
 --------------------------------------------------------------------------------------------------------------------------
@@ -30,12 +37,7 @@ public class IngredientController {
     @Path("/admin/liste")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getListeIngredient() {
-
-        DaoFactory daoFactory = new DaoFactory();
-
-        IngredientDaoInterface ingredientDaoInterface = daoFactory.getIngredientDaoInterface();
-        
+    public Response getListeIngredient() {  
 
         //Creation d'une réponse
         Response response = Response
@@ -47,5 +49,45 @@ public class IngredientController {
         daoFactory.closeEntityManagerFactory();
 
         return response;
+    }
+           /*
+--------------------------------------------------------------------------------------------------------------------------
+                                                 Update Ingredient
+--------------------------------------------------------------------------------------------------------------------------
+    */
+    @PUT
+    @Path("/update/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateIngredient(Ingredient ingredient, @PathParam(value = "id") int id) {
+        
+        ingredient = new Ingredient("Libelle update", "1");
+
+        Response response = Response
+                .ok(ingredientDaoInterface.updateIngredient(ingredient, id))
+                .build();
+
+        return response;
+        
+    }
+        /*
+--------------------------------------------------------------------------------------------------------------------------
+                                                 Delete Ingredient
+--------------------------------------------------------------------------------------------------------------------------
+    */
+    @DELETE
+    @Path("admin/delete/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deleteIngredient(Ingredient ingredient, @PathParam(value = "id") int id) {
+        
+        Response response = Response
+                .ok(ingredientDaoInterface.deleteIngredient(id))
+                .build();
+
+        daoFactory.closeEntityManagerFactory();
+        
+        return response;
+        
     }
 }

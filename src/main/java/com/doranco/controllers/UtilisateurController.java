@@ -6,7 +6,6 @@ package com.doranco.controllers;
 
 import com.doranco.dao.DaoFactory;
 import com.doranco.dao.iinterface.UtilisateurDaoInterface;
-import com.doranco.dao.iinterface.UtilisateurDaoInterface;
 import com.doranco.entities.RoleUtilisateur;
 import com.doranco.entities.Utilisateur;
 import jakarta.json.bind.Jsonb;
@@ -21,8 +20,6 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.List;
 import org.json.JSONObject;
 
 /**
@@ -189,7 +186,7 @@ public class UtilisateurController {
         //Creation d'une réponse
         Response response = Response
                 .status(Response.Status.CREATED)
-                .entity(utilisateur.toString2())
+                .entity(utilisateur.toString())
                 .build();
 
         return response;

@@ -107,9 +107,94 @@ public class IngredientDaoImp implements IngredientDaoInterface {
 //        }
         return null;
     }
+/*
+--------------------------------------------------------------------------------------------------------------------------
+                                                Update Ingredient avec DAO FACTORY 
+--------------------------------------------------------------------------------------------------------------------------
+*/
+   @Override
+    public Ingredient updateIngredient(Ingredient ingredient, int id) {
+        
+        EntityManager entityManager = null;
+        EntityTransaction transaction = null;
+        try {
+            entityManager = daoFactory.getEntityManager();
 
+            Ingredient ingredientAModifier = entityManager.find(Ingredient.class, id);
+            if (ingredientAModifier != null) {
+                transaction = entityManager.getTransaction();
+
+
+
+                ingredientAModifier.setLibelle(ingredient.getLibelle());
+                ingredientAModifier.setQuantite(ingredient.getQuantite());
+
+                ingredientAModifier.setRecette(ingredient.getRecette());
+
+                ingredientAModifier.setDateModif(dtf.format(now));
+
+                transaction.begin();
+                entityManager.persist(ingredientAModifier);
+                transaction.commit();
+                System.out.println("<----------- Mise a jour de l'ingredient avec succes ------->");
+                return ingredient;
+
+            }
+            System.out.println("<----------- Ingredient avec id non trouvé en base de données ------->");
+            return null;
+
+        } catch (Exception ex) {
+            transaction.rollback();
+            System.out.println("Erreur lors de la mise a jour de l'ingredient \n");
+            ex.printStackTrace();
+
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+        return null;
+        
+    }
+/*
+--------------------------------------------------------------------------------------------------------------------------
+                                                Delete Ingredient avec DAO FACTORY 
+--------------------------------------------------------------------------------------------------------------------------
+*/
     @Override
     public boolean deleteIngredient(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        EntityManager entityManager = null;
+        EntityTransaction transaction = null;
+        try {
+            entityManager = daoFactory.getEntityManager();
+
+            Ingredient ingredientAModifier = entityManager.find(Ingredient.class, id);
+            if (ingredientAModifier != null) {
+                transaction = entityManager.getTransaction();
+
+                transaction.begin();
+                entityManager.remove(ingredientAModifier);
+                transaction.commit();
+                System.out.println("<-----------Suppression avec succes ------->");
+                return true;
+
+            }
+            System.out.println("<----------- Ingredient non trouvé avec l'id fournie ------->");
+            return false;
+
+        } catch (Exception ex) {
+            transaction.rollback();
+            System.out.println("Erreur lors de la mise a jour de l'ingredient \n");
+            ex.printStackTrace();
+
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+        return false;
+        
     }
+    
 }
