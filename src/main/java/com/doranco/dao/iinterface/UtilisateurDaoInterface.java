@@ -12,36 +12,45 @@ import java.util.List;
  * @author 33767
  */
 public interface UtilisateurDaoInterface {
-//---------------------------------------------ADMIN COMMAND------------------------------------------------- 
+
+//.---------------------------------------------ADMIN COMMAND-------------------------------------------------
     
-    //Lister tout les Utilisateur
+    //, Lister tout les Utilisateur.
     List<Utilisateur> getListeUtilisateurs();
-    //Deconnecter un utilisateur
+
+    //, Déconnecter un utilisateur.
     Utilisateur disconnectUtilisateur(Utilisateur utilisateur, int id);
-    //Supprime un utilisateur 
-    boolean deleteUtilisateur(int id); 
+
+    //, Supprimer un utilisateur.
+    boolean deleteUtilisateur(int id);
     
-//----------------------------------ADMIN/NEW USER COMMAND (A interdire aux user)-----------------
+//.----------------------------------ADMIN/NEW USER COMMAND (À interdire aux user-------------------------------------------------
     
-    //Creer un Utilisateur
+    //, Créer un Utilisateur.
     Utilisateur createUtilisateur(Utilisateur utilisateur);
-    //Connecter un Utilisateur
+
+    //, Connecter un Utilisateur.
     Utilisateur connectUtilisateur(Utilisateur utilisateur);    
     
-//---------------------------------------------Outils------------------------------------------------- 
-    
-    //Compare les utilisateurs et le renvoie s'il existe
-    Utilisateur loginUtilisateur(Utilisateur utilisateur);   
-    //Compare le mdp pour le login
-    boolean comparePassword(String passwordTemp, Utilisateur utilisateur);    
-    //Lire un Utilisateur a partir de son Nom
-    Utilisateur findUtilisateurByNom(Utilisateur utilisateur);    
-    //Lire un utilisateur à partir de son ID
-    Utilisateur findUtilisateurById(int id);  
-    
-//---------------------------------------------ADMIN / USER-------------------------------------------------
-    
-    //Modifie un utilisateur
-    Utilisateur updateUtilisateur(Utilisateur utilisateur);  
-    Utilisateur readUtilisateur(int id);  
+//.---------------------------------------------Outils-------------------------------------------------
+
+    //, Compare les utilisateurs et le renvoie s'il existe.
+    Utilisateur loginUtilisateur(Utilisateur utilisateur);
+
+    //, Compare le mot de passe pour le login.
+    boolean comparePassword(String passwordTemp, Utilisateur utilisateur);
+
+    //, Lire un Utilisateur a partir de son Nom.
+    Utilisateur findUtilisateurByNom(Utilisateur utilisateur);
+
+    //, Lire un utilisateur à partir de son ID.
+    Utilisateur findUtilisateurById(int id);
+
+//.---------------------------------------------ADMIN / USER-------------------------------------------------
+
+    //, Modifier un utilisateur.
+    Utilisateur updateUtilisateur(Utilisateur utilisateur);
+
+    //, Lire un utilisateur.
+    Utilisateur readUtilisateur(int id);
 }

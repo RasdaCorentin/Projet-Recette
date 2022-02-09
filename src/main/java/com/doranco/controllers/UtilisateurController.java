@@ -1,7 +1,7 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+*/
 package com.doranco.controllers;
 
 import com.doranco.dao.DaoFactory;
@@ -25,18 +25,20 @@ import org.json.JSONObject;
 /**
  *
  * @author 33767
- */
+*/
 @Path("/utilisateur")
 public class UtilisateurController {
 
     Jsonb jsonb = JsonbBuilder.create();
 
-//---------------------------------------------ADMIN COMMAND-------------------------------------------------
-/*
---------------------------------------------------------------------------------------------------------------------------
-                                                 Liste Utilisateur
---------------------------------------------------------------------------------------------------------------------------
-     */
+    /*
+.-----------------------------------------------ADMIN COMMAND--------------------------------------------------------------
+
+:--------------------------------------------------------------------------------------------------------------------------
+                                                % Liste Utilisateur
+:--------------------------------------------------------------------------------------------------------------------------
+*/
+
     @Path("/admin/liste")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -44,10 +46,8 @@ public class UtilisateurController {
 
         DaoFactory daoFactory = new DaoFactory();
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
-        //Creation d'une réponse
         Response response = Response
                 .status(Response.Status.CREATED)
-                //Ajouter to To string pour info ciblé
                 .entity(utilisateurDaoInterface.getListeUtilisateurs())
                 .build();
 
@@ -57,10 +57,11 @@ public class UtilisateurController {
     }
 
     /*
---------------------------------------------------------------------------------------------------------------------------
-                                                 Disconnect Utilisateur 
---------------------------------------------------------------------------------------------------------------------------
-     */
+:--------------------------------------------------------------------------------------------------------------------------
+                                                % Disconnect Utilisateur 
+:--------------------------------------------------------------------------------------------------------------------------
+    */
+
     @Path("/admin/disconnect/{id}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -71,7 +72,6 @@ public class UtilisateurController {
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
         utilisateurDaoInterface.disconnectUtilisateur(utilisateur, id);
 
-        //Creation d'une réponse
         Response response = Response
                 .status(Response.Status.CREATED)
                 .entity(utilisateurDaoInterface.getListeUtilisateurs())
@@ -82,10 +82,11 @@ public class UtilisateurController {
     }
 
     /*
---------------------------------------------------------------------------------------------------------------------------
-                                                 Delete Utilisateur 
---------------------------------------------------------------------------------------------------------------------------
-     */
+:--------------------------------------------------------------------------------------------------------------------------
+                                                % Delete Utilisateur 
+:--------------------------------------------------------------------------------------------------------------------------
+    */
+
     @Path("/admin/deleteU/{id}")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
@@ -93,6 +94,8 @@ public class UtilisateurController {
         DaoFactory daoFactory = new DaoFactory();
 
         UtilisateurDaoInterface UtilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
+
+        //Utilisateur utilisateurSupprimer = UtilisateurDaoInterface.findUtilisateurById(id);
 
         UtilisateurDaoInterface.deleteUtilisateur(id);
         daoFactory.closeEntityManagerFactory();
@@ -104,12 +107,14 @@ public class UtilisateurController {
         return response;
     }
 
-//---------------------------------------------ADMIN / NEW USER COMMAND-------------------------------------------------
-/*
---------------------------------------------------------------------------------------------------------------------------
-                                                Création Utilisateur
---------------------------------------------------------------------------------------------------------------------------
-     */
+    /*
+.---------------------------------------------ADMIN / NEW USER COMMAND-----------------------------------------------------
+
+:--------------------------------------------------------------------------------------------------------------------------
+                                                % Création Utilisateur
+:--------------------------------------------------------------------------------------------------------------------------
+    */
+
     @Path("/enregistrez")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -121,10 +126,9 @@ public class UtilisateurController {
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
         utilisateur = utilisateurDaoInterface.createUtilisateur(utilisateur);
 
-        //Creation daoFactory.closeEntityManagerFactory();d'une réponse
         Response response = Response
                 .status(Response.Status.CREATED)
-                .entity("Bienvenue : " + utilisateur.toString() + "Tu dois maintenant te connecter")
+                .entity("Bienvenue : " + utilisateur.toString() + "Tu dois maintenant allez te connecter.")
                 .build();
 
         daoFactory.closeEntityManagerFactory();
@@ -133,70 +137,71 @@ public class UtilisateurController {
     }
 
     /*
---------------------------------------------------------------------------------------------------------------------------
-                                                Connecter Utilisateur
---------------------------------------------------------------------------------------------------------------------------
-     */
+:--------------------------------------------------------------------------------------------------------------------------
+                                                % Connecter Utilisateur
+:--------------------------------------------------------------------------------------------------------------------------
+    */
+
     @Path("/enregistrez/connect")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response connectUtilisateur(String stringUserData) {
-        //Convertis String en un objet Json data
+        //µ Convertis String en un objet Json data.
         JSONObject jSONObjectData = new JSONObject(stringUserData);
-        //Recupération du user
+        //µ Récupération du user.
         String jsonUtilisateur = jSONObjectData.get("utilisateur").toString();
-        // Instancie dans la classe utilisateur les infos récup
+        //µ Instancie dans la classe utilisateur les infos récupérer.
         Utilisateur utilisateur = jsonb.fromJson(jsonUtilisateur, Utilisateur.class);
-        //Lancement de la Methode Connect 
+        //µ Lancement de la méthode Connect.
         DaoFactory daoFactory = new DaoFactory();
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
         utilisateur = utilisateurDaoInterface.connectUtilisateur(utilisateur);
 
         Response response = Response
                 .status(Response.Status.CREATED)
-                .entity("Bienvenue : " + utilisateur.toString() + " Tu peux maintenant publier tes recettes")
+                .entity("Bienvenue : " + utilisateur.toString() + " Tu peux maintenant publier tes recettes.")
                 .build();
-
         return response;
     }
 
-//---------------------------------------------ADMIN / USER COMMAND-------------------------------------------------
-/*
---------------------------------------------------------------------------------------------------------------------------
-                                                Update Utilisateur
---------------------------------------------------------------------------------------------------------------------------
-     */
+    /*
+.---------------------------------------------ADMIN / USER COMMAND--------------------------------------------------------
+
+:--------------------------------------------------------------------------------------------------------------------------
+                                                % Update Utilisateur
+:--------------------------------------------------------------------------------------------------------------------------
+    */
+
     @Path("/user/update")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateUtilisateur(String stringUserData) {
-        //Convertis String en un objet Json data
+        //µ Convertis String en un objet Json data.
         JSONObject jSONObjectData = new JSONObject(stringUserData);
-        //Recupération du user
+        //µ Récupération du user.
         String jsonUtilisateur = jSONObjectData.get("utilisateur").toString();
-        // Instancie dans la classe utilisateur les infos récup
+        //µ Instancie dans la classe utilisateur les infos récupérer.
         Utilisateur utilisateur = jsonb.fromJson(jsonUtilisateur, Utilisateur.class);
-        //Lancement de la Methode Update 
+        //µ Lancement de la méthode Update.
         DaoFactory daoFactory = new DaoFactory();
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
         utilisateur = utilisateurDaoInterface.updateUtilisateur(utilisateur);
 
-        //Creation d'une réponse
         Response response = Response
                 .status(Response.Status.CREATED)
                 .entity(utilisateur.toString())
                 .build();
-
         return response;
     }
 
     /*
---------------------------------------------------------------------------------------------------------------------------
-                                                 Read Utilisateur
---------------------------------------------------------------------------------------------------------------------------
-     */
+:--------------------------------------------------------------------------------------------------------------------------
+                                                % Read Utilisateur
+:--------------------------------------------------------------------------------------------------------------------------
+    */
+
     @Path("/read/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -206,7 +211,6 @@ public class UtilisateurController {
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
         Utilisateur utilisateur = utilisateurDaoInterface.findUtilisateurById(id);
 
-        //Creation d'une réponse
         Response response = Response
                 .status(Response.Status.CREATED)
                 .entity(utilisateur.toString())

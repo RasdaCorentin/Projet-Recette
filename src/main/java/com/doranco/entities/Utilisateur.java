@@ -10,16 +10,13 @@ package com.doranco.entities;
  * @author 33767
  */
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,13 +26,11 @@ import javax.persistence.Transient;
 @Entity
 public class Utilisateur implements Serializable{
     private static long serialVersionUID = 1L;
-    
+
     /*
-    
     Les attributs 
-    
     */
-    
+
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
@@ -51,22 +46,20 @@ public class Utilisateur implements Serializable{
 
     @Enumerated(EnumType.STRING)
     private RoleUtilisateur role;
-    
+
     /*
-    
     Les relations
-    
     */
+
     @Transient
     @OneToMany(mappedBy = "utilisateur")
 //  @OneToMany(mappedBy = "utilisateur", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Recette> listeRecettes = new ArrayList<>();
-    
+
     /*
-    
     Booléen de vérification de rôle & de statuts
-    
     */
+
     /**
      * @param statuts the statuts to set
      */
@@ -81,48 +74,65 @@ public class Utilisateur implements Serializable{
     public boolean isUser(){
     return this.getRole().equals(RoleUtilisateur.USER);
     }
-        
+
     /*
-        
     Les Constructeurs
-        
     */
-        
-    //Constructeur vide sans parametres
+
+    /**
+     * Constructeur vide sans paramètres.
+     */
     public Utilisateur() { 
     }
-    
-    //Constructeur avec id
+
+    /**
+     * Constructeur avec l'id.
+     * @param id
+     */
     public Utilisateur(int id) {
         this.id = id;
     }
-    
-    // Constructeur rôle
+
+    /**
+     * Constructeur rôle.
+     * @param nom
+     * @param password
+     * @param role
+     * @param email
+     */
     public Utilisateur(String nom, String password, RoleUtilisateur role, String email) {
         this.nom = nom;
         this.password = password;
         this.role = role;
         this.email = email;
     }
-    
-    //Constructeur sans id
+
+    /**
+     * Constructeur sans id.
+     * @param nom
+     * @param password
+     */
     public Utilisateur(String nom, String password) {
-      this.nom = nom;
-      this.password = password;
+        this.nom = nom;
+        this.password = password;
     }    
-    
-    //Constructeur complet
+
+    /**
+     * Constructeur complet.
+     * @param id
+     * @param nom
+     * @param password
+     * @param email
+     */
     public Utilisateur(int id, String nom, String password, String email) {
         this.id = id;
         this.nom = nom;
         this.password = password;
         this.email = email;
     }
-    
+
     /*
-    
-    Methode toString
-    
+    Méthode toString.
     */
 
     @Override
@@ -149,11 +159,8 @@ public class Utilisateur implements Serializable{
 
     }
 
-    
     /*
-    
     Getters & Setters
-    
     */
 
     /**
@@ -286,13 +293,11 @@ public class Utilisateur implements Serializable{
     public void setNewNom(String newNom) {
         this.newNom = newNom;
     }
-    
+
     /*
-    
     Getters & Setters de Relation
-    
     */
-    
+
     /**
      * @return the listeRecettes
      */
