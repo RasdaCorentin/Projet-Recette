@@ -15,17 +15,13 @@ import com.yoann_bezard.dao.interfaces.UtilisateurInterface;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class UtilisateurDaoImp implements UtilisateurInterface {
-
+    
     private DaoFactory daoFactory;
-
+    
     public UtilisateurDaoImp( DaoFactory daoFactory ) {
         this.daoFactory = daoFactory;
     }
 
-    /**
-     * Lister les utilisateurs.
-     * @return 
-     */
     @Override
     public List<Utilisateur> findAllUtilisateurs() {
         EntityManager entityManager = null;
@@ -157,18 +153,14 @@ public class UtilisateurDaoImp implements UtilisateurInterface {
      * @return 
      */
     @Override
-    public Utilisateur updateUtilisateur(Utilisateur user, String email) {
+    public Utilisateur updateUtilisateur(Utilisateur user, int id) {
         EntityManager entityManager = null;
         EntityTransaction transaction = null;
 
         try {
             entityManager = daoFactory.getEntityManager();
 
-            
-            Query query = entityManager.createQuery( "SELECT user FROM Utilisateur user WHERE email=:email" );
-            query.setParameter( "email", email );
-            Utilisateur utilisateur = (Utilisateur) query.getResultList().get(0);
-            Utilisateur utilisateurAModifier = entityManager.find( Utilisateur.class, utilisateur.getId() );
+            Utilisateur utilisateurAModifier = entityManager.find( Utilisateur.class, id );
 
             if( utilisateurAModifier != null ) {
                 transaction = entityManager.getTransaction();
@@ -204,11 +196,6 @@ public class UtilisateurDaoImp implements UtilisateurInterface {
         return user;
     }
 
-    /**
-     * Désactiver le compte d'un utilisateur.
-     * @param email
-     * @return 
-     */
     @Override
     public Utilisateur deactivateUtilisateur(String email) {
         EntityManager entityManager = null;
@@ -248,11 +235,6 @@ public class UtilisateurDaoImp implements UtilisateurInterface {
         return null;
     }
 
-    /**
-     * Activer le compte d'un utilisateur.
-     * @param email
-     * @return 
-     */
     @Override
     public Utilisateur reactivateUtilisateur(String email) {
         EntityManager entityManager = null;

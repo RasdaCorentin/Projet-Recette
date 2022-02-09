@@ -16,8 +16,6 @@ import jakarta.ws.rs.ext.Provider;
 @Provider
 public class RequestFilter implements ContainerRequestFilter {
 
-    public String email;
-
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         System.out.println( "<----------Exécution de ContainerRequestFilter.---------->" );
@@ -72,8 +70,8 @@ public class RequestFilter implements ContainerRequestFilter {
                                 .build();
                             requestContext.abortWith( response );
                         }
-                    }
-
+                    } 
+                    //§ Si le mot "admin" n'est pas présent dans l'url alors je ne prend pas la peine de vérifier le statue de l'utilisateur et lui affiche directement la page.
                     return;
                 }
 
