@@ -99,16 +99,16 @@ public class UtilisateurController {
 
                 //: Si la liste me revient vide.
                 if( queryEmailBase.getResultList().isEmpty() ) {
-                        System.out.println( "<-----Cette id n'existe pas dans la base de donnée.----->" );
+                        System.out.println( "<-----Cette adresse e-mail n'existe pas dans la base de donnée.----->" );
                         Response response = Response
                                 .status( Status.FORBIDDEN )
-                                .entity( "Cette id n'existe pas dans la base de donnée." )
+                                .entity( "Cette adresse e-mail n'existe pas dans la base de donnée." )
                                 .build();
                         return response;
                 }
 
                 Utilisateur userMaj = (Utilisateur) queryEmailBase.getResultList().get( 0 );
-                System.out.println( "<-----Voici l'utilisateur qui est associé à cette id :----->\n" + userMaj.getEmail() );
+                System.out.println( "<-----Voici l'utilisateur qui est associé à cette adresse e-mail :----->\n" + userMaj.getEmail() );
 
                 //§ Vérification de la disponibilité de l'e-mail demandé par l'utilisateur.
                 Query queryEmail = entityManager.createQuery( "SELECT user FROM Utilisateur user WHERE email=:email" );

@@ -66,7 +66,7 @@ public class RequestFilter implements ContainerRequestFilter {
                         } else {
                             Response response = Response
                                 .status( Response.Status.FORBIDDEN )
-                                .entity( "Vous n'avez pas les droits nécessaire pour consulter cette page." )
+                                .entity( "Vous n'avez pas les droits nécessaire pour consulter cette page." + urlPath )
                                 .build();
                             requestContext.abortWith( response );
                         }
