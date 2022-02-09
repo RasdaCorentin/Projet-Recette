@@ -15,9 +15,9 @@ import com.yoann_bezard.dao.interfaces.UtilisateurInterface;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class UtilisateurDaoImp implements UtilisateurInterface {
-    
+
     private DaoFactory daoFactory;
-    
+
     public UtilisateurDaoImp( DaoFactory daoFactory ) {
         this.daoFactory = daoFactory;
     }
