@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import com.yoann_bezard.controllers.RequestFilter;
 import com.yoann_bezard.dao.DaoFactory;
 import com.yoann_bezard.dao.entiites.Utilisateur;
 import com.yoann_bezard.dao.interfaces.UtilisateurInterface;
@@ -15,9 +16,9 @@ import com.yoann_bezard.dao.interfaces.UtilisateurInterface;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class UtilisateurDaoImp implements UtilisateurInterface {
-    
+
     private DaoFactory daoFactory;
-    
+
     public UtilisateurDaoImp( DaoFactory daoFactory ) {
         this.daoFactory = daoFactory;
     }
@@ -153,14 +154,18 @@ public class UtilisateurDaoImp implements UtilisateurInterface {
      * @return 
      */
     @Override
-    public Utilisateur updateUtilisateur(Utilisateur user, int id) {
+    public Utilisateur updateUtilisateur(Utilisateur user, String email) {
         EntityManager entityManager = null;
         EntityTransaction transaction = null;
 
         try {
             entityManager = daoFactory.getEntityManager();
 
-            Utilisateur utilisateurAModifier = entityManager.find( Utilisateur.class, id );
+            
+            Query query = entityManager.createQuery( "SELECT user FROM Utilisateur user WHERE email=:email" );
+            query.setParameter( "email", email );
+            Utilisateur utilisateur = (Utilisateur) query.getResultList().get(0);
+            Utilisateur utilisateurAModifier = entityManager.find( Utilisateur.class, utilisateur.getId() );
 
             if( utilisateurAModifier != null ) {
                 transaction = entityManager.getTransaction();
