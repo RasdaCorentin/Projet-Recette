@@ -10,11 +10,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
@@ -36,6 +40,7 @@ public class Recette implements Serializable {
     */
 
     @Id
+    @Column(name="id_recette")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String DateCrea;
@@ -52,9 +57,25 @@ public class Recette implements Serializable {
     
     @ManyToOne
     private Utilisateur utilisateur;
+    
     @Transient
     @OneToMany(mappedBy = "recette")
     private List<Ingredient> listeIngredients = new ArrayList<>();
+    
+    /*
+    
+    Option ManyToMany
+    @Column(name="id_recette")
+    private int id;
+     */
+//    @ManyToMany()
+//    @JoinTable(name="Recette_Ingredient",
+//    joinColumns = {@JoinColumn(name= "id_recette")},
+//    inverseJoinColumns = {@JoinColumn(name="id_ingredient")})
+//    private List<Ingredient> listeIngredients = new ArrayList<>();
+    
+   
+    
     
     /*
         

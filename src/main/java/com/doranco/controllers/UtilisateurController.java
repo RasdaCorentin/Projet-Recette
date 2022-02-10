@@ -114,9 +114,15 @@ public class UtilisateurController {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createUtilisateur(Utilisateur utilisateur) {
+    public Response createUtilisateur(String stringUserData) {
+        //Convertis String en un objet Json data
+        JSONObject jSONObjectData = new JSONObject(stringUserData);
+        //Recupération du user
+        String jsonUtilisateur = jSONObjectData.get("utilisateur").toString();
+        // Instancie dans la classe utilisateur les infos récup
+        Utilisateur utilisateur = jsonb.fromJson(jsonUtilisateur, Utilisateur.class);
+        
         DaoFactory daoFactory = new DaoFactory();
-
         utilisateur.setRole(RoleUtilisateur.USER);
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
         utilisateur = utilisateurDaoInterface.createUtilisateur(utilisateur);

@@ -6,10 +6,13 @@ package com.doranco.entities;
 
 import jakarta.json.bind.annotation.JsonbTransient;
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
@@ -28,6 +31,7 @@ public class Ingredient implements Serializable{
     */
     
     @Id
+    @Column(name="id_ingredient")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String libelle;
@@ -40,9 +44,28 @@ public class Ingredient implements Serializable{
     Les relations
     
     */
+    
     @JsonbTransient
     @ManyToOne
     private Recette recette;
+    
+    
+    /*
+    
+    Option ManyToMany
+    
+    @Column(name="id_ingredient")
+    private int id;
+    
+    */
+//    @ManyToMany()
+//    private List<Recette> listeRecettes;
+    
+    
+    
+    
+    
+    
     
     /*
         
@@ -189,5 +212,19 @@ public class Ingredient implements Serializable{
         this.recette = recette;
     }
 
+//        /**
+//     * @return the listeRecettes
+//     */
+//    public List<Recette> getListeRecettes() {
+//        return listeRecettes;
+//    }
+//
+//    /**
+//     * @param listeRecettes the listeRecettes to set
+//     */
+//    public void setListeRecettes(List<Recette> listeRecettes) {
+//        this.listeRecettes = listeRecettes;
+//    }
+    
 
 }
