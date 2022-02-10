@@ -60,6 +60,7 @@ Exemple postman:
 
 
 User:
+
 	Update Utilisateur:
 -{{url_projet}}utilisateur/user/update
 Exemple postman:

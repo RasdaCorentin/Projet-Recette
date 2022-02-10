@@ -232,39 +232,108 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
 
 //. -------------------------------------------------------------------------------------------
 
-            /**
-             * Fonction filtre Comparaison de Mot de passe :
-             */
-            String passwordTemp = utilisateur.getPassword();
-
-            //Récupérations utilisateur.
+            //§ Récupération de l'utilisateur qui va être modifié.
             Utilisateur utilisateurAModifier = findUtilisateurByNom(utilisateur);
             if (utilisateurAModifier != null) {
-            transaction = entityManager.getTransaction();
-                //
+                transaction = entityManager.getTransaction();
+
+                //§ Récupération d'un potentiel utilisateur utilisant déjà le nom voulue dans la base de donnée.
+                Utilisateur utilisateurBdd = findUtilisateurByNom(utilisateur);
+
+                //§ Récupération du mot de passe entré par l'utilisateur pour la connexion.
+                String passwordTemp = utilisateur.getPassword();
                 String passwordHash = BCrypt.hashpw(passwordTemp, utilisateurAModifier.getSalt());
-                //
-                if (passwordHash.compareTo(utilisateurAModifier.getPassword()) == 0) {
 
-                    utilisateurAModifier.setDateModif(dtf.format(now));
-                    utilisateurAModifier.setDateModif(dtf.format(now));
-                    utilisateurAModifier.setNom(utilisateur.getNewNom());
-                    utilisateurAModifier.setEmail(utilisateur.getEmail());
-                    //utilisateurAModifier.setPassword(passwordHash);
+                //$ ----------Les vérifications.----------
 
-                    transaction.begin();
-                    entityManager.merge(utilisateurAModifier);
-                    transaction.commit();
-                    System.out.println("<----------- Mise a jour Utilisateur avec succès. ------->");
-                    return utilisateurAModifier;
-                }
-                //
-                System.out.println("<----------- Mot de passe incorrecte, impossible d'effectuer l'update. ------->");
-                //
-                return utilisateur;
+                //£ Si je trouve déjà le nom voulue par l'utilisateur dans la base de donnée, et que ce n'est pas le sien.
+                // if (utilisateurBdd != null && !utilisateurBdd.getNom().equals(utilisateurAModifier.getNewNom())) {
+                //     System.out.println("<----------Ce nom est déjà pris.---------->");
+                //     return null;
+                // } else {
+
+                    //£ Vérification des identifiants de l'utilisateur.
+                    if ( passwordHash.compareTo(utilisateurAModifier.getPassword()) == 0 && utilisateurAModifier.getNom().equals(utilisateur.getNom()) ) {
+
+                        utilisateurAModifier.setDateModif(dtf.format(now));
+                        utilisateurAModifier.setDateModif(dtf.format(now));
+                        utilisateurAModifier.setNom(utilisateur.getNewNom());
+                        utilisateurAModifier.setEmail(utilisateur.getEmail());
+
+                        String salt = BCrypt.gensalt();
+                        String passwordHash2 = BCrypt.hashpw( utilisateur.getNewPassword(), salt );
+                        utilisateurAModifier.setPassword(passwordHash2);
+                        utilisateurAModifier.setSalt(salt);
+    
+                        transaction.begin();
+                        entityManager.merge(utilisateurAModifier);
+                        transaction.commit();
+                        System.out.println("<----------- Mise a jour Utilisateur avec succès. ------->");
+                        return utilisateurAModifier;
+                    }
+                    //
+                    System.out.println("<----------- Nom d'utilisateur ou mot de passe incorrecte, impossible d'effectuer l'update. ------->");
+                    //
+                    return utilisateur;
+                // }
             }
             System.out.println("<----------- Utilisateur avec Nom non trouvé pour l'update. ------->");
             return null;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // /**
+            //  * Fonction filtre Comparaison de Mot de passe :
+            //  */
+            // String passwordTemp = utilisateur.getPassword();
+
+            // //Récupérations utilisateur.
+            // Utilisateur utilisateurAModifier = findUtilisateurByNom(utilisateur);
+            // if (utilisateurAModifier != null) {
+            // transaction = entityManager.getTransaction();
+            //     //
+            //     String passwordHash = BCrypt.hashpw(passwordTemp, utilisateurAModifier.getSalt());
+            //     //
+            //     if (passwordHash.compareTo(utilisateurAModifier.getPassword()) == 0) {
+
+            //         utilisateurAModifier.setDateModif(dtf.format(now));
+            //         utilisateurAModifier.setDateModif(dtf.format(now));
+            //         utilisateurAModifier.setNom(utilisateur.getNewNom());
+            //         utilisateurAModifier.setEmail(utilisateur.getEmail());
+            //         //utilisateurAModifier.setPassword(passwordHash);
+
+            //         transaction.begin();
+            //         entityManager.merge(utilisateurAModifier);
+            //         transaction.commit();
+            //         System.out.println("<----------- Mise a jour Utilisateur avec succès. ------->");
+            //         return utilisateurAModifier;
+            //     }
+            //     //
+            //     System.out.println("<----------- Mot de passe incorrecte, impossible d'effectuer l'update. ------->");
+            //     //
+            //     return utilisateur;
+            // }
+            // System.out.println("<----------- Utilisateur avec Nom non trouvé pour l'update. ------->");
+            // return null;
+
+
+
+
+
+
+
 
 //. ---------------------------------------FIN-------------------------------------------------- 
         } catch (Exception ex) {

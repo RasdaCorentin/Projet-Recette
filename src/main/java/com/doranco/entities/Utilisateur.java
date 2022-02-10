@@ -38,6 +38,7 @@ public class Utilisateur implements Serializable{
     private String nom;
     private String newNom;
     private String password;
+    private String newPassword;
     private String DateCrea;
     private String DateModif;
     private String salt;
@@ -68,11 +69,15 @@ public class Utilisateur implements Serializable{
     }
 
     public boolean isAdmin(){
-    return this.getRole().equals(RoleUtilisateur.ADMIN);
+        return this.getRole().equals(RoleUtilisateur.ADMIN);
     }
 
     public boolean isUser(){
-    return this.getRole().equals(RoleUtilisateur.USER);
+        return this.getRole().equals(RoleUtilisateur.USER);
+    }
+
+    public boolean isActif() {
+        return (this.statuts == true);
     }
 
     /*
@@ -203,6 +208,20 @@ public class Utilisateur implements Serializable{
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * @return the newPassword
+     */
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    /**
+     * @param newPassword the newPassword to set
+     */
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
     }
 
     /**

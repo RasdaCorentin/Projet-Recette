@@ -81,23 +81,45 @@ public class RequestFilter implements ContainerRequestFilter {
 
             /*
 :--------------------------------------------------------------------------------------------------------------------------
-                                                % Si la page est réservé aux administrateurs.
+                                                % L'utilisateur est-il actif ?
 :--------------------------------------------------------------------------------------------------------------------------
             */
 
-            if (urlPath.contains("admin")) {
-                if (utilisateur.isAdmin()) {
-                    return;
-                } else {
-                    Response response = Response
-                        .status(Response.Status.FORBIDDEN)
-                        .entity("T'es pas Admin COCO !")
-                        .build();
-                    requestContext.abortWith(response);
-                }
-            }
+            if (utilisateur.isActif()) {
 
-            return;
+                /*
+:--------------------------------------------------------------------------------------------------------------------------
+                                                % Si la page est réservé aux administrateurs.
+:--------------------------------------------------------------------------------------------------------------------------
+                */
+
+                if (urlPath.contains("admin")) {
+                    if (utilisateur.isAdmin()) {
+                        return;
+                    } else {
+                        Response response = Response
+                            .status(Response.Status.FORBIDDEN)
+                            .entity("T'es pas Admin COCO !")
+                            .build();
+                        requestContext.abortWith(response);
+                    }
+                }
+
+                return;
+
+            /*
+:--------------------------------------------------------------------------------------------------------------------------
+                                                % L'utilisateur est inactif.
+:--------------------------------------------------------------------------------------------------------------------------
+            */
+
+            } else {
+                Response response = Response
+                    .status(Response.Status.FORBIDDEN)
+                    .entity("Vous avez été bannis !")
+                    .build();
+                requestContext.abortWith(response);
+            }
         }
 
         /*
@@ -106,8 +128,10 @@ public class RequestFilter implements ContainerRequestFilter {
 :--------------------------------------------------------------------------------------------------------------------------
         */
 
-        Response response = Response.status(Response.Status.FORBIDDEN).entity("Vous devez commencer par vous enregistrer sur le site.")
-                .build();
+        Response response = Response
+            .status(Response.Status.FORBIDDEN)
+            .entity("Vous devez commencer par vous enregistrer sur le site.")
+            .build();
         requestContext.abortWith(response);
 
     }
