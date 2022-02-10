@@ -4,10 +4,16 @@
 */
 package com.doranco.controllers;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import com.doranco.dao.DaoFactory;
 import com.doranco.dao.iinterface.UtilisateurDaoInterface;
 import com.doranco.entities.RoleUtilisateur;
 import com.doranco.entities.Utilisateur;
+
+import org.json.JSONObject;
+
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.ws.rs.Consumes;
@@ -20,7 +26,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.json.JSONObject;
+import jakarta.ws.rs.core.Response.Status;
 
 /**
  *
@@ -233,7 +239,37 @@ public class UtilisateurController {
         //µ Lancement de la méthode Update.
         DaoFactory daoFactory = new DaoFactory();
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
-        utilisateur = utilisateurDaoInterface.updateUtilisateur(utilisateur);
+
+        //§ Je vérifie dans la base de donnée l'existence du nom que souhaite prendre l'utilisateur.
+        EntityManager entityManager = daoFactory.getEntityManager();
+        Query query = entityManager.createQuery( "SELECT user FROM Utilisateur user WHERE nom=:nom" );
+        query.setParameter( "nom", utilisateur.getNom() );
+
+        //. ----------Les vérifications.----------
+
+        //$ ----------Le nom n'est pas encore utilisé.----------
+        if (query.getResultList().isEmpty()) {
+            utilisateur = utilisateurDaoInterface.updateUtilisateur(utilisateur);
+        }
+        //$ ----------Le nom est déjà utilisé.----------
+        else {
+            Utilisateur utilisateurBdd = (Utilisateur) query.getResultList().get(0);
+            String nomUtilisateurBdd = utilisateurBdd.getNom();
+            String nomUtilisateurUpdate = utilisateur.getNom();
+
+            //$ ----------L'utilisateur souhaite conserver son nom.----------
+            if (nomUtilisateurBdd.equals(nomUtilisateurUpdate)) {
+                utilisateur = utilisateurDaoInterface.updateUtilisateur(utilisateur);
+            }
+            //$ ----------Le nom est déjà utilisé par un autre utilisateur.----------
+            else {
+                Response response = Response
+                    .status(Status.FORBIDDEN)
+                    .entity( "Le nom " + nomUtilisateurBdd + " est déjà utilisé par un autre utilisateur." )
+                    .build();
+                return response;
+            }
+        }
 
         Response response = Response
                 .status(Response.Status.CREATED)

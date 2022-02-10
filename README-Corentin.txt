@@ -66,10 +66,11 @@ User:
 Exemple postman:
 {
     "utilisateur" : {
-        "nom" : "cupidon",
+        "nom" : "DarkSasuke",
+        "password" : "1234",
         "newNom" : "DarkSasuke",
         "email" : "rasengan@gmail.com",
-        "password" : "12345"
+        "newPassword" : "1234"
     }
 }
 
