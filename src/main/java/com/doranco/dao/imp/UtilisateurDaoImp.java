@@ -282,18 +282,145 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
 
     /*
 :--------------------------------------------------------------------------------------------------------------------------
-                                                % Déconnecter Utilisateur
+                                                % Deactivate Utilisateur
 :--------------------------------------------------------------------------------------------------------------------------
     */
 
+//     @Override
+//     public Utilisateur deactivateUtilisateur(int id) {
+//         EntityManager entityManager = null;
+//         EntityTransaction transaction = null;
+//         try {
+//             entityManager = daoFactory.getEntityManager();
+
+//             System.out.println("------------------ DÉBUT DEACTIVATE ---------");
+// //. -------------------------------------------------------------------------------------------
+
+//             Utilisateur utilisateurADesactiver = entityManager.find( Utilisateur.class, id );
+//             if( utilisateurADesactiver != null ) {
+//                 transaction = entityManager.getTransaction();
+
+//                 utilisateurADesactiver.setDateModif(dtf.format(now));
+//                 utilisateurADesactiver.setStatuts(false);
+
+//                 transaction.begin();
+//                 entityManager.persist( utilisateurADesactiver );
+//                 transaction.commit();
+//                 System.out.println( "<----------La désactivation de l'utilisateur à été effectuer avec succès.---------->" );
+//                 return utilisateurADesactiver;
+//             }
+//             System.out.println( "<----------Aucun utilisateur n'a été trouvé, la désactivation à été impossible.---------->" );
+//             return null;
+
+// //. ---------------------------------------FIN--------------------------------------------------
+//         } catch (Exception ex) {
+//             transaction.rollback();
+//             System.out.println( "Erreur deactivate utilisateur. \n" );
+//             ex.printStackTrace();
+//         } finally {
+//             if( entityManager != null ) entityManager.close();
+//         }
+//         return null;
+//     }
+
     @Override
-    public Utilisateur disconnectUtilisateur(Utilisateur utilisateur, int id) {
+    public Utilisateur deactivateUtilisateur(int id) {
         EntityManager entityManager = null;
         EntityTransaction transaction = null;
         try {
             entityManager = daoFactory.getEntityManager();
 
-            System.out.println("------------------ DEBUT CHANGEMENT ---------");
+            System.out.println("------------------ DÉBUT DEACTIVATE ---------");
+// //. -------------------------------------------------------------------------------------------
+
+            Utilisateur utilisateurADesactiver = entityManager.find( Utilisateur.class, id );
+            if( utilisateurADesactiver != null ) {
+                transaction = entityManager.getTransaction();
+
+                utilisateurADesactiver.setDateModif(dtf.format(now));
+                utilisateurADesactiver.setStatuts(false);
+
+                transaction.begin();
+                entityManager.persist( utilisateurADesactiver );
+                transaction.commit();
+                System.out.println( "<----------La désactivation de l'utilisateur à été effectuer avec succès.---------->" );
+                return utilisateurADesactiver;
+            }
+            System.out.println( "<----------Aucun utilisateur n'a été trouvé, la désactivation à été impossible.---------->" );
+            return null;
+
+//. ---------------------------------------FIN--------------------------------------------------
+        } catch (Exception ex) {
+            transaction.rollback();
+            System.out.println( "Erreur deactivate utilisateur. \n" );
+            ex.printStackTrace();
+        } finally {
+            if( entityManager != null ) entityManager.close();
+        }
+        return null;
+    }
+
+        /*
+:--------------------------------------------------------------------------------------------------------------------------
+                                                % Activate Utilisateur
+:--------------------------------------------------------------------------------------------------------------------------
+    */
+
+    @Override
+    public Utilisateur activateUtilisateur(int id) {
+        EntityManager entityManager = null;
+        EntityTransaction transaction = null;
+        try {
+            entityManager = daoFactory.getEntityManager();
+
+            System.out.println("------------------ DÉBUT ACTIVATE ---------");
+//. -------------------------------------------------------------------------------------------
+
+            Utilisateur utilisateurAActiver = entityManager.find( Utilisateur.class, id );
+
+            if( utilisateurAActiver != null ) {
+                transaction = entityManager.getTransaction();
+
+                utilisateurAActiver.setDateModif(dtf.format(now));
+                utilisateurAActiver.setStatuts(true);
+
+                transaction.begin();
+                entityManager.persist( utilisateurAActiver );
+                transaction.commit();
+                System.out.println( "<----------L'activation de l'utilisateur à été effectuer avec succès.---------->" );
+                return utilisateurAActiver;
+            }
+            System.out.println( "<----------Aucun utilisateur n'a été trouvé, l'activation à été impossible.---------->" );
+            return null;
+
+//. ---------------------------------------FIN--------------------------------------------------
+        } catch (Exception ex) {
+            transaction.rollback();
+            System.out.println( "Erreur activate Utilisateur. \n" );
+            ex.printStackTrace();
+        } finally {
+            if( entityManager != null ) entityManager.close();
+        }
+        return null;
+    }
+
+    /*
+:--------------------------------------------------------------------------------------------------------------------------
+                                                % Vanish Utilisateur
+:--------------------------------------------------------------------------------------------------------------------------
+    */
+
+    /**
+     * Permet de faire disparaître un utilisateur, son compte deviendra alors inaccessible mais il restera associé à ses recettes afin de ne pas les supprimer du site.
+     */
+    @Override
+    public Utilisateur vanishUtilisateur(Utilisateur utilisateur, int id) {
+        EntityManager entityManager = null;
+        EntityTransaction transaction = null;
+        try {
+            entityManager = daoFactory.getEntityManager();
+
+            System.out.println("------------------ DÉBUT VANISH ---------");
 //. -------------------------------------------------------------------------------------------
 
             utilisateur = entityManager.find(Utilisateur.class, id);
@@ -310,16 +437,16 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
                 transaction.begin();
                 entityManager.persist(utilisateur);
                 transaction.commit();
-                System.out.println("<----------- Statut mis à jour ------->");
+                System.out.println("<----------- Réussite du vanish. ------->");
                 return utilisateur;
             }
-            System.out.println("<----------- Utilisateur avec id non trouve ------->");
+            System.out.println("<----------- Aucun utilisateur n'est associé à cette id, vanish impossible. ------->");
             return null;
 
-//. ---------------------------------------FIN--------------------------------------------------   
+//. ---------------------------------------FIN--------------------------------------------------
         } catch (Exception ex) {
             transaction.rollback();
-            System.out.println("Erreur désactivation Utilisateur \n");
+            System.out.println("Erreur vanish Utilisateur. \n");
             ex.printStackTrace();
         } finally {
             if (entityManager != null) {
@@ -393,4 +520,5 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
         utilisateur.toString();
         return utilisateur;
     }
+
 }

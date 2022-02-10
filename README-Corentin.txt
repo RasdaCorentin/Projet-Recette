@@ -40,8 +40,16 @@ Exemple postman:
 -{{url_projet}}utilisateur/admin/deleteU/5
 Exemple postman: !!! Impossible de supprimer un utilisateur lié à une recette !!!
 
-	Déconnecter Utilisateur:
--{{url_projet}}utilisateur/admin/disconnect/1
+    Deactivate Utilisateur:
+-{{url_projet}}utilisateur/admin/deactivate/3
+Exemple postman: L'utilisateur 3 à été désactivé avec succès.
+
+    Activate Utilisateur:
+-{{url_projet}}utilisateur/admin/activate/7
+Exemple postman: L'utilisateur 7 à été activé avec succès.
+
+	Vanish Utilisateur:
+-{{url_projet}}utilisateur/admin/vanish/1
 Exemple postman: !!! Modifie le mot de passe de l'utilisateur le rendant inutilisable
 {
     "password" : "12345"

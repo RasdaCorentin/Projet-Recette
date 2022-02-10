@@ -58,19 +58,67 @@ public class UtilisateurController {
 
     /*
 :--------------------------------------------------------------------------------------------------------------------------
-                                                % Disconnect Utilisateur 
+                                                % Deactivate Utilisateur 
 :--------------------------------------------------------------------------------------------------------------------------
     */
 
-    @Path("/admin/disconnect/{id}")
+    @Path("/admin/deactivate/{id}")
+    @PUT
+    @Produces( MediaType.APPLICATION_JSON )
+    @Consumes( MediaType.APPLICATION_JSON )
+    public Response deactivateUserBd( @PathParam( value = "id" ) int id ) {
+
+            DaoFactory daoFactory = new DaoFactory();
+            UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
+            utilisateurDaoInterface.deactivateUtilisateur(id);
+
+            Response response = Response
+                    .ok( "L'utilisateur " + id + " à été désactivé avec succès." )
+                    .build();
+
+            daoFactory.closeEntityManagerFactory();
+            return response;
+    }
+
+    /*
+:--------------------------------------------------------------------------------------------------------------------------
+                                                % Activate Utilisateur 
+:--------------------------------------------------------------------------------------------------------------------------
+    */
+
+    @Path("/admin/activate/{id}")
+    @PUT
+    @Produces( MediaType.APPLICATION_JSON )
+    @Consumes( MediaType.APPLICATION_JSON )
+    public Response activateUserBd( Utilisateur user, @PathParam( value = "id" ) int id ) {
+
+            DaoFactory daoFactory = new DaoFactory();
+            UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
+            utilisateurDaoInterface.activateUtilisateur(id);
+
+            Response response = Response
+                    .ok( "L'utilisateur " + id + " à été activé avec succès." )
+                    .build();
+
+            daoFactory.closeEntityManagerFactory();
+            return response;
+    }
+
+    /*
+:--------------------------------------------------------------------------------------------------------------------------
+                                                % Vanish Utilisateur 
+:--------------------------------------------------------------------------------------------------------------------------
+    */
+
+    @Path("/admin/vanish/{id}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response disconnectUtilisateur(Utilisateur utilisateur, @PathParam(value = "id") int id) {
+    public Response vanishUtilisateur(Utilisateur utilisateur, @PathParam(value = "id") int id) {
 
         DaoFactory daoFactory = new DaoFactory();
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
-        utilisateurDaoInterface.disconnectUtilisateur(utilisateur, id);
+        utilisateurDaoInterface.vanishUtilisateur(utilisateur, id);
 
         Response response = Response
                 .status(Response.Status.CREATED)
@@ -94,8 +142,6 @@ public class UtilisateurController {
         DaoFactory daoFactory = new DaoFactory();
 
         UtilisateurDaoInterface UtilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
-
-        //Utilisateur utilisateurSupprimer = UtilisateurDaoInterface.findUtilisateurById(id);
 
         UtilisateurDaoInterface.deleteUtilisateur(id);
         daoFactory.closeEntityManagerFactory();
@@ -220,4 +266,5 @@ public class UtilisateurController {
 
         return response;
     }
+
 }

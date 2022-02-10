@@ -18,8 +18,14 @@ public interface UtilisateurDaoInterface {
     //, Lister tout les Utilisateur.
     List<Utilisateur> getListeUtilisateurs();
 
-    //, Déconnecter un utilisateur.
-    Utilisateur disconnectUtilisateur(Utilisateur utilisateur, int id);
+    //, Désactiver le compte d'un utilisateur.
+    Utilisateur deactivateUtilisateur(int id);
+
+    //, Activer le compte d'un utilisateur.
+    Utilisateur activateUtilisateur(int id);
+
+    //, Faire disparaître un utilisateur.
+    Utilisateur vanishUtilisateur(Utilisateur utilisateur, int id);
 
     //, Supprimer un utilisateur.
     boolean deleteUtilisateur(int id);
