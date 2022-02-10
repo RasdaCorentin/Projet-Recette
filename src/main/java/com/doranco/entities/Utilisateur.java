@@ -4,78 +4,158 @@
  */
 package com.doranco.entities;
 
+
+/**
+ *
+ * @author 33767
+ */
+
+import jakarta.json.bind.annotation.JsonbTransient;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
-/**
- *
- * @author elair
- */
 @Entity
-public class Utilisateur implements Serializable {
+public class Utilisateur implements Serializable{
+    private static long serialVersionUID = 1L;
+    
+    /*
+    
+    Les attributs 
+    
+    */
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
     @Column(unique = true, nullable = false)
-    private String dateCreation;
-    private String dateModification;
-    private String email;
     private String nom;
-    private String mdp;
+    private String newNom;
+    private String password;
+    private String DateCrea;
+    private String DateModif;
     private String salt;
-    private boolean actif;
-    
+    private String email;
+    private boolean statuts;
+
     @Enumerated(EnumType.STRING)
     private RoleUtilisateur role;
     
+    /*
+    
+    Les relations
+    
+    */
+    @Transient
     @OneToMany(mappedBy = "utilisateur")
-    private List<Recette> listeRecettes=new ArrayList<>();
+//  @OneToMany(mappedBy = "utilisateur", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Recette> listeRecettes = new ArrayList<>();
+    
+    /*
+    
+    Booléen de vérification de rôle & de statuts
+    
+    */
+    /**
+     * @param statuts the statuts to set
+     */
+    public void setStatuts(boolean statuts) {
+        this.statuts = statuts;
+    }
 
-    public Utilisateur(){
+    public boolean isAdmin(){
+    return this.getRole().equals(RoleUtilisateur.ADMIN);
+    }
+
+    public boolean isUser(){
+    return this.getRole().equals(RoleUtilisateur.USER);
+    }
         
+    /*
+        
+    Les Constructeurs
+        
+    */
+        
+    //Constructeur vide sans parametres
+    public Utilisateur() { 
     }
     
-    public Utilisateur(String nom, String mdp, RoleUtilisateur role) {
-        this.nom=nom;
-        this.mdp=mdp;
-        this.role=role;
+    //Constructeur avec id
+    public Utilisateur(int id) {
+        this.id = id;
+    }
+    
+    // Constructeur rôle
+    public Utilisateur(String nom, String password, RoleUtilisateur role, String email) {
+        this.nom = nom;
+        this.password = password;
+        this.role = role;
+        this.email = email;
+    }
+    
+    //Constructeur sans id
+    public Utilisateur(String nom, String password) {
+      this.nom = nom;
+      this.password = password;
+    }    
+    
+    //Constructeur complet
+    public Utilisateur(int id, String nom, String password, String email) {
+        this.id = id;
+        this.nom = nom;
+        this.password = password;
+        this.email = email;
+    }
+    
+    /*
+    
+    Methode toString
+    
+    */
+
+    @Override
+    public String toString() {
+        if (listeRecettes != null) {
+
+            return "ID :" + this.id
+                    + "\nNOM : " + this.nom
+                    + "\nEMAIL : " + this.email
+                    + "\nDATE CREA : " + this.DateCrea
+                    + "\nDATE MODIF : " + this.DateModif
+                    + "\nROLE : " + this.role
+                    + "\nLISTE DES RECETTES : " + this.listeRecettes
+                    + "\n";
+        } else {
+            return "ID :" + this.id
+                    + "\nNOM : " + this.nom
+                    + "\nEMAIL : " + this.email
+                    + "\nDATE CREA : " + this.DateCrea
+                    + "\nDATE MODIF : " + this.DateModif
+                    + "\nROLE : " + this.role
+                    + "\n";
+        }
+
     }
 
-    public Utilisateur(String nom, String mdp) {
-        this.nom=nom;
-        this.mdp=mdp;
-    }
     
-    public Utilisateur(String nom, String email, String mdp) {
-        this.nom=nom;
-        this.email=email;
-        this.mdp=mdp;
-    }
+    /*
+    
+    Getters & Setters
+    
+    */
 
-    public Utilisateur(String nom, String email, String mdp, RoleUtilisateur role) {
-        this.nom=nom;
-        this.email=email;
-        this.mdp=mdp;
-        this.role=role;
-    }
-    
-    public Utilisateur(String nom, String email, String mdp, RoleUtilisateur role, boolean actif) {
-        this.nom=nom;
-        this.email=email;
-        this.mdp=mdp;
-        this.role=role;
-        this.actif=actif;
-    }
-    
     /**
      * @return the id
      */
@@ -88,48 +168,6 @@ public class Utilisateur implements Serializable {
      */
     public void setId(int id) {
         this.id = id;
-    }
-
-    /**
-     * @return the dateCreation
-     */
-    public String getDateCreation() {
-        return dateCreation;
-    }
-
-    /**
-     * @param dateCreation the dateCreation to set
-     */
-    public void setDateCreation(String dateCreation) {
-        this.dateCreation = dateCreation;
-    }
-
-    /**
-     * @return the dateModification
-     */
-    public String getDateModification() {
-        return dateModification;
-    }
-
-    /**
-     * @param dateModification the dateModification to set
-     */
-    public void setDateModification(String dateModification) {
-        this.dateModification = dateModification;
-    }
-
-    /**
-     * @return the email
-     */
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     * @param email the email to set
-     */
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     /**
@@ -147,19 +185,19 @@ public class Utilisateur implements Serializable {
     }
 
     /**
-     * @return the mdp
+     * @return the password
      */
-    public String getMdp() {
-        return mdp;
+    public String getPassword() {
+        return password;
     }
 
     /**
-     * @param mdp the mdp to set
+     * @param password the password to set
      */
-    public void setMdp(String mdp) {
-        this.mdp = mdp;
+    public void setPassword(String password) {
+        this.password = password;
     }
-    
+
     /**
      * @return the salt
      */
@@ -173,19 +211,19 @@ public class Utilisateur implements Serializable {
     public void setSalt(String salt) {
         this.salt = salt;
     }
- 
+
     /**
-     * @return the actif
+     * @return the email
      */
-    public boolean isActif() {
-        return actif;
+    public String getEmail() {
+        return email;
     }
 
     /**
-     * @param actif the actif to set
+     * @param email the email to set
      */
-    public void setActif(boolean actif) {
-        this.actif = actif;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     /**
@@ -203,6 +241,59 @@ public class Utilisateur implements Serializable {
     }
 
     /**
+     * @return the DateCrea
+     */
+    public String getDateCrea() {
+        return DateCrea;
+    }
+
+    /**
+     * @param DateCrea the DateCrea to set
+     */
+    public void setDateCrea(String DateCrea) {
+        this.DateCrea = DateCrea;
+    }
+
+    /**
+     * @return the DateModif
+     */
+    public String getDateModif() {
+        return DateModif;
+    }
+
+    /**
+     * @param DateModif the DateModif to set
+     */
+    public void setDateModif(String DateModif) {
+        this.DateModif = DateModif;
+    }
+    /**
+     * @return the statuts
+     */
+    public boolean isStatuts() {
+        return statuts;
+    }    
+    /**
+     * @return the newNom
+     */
+    public String getNewNom() {
+        return newNom;
+    }
+
+    /**
+     * @param newNom the newNom to set
+     */
+    public void setNewNom(String newNom) {
+        this.newNom = newNom;
+    }
+    
+    /*
+    
+    Getters & Setters de Relation
+    
+    */
+    
+    /**
      * @return the listeRecettes
      */
     public List<Recette> getListeRecettes() {
@@ -215,14 +306,4 @@ public class Utilisateur implements Serializable {
     public void setListeRecettes(List<Recette> listeRecettes) {
         this.listeRecettes = listeRecettes;
     }
-    
-    public boolean isAdmin(){
-        return this.role.equals(RoleUtilisateur.ADMIN);
-    }
-    
-    @Override
-    public String toString() {
-        return "Id: " + this.id + "\nNom: " + this.nom+"\nRole: " +this.role;
-    }
-    
 }

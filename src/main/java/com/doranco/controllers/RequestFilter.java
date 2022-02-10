@@ -5,7 +5,8 @@
 package com.doranco.controllers;
 
 import com.doranco.dao.DaoFactory;
-import com.doranco.dao.interfaces.UtilisateurInterface;
+import com.doranco.dao.iinterface.UtilisateurDaoInterface;
+import com.doranco.entities.RoleUtilisateur;
 import com.doranco.entities.Utilisateur;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
@@ -19,53 +20,63 @@ import java.util.Base64;
  *
  * @author Admin
  */
+//A ajouter pour implémenter  les conditions
 @Provider
 public class RequestFilter implements ContainerRequestFilter {
 
-  @Override
+    /*
+--------------------------------------------------------------------------------------------------------------------------
+                                              Verif Rôle Authentification 
+--------------------------------------------------------------------------------------------------------------------------
+     */
+    @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-
         String urlPath = requestContext.getUriInfo().getPath();
-        if(urlPath.contains("register")){
+
+        if (urlPath.contains("enregistrez")) {
             return;
         }
-        
-        System.out.println("Execution de ContainerRequestFilter premier");
-        // Récuperation de la valeur de l'entete Authorization
+
+        System.out.println("Je prépare les autorisations...");
+
+        /*Je récupère la valeur de l'Authorization dans le Headers 
+et retire le basic ce qui me donne un code crypté que je décode*/
         String basicAuth = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
-        // On garde uniquement le nom et mdp encodé en base64
         basicAuth = basicAuth.replace("Basic ", "");
-        // Décodage et récupération du nom et mdp
         String authDecode = new String(Base64.getDecoder().decode(basicAuth));
-
+//       System.out.println(authDecode);      
         String[] credentials = authDecode.split(":");
-
         String nom = credentials[0];
-        String mdp = credentials[1];
+        String password = credentials[1];
 
-        Utilisateur user = new Utilisateur(nom, mdp);
 
+/*J'enregistre le username et password 
+Les utilise dans la fonction login 
+S'il nous renvoie un utilisateur existant
+Si utilisateur ok utilisateur = utilisateur
+Sinon utilisateur == null
+alors je vérifie s'il est Admin*/
+        Utilisateur utilisateur = new Utilisateur(nom, password);
         DaoFactory daoFactory = new DaoFactory();
+        UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
+        utilisateur = utilisateurDaoInterface.loginUtilisateur(utilisateur);
 
-        UtilisateurInterface utilisateurInterface = daoFactory.getUtilisateurInterface();
+//Ici je créer les condition d'authentification,
+//J'ajoute une condition pour enregistrez les nouveau utilisateurs
 
-        user = utilisateurInterface.login(user);
-
-        if (user != null) {
-            
+        if ((utilisateur != null)) {
             if (urlPath.contains("admin")) {
-                if (user.isAdmin()) {
+                if (utilisateur.isAdmin()) {
                     return;
                 } else {
-                    Response response = Response.status(Response.Status.FORBIDDEN).entity("Vous n'êtes pas un Admin").build();
+                    Response response = Response.status(Response.Status.FORBIDDEN).entity("T'es pas Admin COCO").build();
                     requestContext.abortWith(response);
                 }
-
             }
             return;
         }
-        Response response = Response.status(Response.Status.FORBIDDEN).entity("Accès refusé").build();
+        Response response = Response.status(Response.Status.FORBIDDEN).entity("Vous devez vous enreegistrez")
+                .build();
         requestContext.abortWith(response);
     }
-    
 }

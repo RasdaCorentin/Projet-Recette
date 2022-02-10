@@ -16,10 +16,11 @@ import java.io.IOException;
  */
 @Provider
 public class ResponseFilter implements ContainerResponseFilter {
-
+    
+//Ajout dans lla partie Headers de la page
     @Override
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
-        responseContext.getHeaders().add("X-Powered-By", "Doranco Tech");
+        responseContext.getHeaders().add("X-Powered-By", "Smith Enterprise");
     }
     
 }

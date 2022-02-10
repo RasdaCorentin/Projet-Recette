@@ -8,6 +8,11 @@
             30
         </session-timeout>
     </session-config>
+<!--
+/////////////////////////////////////////////////////////         
+    Création Servlet, paramétre & URL Pattern
+/////////////////////////////////////////////////////////
+-->
     <servlet>
         <servlet-name>Jersey REST Service</servlet-name>
         <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>

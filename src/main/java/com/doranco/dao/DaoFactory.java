@@ -4,26 +4,31 @@
  */
 package com.doranco.dao;
 
+import com.doranco.dao.iinterface.IngredientDaoInterface;
+import com.doranco.dao.iinterface.RecetteDaoInterface;
+import com.doranco.dao.iinterface.UtilisateurDaoInterface;
 import com.doranco.dao.imp.IngredientDaoImp;
 import com.doranco.dao.imp.RecetteDaoImp;
 import com.doranco.dao.imp.UtilisateurDaoImp;
-import com.doranco.dao.interfaces.IngredientInterface;
-import com.doranco.dao.interfaces.RecetteInterface;
-import com.doranco.dao.interfaces.UtilisateurInterface;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 /**
  *
- * @author Admin
+ * @author 33767
+ */
+/*
+Outil merveilleux pour recycler son code.
+
  */
 public class DaoFactory {
-    
+
     private final EntityManagerFactory entityManagerFactory;
 
     public DaoFactory() {
-        this.entityManagerFactory = Persistence.createEntityManagerFactory("tp-pu");
+
+        this.entityManagerFactory = Persistence.createEntityManagerFactory("projet-recette");
     }
 
     public EntityManager getEntityManager() {
@@ -33,16 +38,16 @@ public class DaoFactory {
     public void closeEntityManagerFactory() {
         this.entityManagerFactory.close();
     }
-    
-    public UtilisateurInterface getUtilisateurInterface(){
+
+    public UtilisateurDaoInterface getUtilisateurDaoInterface() {
         return new UtilisateurDaoImp(this);
     }
-    
-    public RecetteInterface getRecetteInterface(){
+
+    public RecetteDaoInterface getRecetteDaoInterface() {
         return new RecetteDaoImp(this);
     }
-    
-    public IngredientInterface getIngredientInterface(){
+
+    public IngredientDaoInterface getIngredientDaoInterface() {
         return new IngredientDaoImp(this);
     }
 }

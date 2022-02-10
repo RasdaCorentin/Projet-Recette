@@ -4,31 +4,101 @@
  */
 package com.doranco.entities;
 
-import javax.persistence.Column;
+import jakarta.json.bind.annotation.JsonbTransient;
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 /**
  *
- * @author elair
+ * @author 33767
  */
 @Entity
-public class Ingredient {
+public class Ingredient implements Serializable{
+    private static long serialVersionUID = 1L;
+    
+    /*
+    
+    Les attributs 
+    
+    */
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(unique = true, nullable = false)
-    private String dateCreation;
-    private String dateModification;
     private String libelle;
-    private int quantite;
+    private String quantite;
+    private String DateCrea;
+    private String DateModif;
     
-    @ManyToOne()
+    /*
+    
+    Les relations
+    
+    */
+    @JsonbTransient
+    @ManyToOne
     private Recette recette;
+    
+    /*
+        
+    Les Constructeurs
+        
+    */
+    
 
+    // Constructeur vide sans parametres
+    public Ingredient() {
+        
+    }
+    //Constructeur avec id
+    public Ingredient(int id) {
+        this.id = id;
+    }
+    // Constructeur sans id
+    public Ingredient(String libelle, String quantite) {
+        this.libelle = libelle;
+        this.quantite = quantite;
+    }
+    //Constructeur libelle
+    public Ingredient(String libelle) {
+        this.libelle = libelle;
+    }
+    //Constructeur complet
+    public Ingredient(int id, String libelle, String quantite) {
+        this.id = id;
+        this.libelle = libelle;
+        this.quantite = quantite;
+    }
+    
+    /*
+    
+    Methode toString
+    
+    */
+
+    @Override
+    public String toString() {
+            return "\n Id: "
+                    + this.getId()
+                    + "\n Libelle: "
+                    + this.getLibelle()
+                    + "\n Quantite: "
+                    + this.getQuantite()
+                    + "\nDATE CREA : " + this.DateCrea
+                    + "\nDATE MODIF : " + this.DateModif;
+    }
+    
+    /*
+    
+    Getters & Setters
+    
+    */
+    
     /**
      * @return the id
      */
@@ -42,35 +112,7 @@ public class Ingredient {
     public void setId(int id) {
         this.id = id;
     }
-
-    /**
-     * @return the dateCreation
-     */
-    public String getDateCreation() {
-        return dateCreation;
-    }
-
-    /**
-     * @param dateCreation the dateCreation to set
-     */
-    public void setDateCreation(String dateCreation) {
-        this.dateCreation = dateCreation;
-    }
-
-    /**
-     * @return the dateModification
-     */
-    public String getDateModification() {
-        return dateModification;
-    }
-
-    /**
-     * @param dateModification the dateModification to set
-     */
-    public void setDateModification(String dateModification) {
-        this.dateModification = dateModification;
-    }
-
+    
     /**
      * @return the libelle
      */
@@ -84,21 +126,55 @@ public class Ingredient {
     public void setLibelle(String libelle) {
         this.libelle = libelle;
     }
-
+ 
     /**
      * @return the quantite
      */
-    public int getQuantite() {
+    public String getQuantite() {
         return quantite;
     }
 
     /**
      * @param quantite the quantite to set
      */
-    public void setQuantite(int quantite) {
+    public void setQuantite(String quantite) {
         this.quantite = quantite;
     }
 
+    /**
+     * @return the DateCrea
+     */
+    public String getDateCrea() {
+        return DateCrea;
+    }
+
+    /**
+     * @param DateCrea the DateCrea to set
+     */
+    public void setDateCrea(String DateCrea) {
+        this.DateCrea = DateCrea;
+    }
+
+    /**
+     * @return the DateModif
+     */
+    public String getDateModif() {
+        return DateModif;
+    }
+
+    /**
+     * @param DateModif the DateModif to set
+     */
+    public void setDateModif(String DateModif) {
+        this.DateModif = DateModif;
+    }
+    
+    /*
+    
+    Getters & Setters de Relation
+    
+    */
+    
     /**
      * @return the recette
      */
@@ -112,4 +188,6 @@ public class Ingredient {
     public void setRecette(Recette recette) {
         this.recette = recette;
     }
+
+
 }

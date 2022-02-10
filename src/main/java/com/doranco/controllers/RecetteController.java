@@ -5,116 +5,114 @@
 package com.doranco.controllers;
 
 import com.doranco.dao.DaoFactory;
-import com.doranco.dao.interfaces.RecetteInterface;
-import com.doranco.dao.interfaces.UtilisateurInterface;
+import com.doranco.dao.iinterface.RecetteDaoInterface;
 import com.doranco.entities.Recette;
-import com.doranco.entities.RoleUtilisateur;
 import com.doranco.entities.Utilisateur;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
-import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.json.JSONObject;
 
 /**
  *
- * @author elair
+ * @author 33767
  */
-@Path("/recette")
+@Path("/utilisateur/recette")
 public class RecetteController {
 
-    private final DaoFactory daoFactory;
-    private final UtilisateurInterface utilisateurInterface;
-    private final RecetteInterface recetteInterface;
+    Jsonb jsonb = JsonbBuilder.create();
 
-    public RecetteController() {
-        daoFactory = new DaoFactory();
-        recetteInterface = daoFactory.getRecetteInterface();
-        utilisateurInterface = daoFactory.getUtilisateurInterface();
-    }
-
-    @Path("/create")
-    @POST
+    /*
+--------------------------------------------------------------------------------------------------------------------------
+                                                 Liste Recette
+--------------------------------------------------------------------------------------------------------------------------
+     */
+    @Path("/admin/liste")
+    @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response createRecette(String stringJsonData) {
-        //convertir string en json
-        JSONObject jSONObjectData = new JSONObject(stringJsonData);
-        //récupération de l'email
-        String email = jSONObjectData.getString("email");
+    public Response getListeRecette() {
 
-        //récup de la recette en string
-        String jsonRecetteString = jSONObjectData.get("recette").toString();
-        //utilisation de json-b
-        Jsonb jsonb = JsonbBuilder.create();
-        Recette recette = jsonb.fromJson(jsonRecetteString, Recette.class);
-        Utilisateur user = utilisateurInterface.findUserByEmail(email);
+        DaoFactory daoFactory = new DaoFactory();
 
-        if (user != null) {
-            recette.setUtilisateur(user);
-            recette = recetteInterface.create(recette);
-            if (recette != null) {
-                Response response = Response.ok(recette).build();
-                return response;
-            }
-        }
+        RecetteDaoInterface recetteDaoInterface = daoFactory.getRecetteDaoInterface();
 
-        Response response = Response.status(500).entity("Utilisateur non trouvé").build();
+        //Creation d'une réponse
+        Response response = Response
+                .status(Response.Status.CREATED)
+                //Ajouter to To string pour info ciblé
+                .entity(recetteDaoInterface.getListeRecettes())
+                .build();
+
         daoFactory.closeEntityManagerFactory();
 
         return response;
     }
+    /*
+--------------------------------------------------------------------------------------------------------------------------
+                                                 Read Recette
+--------------------------------------------------------------------------------------------------------------------------
+     */
+@Path("/read/{id}")
+@GET
+@Produces(MediaType.APPLICATION_JSON)
+public Response readRecette(@PathParam(value = "id") int id){
+    
+    DaoFactory daoFactory = new DaoFactory();
+    RecetteDaoInterface recetteDaoInterface = daoFactory.getRecetteDaoInterface();
+    
+    //Creation d'une réponse
+        Response response = Response
+                .status(Response.Status.CREATED)
+                .entity(recetteDaoInterface.findRecetteById(id))
+                .build();
 
-    @Path("/update/{id}")
-    @PUT
+        daoFactory.closeEntityManagerFactory();
+        
+        return response;
+}
+    /*
+--------------------------------------------------------------------------------------------------------------------------
+                                                Création Recette
+--------------------------------------------------------------------------------------------------------------------------
+     */
+    @Path("/create")
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-//    public Response update(Recette recette) {
-    public Response update(String stringJsonData){
-        //convertir string en json
-        JSONObject jSONObjectData=new JSONObject(stringJsonData);
-        //récupération de l'email
-        String email=jSONObjectData.getString("email");
-        
-       //récup de la recette en string
-        String jsonRecetteString=jSONObjectData.get("recette").toString();
-        //utilisation de json-b
-        Jsonb jsonb=JsonbBuilder.create();
-        Recette recette=jsonb.fromJson(jsonRecetteString, Recette.class);
+    public Response createRecette(String stringUserData) {
+        //Convertis String en un objet Json data
+        JSONObject jSONObjectData = new JSONObject(stringUserData);
+        //Recupération du recette
+        String jsonRecette = jSONObjectData.get("recette").toString();
+        //Recupération du user
+        String jsonUtilisateur = jSONObjectData.get("utilisateur").toString();
+        // Instancie dans la classe utilisateur les infos récup
+        Utilisateur utilisateur = jsonb.fromJson(jsonUtilisateur, Utilisateur.class);
+        // Instancie dans la classe recette les infos récup
+        Recette recette = jsonb.fromJson(jsonRecette, Recette.class);
 
-        recette = recetteInterface.update(recette, recette.getId());
-        if (recette != null) {
-            return Response.ok(recette).build();
-        }
-        return Response.status(500).entity("Erreur update recette").build();
+//      Lancement de la Methode Connect                 
+        DaoFactory daoFactory = new DaoFactory();
+        RecetteDaoInterface recetteDaoInterface = daoFactory.getRecetteDaoInterface();
+        recette = recetteDaoInterface.createRecette(recette, utilisateur);
+
+
+//Creation d'une réponse
+        Response response = Response
+                .status(Response.Status.CREATED)
+                .entity(recette)
+                .build();
+
+        return response;
     }
-
-//    @Path("/create-R")
-//    @POST
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public Response createRecette(Recette recette){
-//        Utilisateur user=utilisateurInterface.findUserByEmail(email);
-//        recette.setUtilisateur(user);
-//        recette=recetteInterface.create(recette);
-//        return Response.ok(recette).build();
-//    }
-    
-//    @Path("/update-R/{id}")
-//    @PUT
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public Response update(Recette recette, @PathParam(value = "id")int id){
-//        recette=new Recette();
-//        Response response=Response
-//                .ok(recetteInterface.update(recette, id))
-//                .build();
-//        return response;
-//    }
 }
+
+

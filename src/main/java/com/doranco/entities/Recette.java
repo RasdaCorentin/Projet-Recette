@@ -4,53 +4,117 @@
  */
 package com.doranco.entities;
 
+
+import jakarta.json.bind.annotation.JsonbTransient;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+
+
 
 /**
  *
- * @author elair
+ * @author Admin
  */
 @Entity
-public class Recette {
+public class Recette implements Serializable {
+   private static long serialVersionUID = 1L;
+   
+    /*
+    
+    Les attributs 
+    
+    */
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(unique = true, nullable = false)
-    private String dateCreation;
-    private String dateModification;
+    private String DateCrea;
+    private String DateModif;
     private String libelle;
     private String description;
-    private String referenceImage;
-
-    @ManyToOne()
+    private String refImage;
+    
+    /*
+    
+    Les relations
+    
+    */
+    
+    @ManyToOne
     private Utilisateur utilisateur;
-    
+    @Transient
     @OneToMany(mappedBy = "recette")
-    private List<Ingredient> listeIngredients=new ArrayList<>();
+    private List<Ingredient> listeIngredients = new ArrayList<>();
     
-    public Recette(){
+    /*
+        
+    Les Constructeurs
+        
+    */
+
+    // Constructeur vide sans parametres
+    public Recette() {
         
     }
-    
-    public Recette(String libelle, String description){
-        this.libelle=libelle;
-        this.description=description;
+    //Constructeur avec id
+    public Recette(int id) {
+        this.id = id;
+    }
+    // Constructeur sans id
+    public Recette(String libelle, String description) {
+        this.libelle = libelle;
+        this.description = description;
+    }
+    //Constructeur complet
+    public Recette(int id, String libelle, String description) {
+        this.id = id;
+        this.libelle = libelle;
+        this.description = description;
     }
     
-    public Recette(String libelle, String description, String referenceImage){
-        this.libelle=libelle;
-        this.description=description;
-        this.referenceImage=referenceImage;
-    }
+    /*
     
+    Methode toString
+    
+    */
+
+@Override
+    public String toString() {
+        
+        if (listeIngredients != null) {
+        
+        return "ID :" + this.getId()
+                + "\nLIBELLE : " + this.getLibelle()
+                + "\nDESCRIPTION : " + this.getDescription()
+                + "\nDATE CREA : " + this.DateCrea
+                + "\nDATE MODIF : " + this.DateModif
+                + "\nLISTE D'INGREDIENTS : " + this.getListeIngredients()
+                + "\n";
+    } else {
+        return "ID :" + this.getId()
+                + "\nLIBELLE : " + this.getLibelle()
+                + "\nDESCRIPTION : " + this.getDescription()
+                + "\nDATE CREA : " + this.DateCrea
+                + "\nDATE MODIF : " + this.DateModif
+                + "\n";
+        }
+    }
+    /*
+    
+    Getters & Setters
+    
+    */
+
     /**
      * @return the id
      */
@@ -66,31 +130,31 @@ public class Recette {
     }
 
     /**
-     * @return the dateCreation
+     * @return the DateCrea
      */
-    public String getDateCreation() {
-        return dateCreation;
+    public String getDateCrea() {
+        return DateCrea;
     }
 
     /**
-     * @param dateCreation the dateCreation to set
+     * @param DateCrea the DateCrea to set
      */
-    public void setDateCreation(String dateCreation) {
-        this.dateCreation = dateCreation;
+    public void setDateCrea(String DateCrea) {
+        this.DateCrea = DateCrea;
     }
 
     /**
-     * @return the dateModification
+     * @return the DateModif
      */
-    public String getDateModification() {
-        return dateModification;
+    public String getDateModif() {
+        return DateModif;
     }
 
     /**
-     * @param dateModification the dateModification to set
+     * @param DateModif the DateModif to set
      */
-    public void setDateModification(String dateModification) {
-        this.dateModification = dateModification;
+    public void setDateModif(String DateModif) {
+        this.DateModif = DateModif;
     }
 
     /**
@@ -122,18 +186,24 @@ public class Recette {
     }
 
     /**
-     * @return the referenceImage
+     * @return the refImage
      */
-    public String getReferenceImage() {
-        return referenceImage;
+    public String getRefImage() {
+        return refImage;
     }
 
     /**
-     * @param referenceImage the referenceImage to set
+     * @param refImage the refImage to set
      */
-    public void setReferenceImage(String referenceImage) {
-        this.referenceImage = referenceImage;
+    public void setRefImage(String refImage) {
+        this.refImage = refImage;
     }
+    
+    /*
+    
+    Getters & Setters de Relation
+    
+    */
 
     /**
      * @return the utilisateur
@@ -162,13 +232,5 @@ public class Recette {
     public void setListeIngredients(List<Ingredient> listeIngredients) {
         this.listeIngredients = listeIngredients;
     }
-    
-    @Override
-    public String toString(){
-        String result="Id: "+this.id+"\nLibellé: "+this.libelle+"\nDescription: "+this.description;
-        if(this.utilisateur!=null){
-            result+="\nUtilisateur: "+this.utilisateur;
-        }
-        return result;
-    }
+
 }

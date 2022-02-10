@@ -6,8 +6,8 @@ package com.doranco.entities;
 
 /**
  *
- * @author elair
+ * @author 33767
  */
 public enum RoleUtilisateur {
-    ADMIN, USER
+    ADMIN, USER;
 }
