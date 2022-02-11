@@ -14,6 +14,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,12 +36,14 @@ public class Utilisateur implements Serializable{
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
     @Column(unique = true, nullable = false)
+
+    private Date DateCrea;
+    private Date DateModif;
+
     private String nom;
     private String newNom;
     private String password;
     private String newPassword;
-    private String DateCrea;
-    private String DateModif;
     private String salt;
     private String email;
     private boolean statuts;
@@ -269,28 +272,28 @@ public class Utilisateur implements Serializable{
     /**
      * @return the DateCrea
      */
-    public String getDateCrea() {
+    public Date getDateCrea() {
         return DateCrea;
     }
 
     /**
      * @param DateCrea the DateCrea to set
      */
-    public void setDateCrea(String DateCrea) {
+    public void setDateCrea(Date DateCrea) {
         this.DateCrea = DateCrea;
     }
 
     /**
      * @return the DateModif
      */
-    public String getDateModif() {
+    public Date getDateModif() {
         return DateModif;
     }
 
     /**
      * @param DateModif the DateModif to set
      */
-    public void setDateModif(String DateModif) {
+    public void setDateModif(Date DateModif) {
         this.DateModif = DateModif;
     }
     /**

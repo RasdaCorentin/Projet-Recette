@@ -7,6 +7,7 @@ package com.doranco.dao.imp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -28,10 +29,6 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
     public UtilisateurDaoImp(DaoFactory daoFactory) {
         this.daoFactory = daoFactory;
     }
-
-    //§ Les dates.
-    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-    LocalDateTime now = LocalDateTime.now();
 
     /*
 :--------------------------------------------------------------------------------------------------------------------------
@@ -85,8 +82,8 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
 //. -------------------------------------------------------------------------------------------
             String salt = BCrypt.gensalt();
             String passwordHash = BCrypt.hashpw(utilisateur.getPassword(), salt);
-            utilisateur.setDateCrea(dtf.format(now));
-            utilisateur.setDateModif(dtf.format(now));
+            utilisateur.setDateCrea(new Date());
+            utilisateur.setDateModif(new Date());
             utilisateur.setPassword(passwordHash);
             utilisateur.setSalt(salt);
             utilisateur.setStatuts(false);
@@ -240,8 +237,7 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
             if (utilisateurAModifier != null) {
                 transaction = entityManager.getTransaction();
 
-                    utilisateurAModifier.setDateModif(dtf.format(now));
-                    utilisateurAModifier.setDateModif(dtf.format(now));
+                    utilisateurAModifier.setDateModif(new Date());
                     utilisateurAModifier.setNom(utilisateur.getNewNom());
                     utilisateurAModifier.setEmail(utilisateur.getEmail());
 
@@ -293,7 +289,7 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
             if( utilisateurADesactiver != null ) {
                 transaction = entityManager.getTransaction();
 
-                utilisateurADesactiver.setDateModif(dtf.format(now));
+                utilisateurADesactiver.setDateModif(new Date());
                 utilisateurADesactiver.setStatuts(false);
 
                 transaction.begin();
@@ -337,7 +333,7 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
             if( utilisateurAActiver != null ) {
                 transaction = entityManager.getTransaction();
 
-                utilisateurAActiver.setDateModif(dtf.format(now));
+                utilisateurAActiver.setDateModif(new Date());
                 utilisateurAActiver.setStatuts(true);
 
                 transaction.begin();
@@ -387,7 +383,7 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
                 String passwordHash = BCrypt.hashpw(utilisateur.getPassword(), salt);
 
                 utilisateur.setPassword(passwordHash);
-                utilisateur.setDateModif(dtf.format(now));
+                utilisateur.setDateModif(new Date());
                 utilisateur.setStatuts(false);
 
                 transaction.begin();
@@ -432,7 +428,7 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
 
             Utilisateur nUtilisateur = findUtilisateurByNom(utilisateur);
 
-                    nUtilisateur.setDateModif(dtf.format(now));
+                    nUtilisateur.setDateModif(new Date());
                     nUtilisateur.setStatuts(true);
 
                     transaction.begin();

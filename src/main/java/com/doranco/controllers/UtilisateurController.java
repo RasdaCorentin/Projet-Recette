@@ -27,7 +27,6 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.Response.Status;
 
 /**
  *
@@ -75,12 +74,14 @@ public class UtilisateurController {
     @Consumes( MediaType.APPLICATION_JSON )
     public Response deactivateUserBd( @PathParam( value = "id" ) int id ) {
 
-            DaoFactory daoFactory = new DaoFactory();
-            UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
-            Utilisateur utilisateur = utilisateurDaoInterface.findUtilisateurById(id);
-            utilisateurDaoInterface.deactivateUtilisateur(id);
+        DaoFactory daoFactory = new DaoFactory();
+        UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
+        Utilisateur utilisateur = utilisateurDaoInterface.findUtilisateurById(id);
+        utilisateurDaoInterface.deactivateUtilisateur(id);
 
-        //. ----------Si l'id est bien trouvé.----------
+        //. ----------Vérification de l'id.----------
+
+        //$ ----------Si l'id est bien trouvé.----------
         if (utilisateur != null) {
             Response response = Response
                 .ok( "L'utilisateur " + id + " à été désactivé avec succès." )
@@ -90,7 +91,7 @@ public class UtilisateurController {
         return response;
         } 
 
-        //. ----------Si l'id n'est pas trouvé.----------
+        //! ----------Si l'id n'est pas trouvé.----------
         else {
             Response response = Response
                 .status(Response.Status.NOT_FOUND)
@@ -113,12 +114,14 @@ public class UtilisateurController {
     @Consumes( MediaType.APPLICATION_JSON )
     public Response activateUserBd( Utilisateur user, @PathParam( value = "id" ) int id ) {
 
-            DaoFactory daoFactory = new DaoFactory();
-            UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
-            Utilisateur utilisateur = utilisateurDaoInterface.findUtilisateurById(id);
-            utilisateurDaoInterface.activateUtilisateur(id);
+        DaoFactory daoFactory = new DaoFactory();
+        UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
+        Utilisateur utilisateur = utilisateurDaoInterface.findUtilisateurById(id);
+        utilisateurDaoInterface.activateUtilisateur(id);
 
-        //. ----------Si l'id est bien trouvé.----------
+        //. ----------Vérification de l'id.----------
+
+        //$ ----------Si l'id est bien trouvé.----------
         if (utilisateur != null) {
             Response response = Response
                 .ok( "L'utilisateur " + id + " à été activé avec succès." )
@@ -128,7 +131,7 @@ public class UtilisateurController {
         return response;
         } 
 
-        //. ----------Si l'id n'est pas trouvé.----------
+        //! ----------Si l'id n'est pas trouvé.----------
         else {
             Response response = Response
                 .status(Response.Status.NOT_FOUND)
@@ -156,7 +159,9 @@ public class UtilisateurController {
         Utilisateur utilisateurBdd = utilisateurDaoInterface.findUtilisateurById(id);
         utilisateurDaoInterface.vanishUtilisateur(utilisateur, id);
 
-        //. ----------Si l'id est bien trouvé.----------
+        //. ----------Vérification de l'id.----------
+
+        //$ ----------Si l'id est bien trouvé.----------
         if (utilisateurBdd != null) {
             Response response = Response
                 .status(Response.Status.CREATED)
@@ -167,7 +172,7 @@ public class UtilisateurController {
         return response;
         } 
 
-        //. ----------Si l'id n'est pas trouvé.----------
+        //! ----------Si l'id n'est pas trouvé.----------
         else {
             Response response = Response
                 .status(Response.Status.NOT_FOUND)
@@ -190,16 +195,32 @@ public class UtilisateurController {
     public Response deleteUtilisateur(@PathParam(value = "id") int id) {
         DaoFactory daoFactory = new DaoFactory();
 
-        UtilisateurDaoInterface UtilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
-
-        UtilisateurDaoInterface.deleteUtilisateur(id);
+        UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
+        Utilisateur utilisateurBdd = utilisateurDaoInterface.findUtilisateurById(id);
+        utilisateurDaoInterface.deleteUtilisateur(id);
         daoFactory.closeEntityManagerFactory();
 
-        Response response = Response
-                .status(Response.Status.CREATED)
+        //. ----------Vérification de l'id.----------
+
+        //$ ----------Si l'id est bien trouvé.----------
+        if (utilisateurBdd != null) {
+            Response response = Response
+                .status(Response.Status.ACCEPTED)
                 .entity("Utilisateur id :" + id + " Supprimé")
                 .build();
-        return response;
+            daoFactory.closeEntityManagerFactory();
+            return response;
+        } 
+
+        //! ----------Si l'id n'est pas trouvé.----------
+        else {
+            Response response = Response
+                .status(Response.Status.NOT_FOUND)
+                .entity("Aucun utilisateur ne possédant cette id n'a pus être trouvé.")
+                .build();
+            return response;
+        }
+
     }
 
     /*
@@ -240,7 +261,7 @@ public class UtilisateurController {
             return response;
         }
 
-        //$ ----------Le nom est déjà utilisé par un autre utilisateur.----------
+        //! ----------Le nom est déjà utilisé par un autre utilisateur.----------
         else {
                 Response response = Response
                     .status(Response.Status.FORBIDDEN)
@@ -271,13 +292,51 @@ public class UtilisateurController {
         //µ Lancement de la méthode Connect.
         DaoFactory daoFactory = new DaoFactory();
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
-        utilisateur = utilisateurDaoInterface.connectUtilisateur(utilisateur);
+        Utilisateur utilisateurAConnecter = utilisateurDaoInterface.findUtilisateurByNom(utilisateur);
 
+        //. ----------Vérification du faite que l'utilisateur existe dans la base de donnée.----------
+
+        if (utilisateurAConnecter != null) {
+
+            //§ Récupération du mot de passe entré par l'utilisateur pour la connexion.
+            String passwordTemp = utilisateur.getPassword();
+            String passwordHash = BCrypt.hashpw(passwordTemp, utilisateurAConnecter.getSalt());
+
+            //. ----------Vérification des identifiants de l'utilisateur.----------
+
+            if ( passwordHash.compareTo(utilisateurAConnecter.getPassword()) == 0 && utilisateurAConnecter.getNom().equals(utilisateur.getNom()) ) {
+
+                //? ----------Connexion de l'utilisateur.----------
+                utilisateur = utilisateurDaoInterface.connectUtilisateur(utilisateur);
+
+                Response response = Response
+                        .status(Response.Status.CREATED)
+                        .entity("Bienvenue : " + utilisateur.toString() + " Tu peux maintenant publier tes recettes.")
+                        .build();
+                return response;
+
+            }
+
+            //! ----------Erreur sur les identifiants.----------
+            else {
+
+                Response response = Response
+                    .status(Response.Status.FORBIDDEN)
+                    .entity("Vos identifiants sont incorrect !")
+                    .build();
+                return response;
+
+            }
+
+        }
+
+        //! ----------Le nom d'utilisateur n'existe pas.----------
         Response response = Response
-                .status(Response.Status.CREATED)
-                .entity("Bienvenue : " + utilisateur.toString() + " Tu peux maintenant publier tes recettes.")
-                .build();
+            .status(Response.Status.NOT_FOUND)
+            .entity("Le nom " + utilisateur.getNom() + " n'est associé à aucun compte sur le site.")
+            .build();
         return response;
+
     }
 
     /*
@@ -306,59 +365,77 @@ public class UtilisateurController {
         //§ Récupération de l'utilisateur qui va être modifié.
         Utilisateur utilisateurAModifier = utilisateurDaoInterface.findUtilisateurByNom(utilisateur);
 
-        //§ Récupération du mot de passe entré par l'utilisateur pour la connexion.
-        String passwordTemp = utilisateur.getPassword();
-        String passwordHash = BCrypt.hashpw(passwordTemp, utilisateurAModifier.getSalt());
+        //. ----------Vérification du faite que l'utilisateur existe dans la base de donnée.----------
 
-        //. ----------Vérification des identifiants de l'utilisateur.----------
+        if (utilisateurAModifier != null) {
 
-        if ( passwordHash.compareTo(utilisateurAModifier.getPassword()) == 0 && utilisateurAModifier.getNom().equals(utilisateur.getNom()) ) {
+            //§ Récupération du mot de passe entré par l'utilisateur pour la connexion.
+            String passwordTemp = utilisateur.getPassword();
+            String passwordHash = BCrypt.hashpw(passwordTemp, utilisateurAModifier.getSalt());
 
-            //. ----------Vérification du nouveau nom souhaité par l'utilisateur.----------
+            //. ----------Vérification des identifiants de l'utilisateur.----------
 
-            //§ Je vérifie dans la base de donnée l'existence du nom que souhaite prendre l'utilisateur.
-            EntityManager entityManager = daoFactory.getEntityManager();
-            Query query = entityManager.createQuery( "SELECT user FROM Utilisateur user WHERE nom=:nom" );
-            query.setParameter( "nom", utilisateur.getNom() );
+            if ( passwordHash.compareTo(utilisateurAModifier.getPassword()) == 0 && utilisateurAModifier.getNom().equals(utilisateur.getNom()) ) {
 
-            //$ ----------Le nom n'est pas encore utilisé.----------
-            if (query.getResultList().isEmpty()) {
-                utilisateur = utilisateurDaoInterface.updateUtilisateur(utilisateur);
-            }
+                //. ----------Vérification du nouveau nom souhaité par l'utilisateur.----------
 
-            //$ ----------Le nom est déjà utilisé.----------
-            else {
-                Utilisateur utilisateurBdd = (Utilisateur) query.getResultList().get(0);
-                String nomUtilisateurBdd = utilisateurBdd.getNom();
-                String nomUtilisateurUpdate = utilisateur.getNom();
+                //§ Je vérifie dans la base de donnée l'existence du nom que souhaite prendre l'utilisateur.
+                EntityManager entityManager = daoFactory.getEntityManager();
+                Query query = entityManager.createQuery( "SELECT user FROM Utilisateur user WHERE nom=:nom" );
+                query.setParameter( "nom", utilisateur.getNom() );
 
-                //$ ----------L'utilisateur souhaite conserver son nom.----------
-                if (nomUtilisateurBdd.equals(nomUtilisateurUpdate)) {
+                //$ ----------Le nom n'est pas encore utilisé.----------
+                if (query.getResultList().isEmpty()) {
                     utilisateur = utilisateurDaoInterface.updateUtilisateur(utilisateur);
                 }
 
-                //$ ----------Le nom est déjà utilisé par un autre utilisateur.----------
-                    Response response = Response
-                        .status(Response.Status.FORBIDDEN)
-                        .entity("Le nom " + nomUtilisateurBdd + " est déjà utilisé par un autre utilisateur.")
-                        .build();
-                    return response;
+                //! ----------Le nom est déjà utilisé.----------
+                else {
+                    Utilisateur utilisateurBdd = (Utilisateur) query.getResultList().get(0);
+                    String nomUtilisateurBdd = utilisateurBdd.getNom();
+                    String nomUtilisateurUpdate = utilisateur.getNom();
 
+                    //$ ----------L'utilisateur souhaite conserver son nom.----------
+                    if (nomUtilisateurBdd.equals(nomUtilisateurUpdate)) {
+                        utilisateur = utilisateurDaoInterface.updateUtilisateur(utilisateur);
+                    }
+
+                    //! ----------Le nom est déjà utilisé par un autre utilisateur.----------
+                    else {
+                        Response response = Response
+                            .status(Response.Status.FORBIDDEN)
+                            .entity("Le nom " + nomUtilisateurBdd + " est déjà utilisé par un autre utilisateur.")
+                            .build();
+                        return response;
+                    }
+
+                }
+
+            //! ----------Erreur sur les identifiants.----------
+            } else {
+                Response response = Response
+                    .status(Response.Status.FORBIDDEN)
+                    .entity("Vos identifiants sont incorrect !")
+                    .build();
+                return response;
             }
 
-        } else {
-            Response response = Response
-                .status(Response.Status.FORBIDDEN)
-                .entity("Vos identifiants sont incorrect !")
-                .build();
-            return response;
-        }
+            //. ----------Création de l'utilisateur.----------
 
             Response response = Response
                     .status(Response.Status.CREATED)
                     .entity(utilisateur.toString())
                     .build();
             return response;
+
+        }
+
+        //! ----------Le nom d'utilisateur n'existe pas.----------
+        Response response = Response
+            .status(Response.Status.NOT_FOUND)
+            .entity("Le nom " + utilisateur.getNom() + " n'est associé à aucun compte sur le site.")
+            .build();
+        return response;
 
     }
 
@@ -377,7 +454,9 @@ public class UtilisateurController {
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
         Utilisateur utilisateur = utilisateurDaoInterface.findUtilisateurById(id);
 
-        //. ----------Si l'id est bien trouvé.----------
+        //. ----------Vérification de l'id.----------
+
+        //$ ----------Si l'id est bien trouvé.----------
         if (utilisateur != null) {
             Response response = Response
             .status(Response.Status.CREATED)
@@ -388,7 +467,7 @@ public class UtilisateurController {
         return response;
         } 
 
-        //. ----------Si l'id n'est pas trouvé.----------
+        //! ----------Si l'id n'est pas trouvé.----------
         else {
             Response response = Response
                 .status(Response.Status.NOT_FOUND)
