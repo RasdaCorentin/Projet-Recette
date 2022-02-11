@@ -349,25 +349,6 @@ public class UtilisateurController {
             .build();
         return response;
 
-
-
-
-
-
-        // if (utilisateurAConnecter.getNewNom() == null) {
-        //     Response response = Response
-        //         .status(Response.Status.NOT_FOUND)
-        //         .entity("null " + utilisateurAConnecter.getNewNom())
-        //         .build();
-        //     return response;
-        // } else {
-        //     Response response = Response
-        //         .status(Response.Status.NOT_FOUND)
-        //         .entity("Je ne sais pas. " + utilisateurAConnecter.getNewNom())
-        //         .build();
-        //     return response;
-        // }
-
     }
 
     /*
