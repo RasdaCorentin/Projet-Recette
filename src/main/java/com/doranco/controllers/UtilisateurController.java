@@ -44,10 +44,10 @@ public class UtilisateurController {
 
         DaoFactory daoFactory = new DaoFactory();
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
-        //Creation d'une réponse
+        //Création d'une réponse
         Response response = Response
                 .status(Response.Status.CREATED)
-                //Ajouter to To string pour info ciblé
+                //Ajouter to To string pour info ciblée
                 .entity(utilisateurDaoInterface.getListeUtilisateurs())
                 .build();
 
@@ -71,7 +71,7 @@ public class UtilisateurController {
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
         utilisateurDaoInterface.disconnectUtilisateur(utilisateur, id);
 
-        //Creation d'une réponse
+        //Création d'une réponse
         Response response = Response
                 .status(Response.Status.CREATED)
                 .entity(utilisateurDaoInterface.getListeUtilisateurs())
@@ -121,7 +121,7 @@ public class UtilisateurController {
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
         utilisateur = utilisateurDaoInterface.createUtilisateur(utilisateur);
 
-        //Creation daoFactory.closeEntityManagerFactory();d'une réponse
+        //Création daoFactory.closeEntityManagerFactory();d'une réponse
         Response response = Response
                 .status(Response.Status.CREATED)
                 .entity("Bienvenue : " + utilisateur.toString() + "Tu dois maintenant te connecter")
@@ -142,9 +142,9 @@ public class UtilisateurController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response connectUtilisateur(String stringUserData) {
-        //Convertis String en un objet Json data
+        //Convertir String en un objet Json data
         JSONObject jSONObjectData = new JSONObject(stringUserData);
-        //Recupération du user
+        //Récupération du user
         String jsonUtilisateur = jSONObjectData.get("utilisateur").toString();
         // Instancie dans la classe utilisateur les infos récup
         Utilisateur utilisateur = jsonb.fromJson(jsonUtilisateur, Utilisateur.class);
@@ -172,7 +172,7 @@ public class UtilisateurController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateUtilisateur(String stringUserData) {
-        //Convertis String en un objet Json data
+        //Convertir String en un objet Json data
         JSONObject jSONObjectData = new JSONObject(stringUserData);
         //Recupération du user
         String jsonUtilisateur = jSONObjectData.get("utilisateur").toString();
@@ -183,7 +183,7 @@ public class UtilisateurController {
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
         utilisateur = utilisateurDaoInterface.updateUtilisateur(utilisateur);
 
-        //Creation d'une réponse
+        //Création d'une réponse
         Response response = Response
                 .status(Response.Status.CREATED)
                 .entity(utilisateur.toString())

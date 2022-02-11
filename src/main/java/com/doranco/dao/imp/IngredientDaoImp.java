@@ -73,39 +73,54 @@ public class IngredientDaoImp implements IngredientDaoInterface {
     @Override
     public Ingredient createIngredient(Ingredient ingredient) {
         
-//        EntityManager entityManager = null;
-//        EntityTransaction transaction = null;
+        EntityManager entityManager = null;
+        EntityTransaction transaction = null;
         
         try {
-//            entityManager = daoFactory.getEntityManager();
-//            transaction = entityManager.getTransaction();
+            entityManager = daoFactory.getEntityManager();
+            transaction = entityManager.getTransaction();
             
 // ------------------------------------------Methode-------------------------------------------------- 
             
             ingredient.setDateCrea(dtf.format(now));
             ingredient.setDateModif(dtf.format(now));
             
-//  Il faut ajouter le nom de la recette lié à l'ingredient                    
-//            transaction.begin();
-//            entityManager.persist(ingredient);
-//            transaction.commit();
+//  Il faut ajouter le nom de la recette lié à l'ingrédient                    
+            transaction.begin();
+            entityManager.persist(ingredient);
+            transaction.commit();
 
-            System.out.println("<----------- Creation Ingredient " + ingredient.toString() + " avec success ------->");
+            System.out.println("<----------- Création Ingrédient avec succès ------->");
             return ingredient;
  
 // ---------------------------------------FIN Methode-------------------------------------------------- 
 
         } catch (Exception ex) {
-//            transaction.rollback();
-            System.out.println("Erreur creation Ingredient \n");
+            transaction.rollback();
+            System.out.println("Erreur création Ingrédient \n");
             ex.printStackTrace();
-//
-//        } finally {
-//            if (entityManager != null) {
-//                entityManager.close();
+
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
             }
-//        }
+        }
         return null;
+    }
+    
+    @Override
+    public Ingredient findIngredientById(int id) {
+        EntityManager entityManager = null;
+        Ingredient ingredient = new Ingredient();
+        entityManager = daoFactory.getEntityManager();
+        Query query = entityManager.createQuery("select ing from Ingredient ing where id=:id");
+        query.setParameter("id", id);
+        if (query.getResultList().isEmpty()) {
+            System.out.println("Cet id d'ingrédient n'existe pas");
+            return null;
+        }
+        ingredient = (Ingredient) query.getResultList().get(0);
+        return ingredient;
     }
 /*
 --------------------------------------------------------------------------------------------------------------------------
@@ -124,28 +139,24 @@ public class IngredientDaoImp implements IngredientDaoInterface {
             if (ingredientAModifier != null) {
                 transaction = entityManager.getTransaction();
 
-
-
                 ingredientAModifier.setLibelle(ingredient.getLibelle());
                 ingredientAModifier.setQuantite(ingredient.getQuantite());
-
-                ingredientAModifier.setRecette(ingredient.getRecette());
 
                 ingredientAModifier.setDateModif(dtf.format(now));
 
                 transaction.begin();
                 entityManager.persist(ingredientAModifier);
                 transaction.commit();
-                System.out.println("<----------- Mise a jour de l'ingredient avec succes ------->");
-                return ingredient;
+                System.out.println("<----------- Mise à jour de l'ingrédient avec succès ------->");
+                return ingredientAModifier;
 
             }
-            System.out.println("<----------- Ingredient avec id non trouvé en base de données ------->");
+            System.out.println("<----------- Ingrédient avec id non trouvé en base de données ------->");
             return null;
 
         } catch (Exception ex) {
             transaction.rollback();
-            System.out.println("Erreur lors de la mise a jour de l'ingredient \n");
+            System.out.println("Erreur lors de la mise à jour de l'ingrédient \n");
             ex.printStackTrace();
 
         } finally {
@@ -176,16 +187,16 @@ public class IngredientDaoImp implements IngredientDaoInterface {
                 transaction.begin();
                 entityManager.remove(ingredientAModifier);
                 transaction.commit();
-                System.out.println("<-----------Suppression avec succes ------->");
+                System.out.println("<-----------Suppression avec succès ------->");
                 return true;
 
             }
-            System.out.println("<----------- Ingredient non trouvé avec l'id fournie ------->");
+            System.out.println("<----------- Ingrédient non trouvé avec l'id fournie ------->");
             return false;
 
         } catch (Exception ex) {
             transaction.rollback();
-            System.out.println("Erreur lors de la mise a jour de l'ingredient \n");
+            System.out.println("Erreur lors de la mise à jour de l'ingrédient \n");
             ex.printStackTrace();
 
         } finally {
@@ -196,5 +207,5 @@ public class IngredientDaoImp implements IngredientDaoInterface {
         return false;
         
     }
-    
 }
+

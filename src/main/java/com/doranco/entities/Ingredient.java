@@ -19,7 +19,7 @@ import javax.persistence.Transient;
  */
 @Entity
 public class Ingredient implements Serializable{
-    private static long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     
     /*
     
@@ -40,9 +40,7 @@ public class Ingredient implements Serializable{
     Les relations
     
     */
-    @JsonbTransient
-    @ManyToOne
-    private Recette recette;
+  
     
     /*
         
@@ -175,19 +173,7 @@ public class Ingredient implements Serializable{
     
     */
     
-    /**
-     * @return the recette
-     */
-    public Recette getRecette() {
-        return recette;
-    }
-
-    /**
-     * @param recette the recette to set
-     */
-    public void setRecette(Recette recette) {
-        this.recette = recette;
-    }
+  
 
 
 }

@@ -61,8 +61,8 @@ alors je vérifie s'il est Admin*/
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
         utilisateur = utilisateurDaoInterface.loginUtilisateur(utilisateur);
 
-//Ici je créer les condition d'authentification,
-//J'ajoute une condition pour enregistrez les nouveau utilisateurs
+//Ici je crée les conditions d'authentification,
+//J'ajoute une condition pour enregistrez les nouveaux utilisateurs
 
         if ((utilisateur != null)) {
             if (urlPath.contains("admin")) {
@@ -75,7 +75,7 @@ alors je vérifie s'il est Admin*/
             }
             return;
         }
-        Response response = Response.status(Response.Status.FORBIDDEN).entity("Vous devez vous enreegistrez")
+        Response response = Response.status(Response.Status.FORBIDDEN).entity("Vous devez vous enregistrer")
                 .build();
         requestContext.abortWith(response);
     }

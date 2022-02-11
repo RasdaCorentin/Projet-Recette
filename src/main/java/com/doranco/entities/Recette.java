@@ -27,7 +27,7 @@ import javax.persistence.Transient;
  */
 @Entity
 public class Recette implements Serializable {
-   private static long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
    
     /*
     
@@ -52,10 +52,7 @@ public class Recette implements Serializable {
     
     @ManyToOne
     private Utilisateur utilisateur;
-    @Transient
-    @OneToMany(mappedBy = "recette")
-    private List<Ingredient> listeIngredients = new ArrayList<>();
-    
+     
     /*
         
     Les Constructeurs
@@ -90,24 +87,14 @@ public class Recette implements Serializable {
 
 @Override
     public String toString() {
-        
-        if (listeIngredients != null) {
-        
-        return "ID :" + this.getId()
-                + "\nLIBELLE : " + this.getLibelle()
-                + "\nDESCRIPTION : " + this.getDescription()
-                + "\nDATE CREA : " + this.DateCrea
-                + "\nDATE MODIF : " + this.DateModif
-                + "\nLISTE D'INGREDIENTS : " + this.getListeIngredients()
-                + "\n";
-    } else {
+ 
         return "ID :" + this.getId()
                 + "\nLIBELLE : " + this.getLibelle()
                 + "\nDESCRIPTION : " + this.getDescription()
                 + "\nDATE CREA : " + this.DateCrea
                 + "\nDATE MODIF : " + this.DateModif
                 + "\n";
-        }
+
     }
     /*
     
@@ -219,18 +206,6 @@ public class Recette implements Serializable {
         this.utilisateur = utilisateur;
     }
 
-    /**
-     * @return the listeIngredients
-     */
-    public List<Ingredient> getListeIngredients() {
-        return listeIngredients;
-    }
-
-    /**
-     * @param listeIngredients the listeIngredients to set
-     */
-    public void setListeIngredients(List<Ingredient> listeIngredients) {
-        this.listeIngredients = listeIngredients;
-    }
+  
 
 }

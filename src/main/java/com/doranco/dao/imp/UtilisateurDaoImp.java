@@ -240,7 +240,6 @@ Fonction filtre Comparaison de Mot de passe : //
                 if (passwordHash.compareTo(utilisateurAModifier.getPassword()) == 0) {
 
                     utilisateurAModifier.setDateModif(dtf.format(now));
-                    utilisateurAModifier.setDateModif(dtf.format(now));
                     utilisateurAModifier.setNom(utilisateur.getNewNom());
                     utilisateurAModifier.setEmail(utilisateur.getEmail());
 //                    utilisateurAModifier.setPassword(passwordHash);
