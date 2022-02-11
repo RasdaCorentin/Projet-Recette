@@ -22,7 +22,7 @@ import javax.persistence.Transient;
  */
 @Entity
 public class Ingredient implements Serializable{
-    private static long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     
     /*
     

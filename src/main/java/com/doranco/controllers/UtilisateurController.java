@@ -37,7 +37,7 @@ public class UtilisateurController {
                                                  Liste Utilisateur
 --------------------------------------------------------------------------------------------------------------------------
      */
-    @Path("/admin/liste")
+    @Path("/liste")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getListeUtilisateur() {
@@ -130,7 +130,7 @@ public class UtilisateurController {
         //Creation daoFactory.closeEntityManagerFactory();d'une réponse
         Response response = Response
                 .status(Response.Status.CREATED)
-                .entity("Bienvenue : " + utilisateur.toString() + "Tu dois maintenant te connecter")
+                .entity("Bienvenue : " + utilisateur + "Tu dois maintenant te connecter")
                 .build();
 
         daoFactory.closeEntityManagerFactory();

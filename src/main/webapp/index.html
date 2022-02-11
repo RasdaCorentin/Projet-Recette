@@ -8,30 +8,7 @@
 
         <!-- Latest compiled JavaScript -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-            var http = new XMLHttpRequest();
-            var url = 'http://localhost:8080/Projet-Recette/api/utilisateur/enregistrez';
-            var method = 'POST';
-            var data = {
-                "utilisateur": {
-                    "nom": "Michael",
-                    "password": "123",
-                    "email": "coco@gmail.com"
-                }
-            };
-            data = JSON.stringify(data);
-
-            http.open(method, url);
-            http.setRequestHeader('Content-Type', 'application/json');
-            http.onreadystatechange = function () {
-                if (http.readyState === XMLHttpRequest.DONE && http.status === 201) {
-                    console.log(http.responseText);
-                } else if (http.readyState === XMLHttpRequest.DONE && http.status !== 201) {
-                    console.log("Error");
-                }
-            };
-            http.send(data);
-        </script>
+    
     </head>
     <body>
         <div class="p-5 bg-success text-white text-center">
@@ -43,13 +20,13 @@
             <div class="container-fluid">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/ProjetRecette/index.html">Accueil</a>
+                        <a class="nav-link active" href="/Projet-Recette/index.html">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/ProjetRecette/connexion.jsp">Se connecter</a>
+                        <a class="nav-link" href="/Projet-Recette/adminpage.html">Admin</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/ProjetRecette/inscription.jsp">S'inscrire</a>
+                        <a class="nav-link" href="/Projet-Recette/inscription.html">S'inscrire</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Forum</a>
@@ -70,7 +47,6 @@
                  height="1000"> 
         </div>
         
-        <button>JS Me</button>
         <div class="p-4 bg-success text-white text-center">
             <p>Footer</p>
         </div>

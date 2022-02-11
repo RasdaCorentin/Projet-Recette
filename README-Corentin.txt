@@ -90,16 +90,3 @@ Exemple postman:
 	Read Recette:
 -{{url_projet}}utilisateur/recette/read/1
 Exemple postman:
-
-
-Requete XML : 
-TODO-List:
-{Urgent}
-Faire les Methodes:
--List Users (Admin)
--List recette (index)
--Update User
-Faire les Affichages des Methodes
-{Pas Urgent}
-Input à protéger
-Renvois vers la page d'acceuil après inscription 
