@@ -1,6 +1,7 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+
 */
 package com.doranco.controllers;
 
@@ -15,6 +16,7 @@ import com.doranco.entities.Utilisateur;
 import org.json.JSONObject;
 import org.mindrot.jbcrypt.BCrypt;
 
+
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.ws.rs.Consumes;
@@ -28,10 +30,14 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import org.json.JSONObject;
+
+
 /**
  *
  * @author 33767
 */
+
 @Path("/utilisateur")
 public class UtilisateurController {
 
@@ -164,6 +170,7 @@ public class UtilisateurController {
         //$ ----------Si l'id est bien trouvé.----------
         if (utilisateurBdd != null) {
             Response response = Response
+
                 .status(Response.Status.CREATED)
                 .entity(utilisateurDaoInterface.getListeUtilisateurs())
                 .build();
@@ -231,6 +238,7 @@ public class UtilisateurController {
 :--------------------------------------------------------------------------------------------------------------------------
     */
 
+
     @Path("/enregistrez")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -278,11 +286,13 @@ public class UtilisateurController {
 :--------------------------------------------------------------------------------------------------------------------------
     */
 
+
     @Path("/enregistrez/connect")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response connectUtilisateur(String stringUserData) {
+
         //µ Convertis String en un objet Json data.
         JSONObject jSONObjectData = new JSONObject(stringUserData);
         //µ Récupération du user.
@@ -358,6 +368,7 @@ public class UtilisateurController {
                                                 % Update Utilisateur
 :--------------------------------------------------------------------------------------------------------------------------
     */
+
 
     @Path("/user/update")
     @PUT
@@ -457,6 +468,7 @@ public class UtilisateurController {
 :--------------------------------------------------------------------------------------------------------------------------
     */
 
+
     @Path("/read/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -465,7 +477,6 @@ public class UtilisateurController {
         DaoFactory daoFactory = new DaoFactory();
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
         Utilisateur utilisateur = utilisateurDaoInterface.findUtilisateurById(id);
-
         //. ----------Vérification de l'id.----------
 
         //$ ----------Si l'id est bien trouvé.----------

@@ -13,7 +13,9 @@ Usecase 4 : Supprimer utilisateur
 - v1/utilisateur/delete/(+ id)
 
 
+
 FONCTIONNALITÉS RECETTE :
+
 
 Usecase 1 : Création d'une recette avec id de l'utilisateur
 - v1/recette/create/(+ id utilisateur)
@@ -25,8 +27,8 @@ NB : Supprime l'id utilisateur associé (corrections à venir)
 Usecase 3 : Suppression de la recette avec son id
 - v1/recette/delete/(+id recette)
 
-
 FONCTIONNALITÉS INGREDIENT :
+
 
 Usecase 1 : Liste ingrédients (avec recettes associées et utilisateurs associés)
 - v1/ingredient/liste
@@ -51,6 +53,7 @@ Usecase 2 : Nouvel utilisateur (url "new" par défaut)
 
 
 FONCTIONNALITÉS ADMIN
+
 Usecase 1 : Liste des utilisateurs
 - v1/utilisateur/admin/liste
 NB : Affiche la liste des recettes avec ingredients dans la console.

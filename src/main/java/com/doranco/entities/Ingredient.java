@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+
 
 /**
  *
@@ -31,17 +33,16 @@ public class Ingredient implements Serializable{
     private int id;
     private String libelle;
     private String quantite;
-    private String DateCrea;
-    private String DateModif;
+    private Date DateCrea;
+    private Date DateModif;
     
     /*
     
     Les relations
     
     */
-    @JsonbTransient
-    @ManyToOne
-    private Recette recette;
+
+// A Implementer avec Recette + Many To Many
     
     /*
         
@@ -140,53 +141,13 @@ public class Ingredient implements Serializable{
         this.quantite = quantite;
     }
 
-    /**
-     * @return the DateCrea
-     */
-    public String getDateCrea() {
-        return DateCrea;
-    }
-
-    /**
-     * @param DateCrea the DateCrea to set
-     */
-    public void setDateCrea(String DateCrea) {
-        this.DateCrea = DateCrea;
-    }
-
-    /**
-     * @return the DateModif
-     */
-    public String getDateModif() {
-        return DateModif;
-    }
-
-    /**
-     * @param DateModif the DateModif to set
-     */
-    public void setDateModif(String DateModif) {
-        this.DateModif = DateModif;
-    }
+// Ajouter Getters & Setters Date
     
     /*
     
     Getters & Setters de Relation
     
     */
-    
-    /**
-     * @return the recette
-     */
-    public Recette getRecette() {
-        return recette;
-    }
-
-    /**
-     * @param recette the recette to set
-     */
-    public void setRecette(Recette recette) {
-        this.recette = recette;
-    }
-
+ 
 
 }

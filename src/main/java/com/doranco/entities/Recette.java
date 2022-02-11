@@ -27,7 +27,7 @@ import javax.persistence.Transient;
  */
 @Entity
 public class Recette implements Serializable {
-    private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
     /*
     
@@ -38,8 +38,8 @@ public class Recette implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String DateCrea;
-    private String DateModif;
+    private Date DateCrea;
+    private Date DateModif;
     private String libelle;
     private String description;
     private String refImage;
@@ -52,10 +52,9 @@ public class Recette implements Serializable {
     
     @ManyToOne
     private Utilisateur utilisateur;
-    @Transient
-    @OneToMany(mappedBy = "recette")
-    private List<Ingredient> listeIngredients = new ArrayList<>();
-    
+  
+// A Implementer avec Ingredient + Many To Many
+  
     /*
         
     Les Constructeurs
@@ -90,24 +89,13 @@ public class Recette implements Serializable {
 
 @Override
     public String toString() {
-        
-        if (listeIngredients != null) {
-        
         return "ID :" + this.getId()
                 + "\nLIBELLE : " + this.getLibelle()
                 + "\nDESCRIPTION : " + this.getDescription()
                 + "\nDATE CREA : " + this.DateCrea
                 + "\nDATE MODIF : " + this.DateModif
-                + "\nLISTE D'INGREDIENTS : " + this.getListeIngredients()
+
                 + "\n";
-    } else {
-        return "ID :" + this.getId()
-                + "\nLIBELLE : " + this.getLibelle()
-                + "\nDESCRIPTION : " + this.getDescription()
-                + "\nDATE CREA : " + this.DateCrea
-                + "\nDATE MODIF : " + this.DateModif
-                + "\n";
-        }
     }
     /*
     
@@ -129,34 +117,8 @@ public class Recette implements Serializable {
         this.id = id;
     }
 
-    /**
-     * @return the DateCrea
-     */
-    public String getDateCrea() {
-        return DateCrea;
-    }
-
-    /**
-     * @param DateCrea the DateCrea to set
-     */
-    public void setDateCrea(String DateCrea) {
-        this.DateCrea = DateCrea;
-    }
-
-    /**
-     * @return the DateModif
-     */
-    public String getDateModif() {
-        return DateModif;
-    }
-
-    /**
-     * @param DateModif the DateModif to set
-     */
-    public void setDateModif(String DateModif) {
-        this.DateModif = DateModif;
-    }
-
+// Ajouter Getters & Setters Date
+  
     /**
      * @return the libelle
      */
@@ -217,20 +179,6 @@ public class Recette implements Serializable {
      */
     public void setUtilisateur(Utilisateur utilisateur) {
         this.utilisateur = utilisateur;
-    }
-
-    /**
-     * @return the listeIngredients
-     */
-    public List<Ingredient> getListeIngredients() {
-        return listeIngredients;
-    }
-
-    /**
-     * @param listeIngredients the listeIngredients to set
-     */
-    public void setListeIngredients(List<Ingredient> listeIngredients) {
-        this.listeIngredients = listeIngredients;
     }
 
 }

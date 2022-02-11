@@ -92,15 +92,17 @@ public class RecetteDaoImp implements RecetteDaoInterface {
                 transaction.begin();
 //          Ajouter les ingredient
 
-                List<Ingredient> listeIngredient = new ArrayList<>(recette.getListeIngredients());
-                IngredientDaoInterface ingredientDaoInterface = daoFactory.getIngredientDaoInterface();
-                for (int index = 0; index < listeIngredient.size(); index++) {
-                    Ingredient ingredient = listeIngredient.get(index);
-                    ingredient.setRecette(recette);
-                    System.out.println(ingredient);
-                    ingredient = ingredientDaoInterface.createIngredient(ingredient);
-                    entityManager.persist(ingredient);
-                }
+// Important !!!
+//                List<Ingredient> listeIngredient = new ArrayList<>(recette.getListeIngredients());
+//                IngredientDaoInterface ingredientDaoInterface = daoFactory.getIngredientDaoInterface();
+//                for (int index = 0; index < listeIngredient.size(); index++) {
+//                    Ingredient ingredient = listeIngredient.get(index);
+//                    ingredient.setRecette(recette);
+//                    System.out.println(ingredient);
+//                    ingredient = ingredientDaoInterface.createIngredient(ingredient);
+//                    entityManager.persist(ingredient);
+//                }
+
 
 //          Ajouter la recette           
                 recette.setUtilisateur(utilisateur);

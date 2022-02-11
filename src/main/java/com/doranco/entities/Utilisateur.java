@@ -10,6 +10,7 @@ package com.doranco.entities;
  * @author 33767
  */
 
+
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import java.io.Serializable;
@@ -46,6 +47,7 @@ public class Utilisateur implements Serializable{
     private String newPassword;
 
     private String password;
+
     private String salt;
     private String email;
     private boolean statuts;
@@ -74,6 +76,7 @@ public class Utilisateur implements Serializable{
     }
 
     public boolean isAdmin(){
+
         return this.getRole().equals(RoleUtilisateur.ADMIN);
     }
 
@@ -110,6 +113,7 @@ public class Utilisateur implements Serializable{
      * @param role
      * @param email
      */
+
     public Utilisateur(String nom, String password, RoleUtilisateur role, String email) {
         this.nom = nom;
         this.password = password;
@@ -134,6 +138,7 @@ public class Utilisateur implements Serializable{
      * @param password
      * @param email
      */
+
     public Utilisateur(int id, String nom, String password, String email) {
         this.id = id;
         this.nom = nom;
@@ -229,51 +234,52 @@ public class Utilisateur implements Serializable{
         this.newPassword = newPassword;
     }
 
-    /**
+    /*
      * @return the salt
      */
     public String getSalt() {
         return salt;
     }
 
-    /**
+    /*
      * @param salt the salt to set
      */
     public void setSalt(String salt) {
         this.salt = salt;
     }
 
-    /**
+    /*
      * @return the email
      */
     public String getEmail() {
         return email;
     }
 
-    /**
+    /*
      * @param email the email to set
      */
     public void setEmail(String email) {
         this.email = email;
     }
 
-    /**
+    /*
      * @return the role
      */
     public RoleUtilisateur getRole() {
         return role;
     }
 
-    /**
+    /*
      * @param role the role to set
      */
     public void setRole(RoleUtilisateur role) {
         this.role = role;
     }
 
-    /**
+    /*
      * @return the DateCrea
      */
+
     public Date getDateCrea() {
         return DateCrea;
     }
@@ -295,6 +301,7 @@ public class Utilisateur implements Serializable{
     /**
      * @param DateModif the DateModif to set
      */
+
     public void setDateModif(Date DateModif) {
         this.DateModif = DateModif;
     }
