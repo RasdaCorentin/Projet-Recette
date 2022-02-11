@@ -107,19 +107,22 @@ public class RequestFilter implements ContainerRequestFilter {
 
                 return;
 
+            }
+
             /*
 :--------------------------------------------------------------------------------------------------------------------------
                                                 % L'utilisateur est inactif.
 :--------------------------------------------------------------------------------------------------------------------------
             */
 
-            } else {
+            else {
                 Response response = Response
                     .status(Response.Status.FORBIDDEN)
                     .entity("Vous avez été bannis !")
                     .build();
                 requestContext.abortWith(response);
             }
+
         }
 
         /*

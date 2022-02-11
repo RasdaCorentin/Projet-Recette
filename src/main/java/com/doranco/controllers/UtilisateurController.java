@@ -77,14 +77,28 @@ public class UtilisateurController {
 
             DaoFactory daoFactory = new DaoFactory();
             UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
+            Utilisateur utilisateur = utilisateurDaoInterface.findUtilisateurById(id);
             utilisateurDaoInterface.deactivateUtilisateur(id);
 
+        //. ----------Si l'id est bien trouvé.----------
+        if (utilisateur != null) {
             Response response = Response
-                    .ok( "L'utilisateur " + id + " à été désactivé avec succès." )
-                    .build();
+                .ok( "L'utilisateur " + id + " à été désactivé avec succès." )
+                .build();
 
-            daoFactory.closeEntityManagerFactory();
+        daoFactory.closeEntityManagerFactory();
+        return response;
+        } 
+
+        //. ----------Si l'id n'est pas trouvé.----------
+        else {
+            Response response = Response
+                .status(Response.Status.NOT_FOUND)
+                .entity("Aucun utilisateur ne possédant cette id n'a pus être trouvé.")
+                .build();
             return response;
+        }
+
     }
 
     /*
@@ -101,14 +115,28 @@ public class UtilisateurController {
 
             DaoFactory daoFactory = new DaoFactory();
             UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
+            Utilisateur utilisateur = utilisateurDaoInterface.findUtilisateurById(id);
             utilisateurDaoInterface.activateUtilisateur(id);
 
+        //. ----------Si l'id est bien trouvé.----------
+        if (utilisateur != null) {
             Response response = Response
-                    .ok( "L'utilisateur " + id + " à été activé avec succès." )
-                    .build();
+                .ok( "L'utilisateur " + id + " à été activé avec succès." )
+                .build();
 
-            daoFactory.closeEntityManagerFactory();
+        daoFactory.closeEntityManagerFactory();
+        return response;
+        } 
+
+        //. ----------Si l'id n'est pas trouvé.----------
+        else {
+            Response response = Response
+                .status(Response.Status.NOT_FOUND)
+                .entity("Aucun utilisateur ne possédant cette id n'a pus être trouvé.")
+                .build();
             return response;
+        }
+
     }
 
     /*
@@ -125,15 +153,29 @@ public class UtilisateurController {
 
         DaoFactory daoFactory = new DaoFactory();
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
+        Utilisateur utilisateurBdd = utilisateurDaoInterface.findUtilisateurById(id);
         utilisateurDaoInterface.vanishUtilisateur(utilisateur, id);
 
-        Response response = Response
+        //. ----------Si l'id est bien trouvé.----------
+        if (utilisateurBdd != null) {
+            Response response = Response
                 .status(Response.Status.CREATED)
                 .entity(utilisateurDaoInterface.getListeUtilisateurs())
                 .build();
 
         daoFactory.closeEntityManagerFactory();
         return response;
+        } 
+
+        //. ----------Si l'id n'est pas trouvé.----------
+        else {
+            Response response = Response
+                .status(Response.Status.NOT_FOUND)
+                .entity("Aucun utilisateur ne possédant cette id n'a pus être trouvé.")
+                .build();
+            return response;
+        }
+
     }
 
     /*
@@ -174,19 +216,39 @@ public class UtilisateurController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createUtilisateur(Utilisateur utilisateur) {
         DaoFactory daoFactory = new DaoFactory();
-
-        utilisateur.setRole(RoleUtilisateur.USER);
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
-        utilisateur = utilisateurDaoInterface.createUtilisateur(utilisateur);
 
-        Response response = Response
-                .status(Response.Status.CREATED)
-                .entity("Bienvenue : " + utilisateur.toString() + "Tu dois maintenant allez te connecter.")
-                .build();
+        //§ Je vérifie dans la base de donnée l'existence du nom que souhaite prendre l'utilisateur.
+        EntityManager entityManager = daoFactory.getEntityManager();
+        Query query = entityManager.createQuery( "SELECT user FROM Utilisateur user WHERE nom=:nom" );
+        query.setParameter( "nom", utilisateur.getNom() );
 
-        daoFactory.closeEntityManagerFactory();
+        //. ----------Vérification du nom souhaité par l'utilisateur.----------
 
-        return response;
+        //$ ----------Le nom n'est pas encore utilisé.----------
+        if (query.getResultList().isEmpty()) {
+            utilisateur.setRole(RoleUtilisateur.USER);
+            utilisateur = utilisateurDaoInterface.createUtilisateur(utilisateur);
+    
+            Response response = Response
+                    .status(Response.Status.CREATED)
+                    .entity("Bienvenue : " + utilisateur.toString() + "Tu dois maintenant allez te connecter.")
+                    .build();
+    
+            daoFactory.closeEntityManagerFactory();
+    
+            return response;
+        }
+
+        //$ ----------Le nom est déjà utilisé par un autre utilisateur.----------
+        else {
+                Response response = Response
+                    .status(Response.Status.FORBIDDEN)
+                    .entity("Le nom " + utilisateur.getNom() + " est déjà utilisé par un autre utilisateur.")
+                    .build();
+                return response;
+        }
+
     }
 
     /*
@@ -276,13 +338,11 @@ public class UtilisateurController {
                 }
 
                 //$ ----------Le nom est déjà utilisé par un autre utilisateur.----------
-                else {
                     Response response = Response
                         .status(Response.Status.FORBIDDEN)
                         .entity("Le nom " + nomUtilisateurBdd + " est déjà utilisé par un autre utilisateur.")
                         .build();
                     return response;
-                }
 
             }
 
@@ -325,7 +385,6 @@ public class UtilisateurController {
             .build();
 
         daoFactory.closeEntityManagerFactory();
-        
         return response;
         } 
 
