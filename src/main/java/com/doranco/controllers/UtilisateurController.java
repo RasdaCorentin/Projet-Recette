@@ -306,14 +306,26 @@ public class UtilisateurController {
 
             if ( passwordHash.compareTo(utilisateurAConnecter.getPassword()) == 0 && utilisateurAConnecter.getNom().equals(utilisateur.getNom()) ) {
 
-                //? ----------Connexion de l'utilisateur.----------
-                utilisateur = utilisateurDaoInterface.connectUtilisateur(utilisateur);
+                //. ----------Je vérifie que l'utilisateur est bien nouveau sur le site.----------
+                if (utilisateurAConnecter.getDateModif() == null) {
 
-                Response response = Response
-                        .status(Response.Status.CREATED)
-                        .entity("Bienvenue : " + utilisateur.toString() + " Tu peux maintenant publier tes recettes.")
+                    //? ----------Laisser passer A-38 donner à l'utilisateur.----------
+                    utilisateur = utilisateurDaoInterface.connectUtilisateur(utilisateur);
+
+                    Response response = Response
+                            .status(Response.Status.ACCEPTED)
+                            .entity("Bienvenue : " + utilisateur.toString() + ", tu as obtenues ton laisser passer A38. Tu peux maintenant publier tes recettes.")
+                            .build();
+                    return response;
+
+                } else {
+                    Response response = Response
+                        .status(Response.Status.NOT_FOUND)
+                        .entity("Vous n'êtes pas nouveau ! Voyez avec les administrateurs pour qu'elle raison vous avez été bannis !")
                         .build();
-                return response;
+                    return response;
+                }
+
 
             }
 
@@ -336,6 +348,25 @@ public class UtilisateurController {
             .entity("Le nom " + utilisateur.getNom() + " n'est associé à aucun compte sur le site.")
             .build();
         return response;
+
+
+
+
+
+
+        // if (utilisateurAConnecter.getNewNom() == null) {
+        //     Response response = Response
+        //         .status(Response.Status.NOT_FOUND)
+        //         .entity("null " + utilisateurAConnecter.getNewNom())
+        //         .build();
+        //     return response;
+        // } else {
+        //     Response response = Response
+        //         .status(Response.Status.NOT_FOUND)
+        //         .entity("Je ne sais pas. " + utilisateurAConnecter.getNewNom())
+        //         .build();
+        //     return response;
+        // }
 
     }
 

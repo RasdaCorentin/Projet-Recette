@@ -83,7 +83,6 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
             String salt = BCrypt.gensalt();
             String passwordHash = BCrypt.hashpw(utilisateur.getPassword(), salt);
             utilisateur.setDateCrea(new Date());
-            utilisateur.setDateModif(new Date());
             utilisateur.setPassword(passwordHash);
             utilisateur.setSalt(salt);
             utilisateur.setStatuts(false);

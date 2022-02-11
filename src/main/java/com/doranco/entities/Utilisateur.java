@@ -35,15 +35,17 @@ public class Utilisateur implements Serializable{
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(unique = true, nullable = false)
 
     private Date DateCrea;
     private Date DateModif;
 
+    @Column(unique = true, nullable = false)
     private String nom;
+
     private String newNom;
-    private String password;
     private String newPassword;
+
+    private String password;
     private String salt;
     private String email;
     private boolean statuts;
