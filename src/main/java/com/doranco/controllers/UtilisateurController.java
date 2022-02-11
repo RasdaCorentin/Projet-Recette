@@ -13,6 +13,7 @@ import com.doranco.entities.RoleUtilisateur;
 import com.doranco.entities.Utilisateur;
 
 import org.json.JSONObject;
+import org.mindrot.jbcrypt.BCrypt;
 
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
@@ -240,42 +241,65 @@ public class UtilisateurController {
         DaoFactory daoFactory = new DaoFactory();
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
 
-        //§ Je vérifie dans la base de donnée l'existence du nom que souhaite prendre l'utilisateur.
-        EntityManager entityManager = daoFactory.getEntityManager();
-        Query query = entityManager.createQuery( "SELECT user FROM Utilisateur user WHERE nom=:nom" );
-        query.setParameter( "nom", utilisateur.getNom() );
+        //§ Récupération de l'utilisateur qui va être modifié.
+        Utilisateur utilisateurAModifier = utilisateurDaoInterface.findUtilisateurByNom(utilisateur);
 
-        //. ----------Les vérifications.----------
+        //§ Récupération du mot de passe entré par l'utilisateur pour la connexion.
+        String passwordTemp = utilisateur.getPassword();
+        String passwordHash = BCrypt.hashpw(passwordTemp, utilisateurAModifier.getSalt());
 
-        //$ ----------Le nom n'est pas encore utilisé.----------
-        if (query.getResultList().isEmpty()) {
-            utilisateur = utilisateurDaoInterface.updateUtilisateur(utilisateur);
-        }
-        //$ ----------Le nom est déjà utilisé.----------
-        else {
-            Utilisateur utilisateurBdd = (Utilisateur) query.getResultList().get(0);
-            String nomUtilisateurBdd = utilisateurBdd.getNom();
-            String nomUtilisateurUpdate = utilisateur.getNom();
+        //. ----------Vérification des identifiants de l'utilisateur.----------
 
-            //$ ----------L'utilisateur souhaite conserver son nom.----------
-            if (nomUtilisateurBdd.equals(nomUtilisateurUpdate)) {
+        if ( passwordHash.compareTo(utilisateurAModifier.getPassword()) == 0 && utilisateurAModifier.getNom().equals(utilisateur.getNom()) ) {
+
+            //. ----------Vérification du nouveau nom souhaité par l'utilisateur.----------
+
+            //§ Je vérifie dans la base de donnée l'existence du nom que souhaite prendre l'utilisateur.
+            EntityManager entityManager = daoFactory.getEntityManager();
+            Query query = entityManager.createQuery( "SELECT user FROM Utilisateur user WHERE nom=:nom" );
+            query.setParameter( "nom", utilisateur.getNom() );
+
+            //$ ----------Le nom n'est pas encore utilisé.----------
+            if (query.getResultList().isEmpty()) {
                 utilisateur = utilisateurDaoInterface.updateUtilisateur(utilisateur);
             }
-            //$ ----------Le nom est déjà utilisé par un autre utilisateur.----------
+
+            //$ ----------Le nom est déjà utilisé.----------
             else {
-                Response response = Response
-                    .status(Status.FORBIDDEN)
-                    .entity( "Le nom " + nomUtilisateurBdd + " est déjà utilisé par un autre utilisateur." )
-                    .build();
-                return response;
+                Utilisateur utilisateurBdd = (Utilisateur) query.getResultList().get(0);
+                String nomUtilisateurBdd = utilisateurBdd.getNom();
+                String nomUtilisateurUpdate = utilisateur.getNom();
+
+                //$ ----------L'utilisateur souhaite conserver son nom.----------
+                if (nomUtilisateurBdd.equals(nomUtilisateurUpdate)) {
+                    utilisateur = utilisateurDaoInterface.updateUtilisateur(utilisateur);
+                }
+
+                //$ ----------Le nom est déjà utilisé par un autre utilisateur.----------
+                else {
+                    Response response = Response
+                        .status(Response.Status.FORBIDDEN)
+                        .entity("Le nom " + nomUtilisateurBdd + " est déjà utilisé par un autre utilisateur.")
+                        .build();
+                    return response;
+                }
+
             }
+
+        } else {
+            Response response = Response
+                .status(Response.Status.FORBIDDEN)
+                .entity("Vos identifiants sont incorrect !")
+                .build();
+            return response;
         }
 
-        Response response = Response
-                .status(Response.Status.CREATED)
-                .entity(utilisateur.toString())
-                .build();
-        return response;
+            Response response = Response
+                    .status(Response.Status.CREATED)
+                    .entity(utilisateur.toString())
+                    .build();
+            return response;
+
     }
 
     /*
@@ -293,14 +317,27 @@ public class UtilisateurController {
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
         Utilisateur utilisateur = utilisateurDaoInterface.findUtilisateurById(id);
 
-        Response response = Response
-                .status(Response.Status.CREATED)
-                .entity(utilisateur.toString())
-                .build();
+        //. ----------Si l'id est bien trouvé.----------
+        if (utilisateur != null) {
+            Response response = Response
+            .status(Response.Status.CREATED)
+            .entity(utilisateur.toString())
+            .build();
 
         daoFactory.closeEntityManagerFactory();
-
+        
         return response;
+        } 
+
+        //. ----------Si l'id n'est pas trouvé.----------
+        else {
+            Response response = Response
+                .status(Response.Status.NOT_FOUND)
+                .entity("Aucun utilisateur ne possédant cette id n'a pus être trouvé.")
+                .build();
+            return response;
+        }
+
     }
 
 }

@@ -4,16 +4,19 @@
 */
 package com.doranco.dao.imp;
 
-import com.doranco.dao.DaoFactory;
-import com.doranco.dao.iinterface.UtilisateurDaoInterface;
-import com.doranco.entities.Utilisateur;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+
+import com.doranco.dao.DaoFactory;
+import com.doranco.dao.iinterface.UtilisateurDaoInterface;
+import com.doranco.entities.Utilisateur;
+
 import org.mindrot.jbcrypt.BCrypt;
 
 /*
@@ -237,13 +240,6 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
             if (utilisateurAModifier != null) {
                 transaction = entityManager.getTransaction();
 
-                //§ Récupération du mot de passe entré par l'utilisateur pour la connexion.
-                String passwordTemp = utilisateur.getPassword();
-                String passwordHash = BCrypt.hashpw(passwordTemp, utilisateurAModifier.getSalt());
-
-                //£ Vérification des identifiants de l'utilisateur.
-                if ( passwordHash.compareTo(utilisateurAModifier.getPassword()) == 0 && utilisateurAModifier.getNom().equals(utilisateur.getNom()) ) {
-
                     utilisateurAModifier.setDateModif(dtf.format(now));
                     utilisateurAModifier.setDateModif(dtf.format(now));
                     utilisateurAModifier.setNom(utilisateur.getNewNom());
@@ -259,11 +255,6 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
                     transaction.commit();
                     System.out.println("<----------- Mise a jour Utilisateur avec succès. ------->");
                     return utilisateurAModifier;
-                }
-                //
-                System.out.println("<----------- Nom d'utilisateur ou mot de passe incorrecte, impossible d'effectuer l'update. ------->");
-                //
-                return utilisateur;
             }
             System.out.println("<----------- Utilisateur avec Nom non trouvé pour l'update. ------->");
             return null;
@@ -288,43 +279,6 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
 :--------------------------------------------------------------------------------------------------------------------------
     */
 
-//     @Override
-//     public Utilisateur deactivateUtilisateur(int id) {
-//         EntityManager entityManager = null;
-//         EntityTransaction transaction = null;
-//         try {
-//             entityManager = daoFactory.getEntityManager();
-
-//             System.out.println("------------------ DÉBUT DEACTIVATE ---------");
-// //. -------------------------------------------------------------------------------------------
-
-//             Utilisateur utilisateurADesactiver = entityManager.find( Utilisateur.class, id );
-//             if( utilisateurADesactiver != null ) {
-//                 transaction = entityManager.getTransaction();
-
-//                 utilisateurADesactiver.setDateModif(dtf.format(now));
-//                 utilisateurADesactiver.setStatuts(false);
-
-//                 transaction.begin();
-//                 entityManager.persist( utilisateurADesactiver );
-//                 transaction.commit();
-//                 System.out.println( "<----------La désactivation de l'utilisateur à été effectuer avec succès.---------->" );
-//                 return utilisateurADesactiver;
-//             }
-//             System.out.println( "<----------Aucun utilisateur n'a été trouvé, la désactivation à été impossible.---------->" );
-//             return null;
-
-// //. ---------------------------------------FIN--------------------------------------------------
-//         } catch (Exception ex) {
-//             transaction.rollback();
-//             System.out.println( "Erreur deactivate utilisateur. \n" );
-//             ex.printStackTrace();
-//         } finally {
-//             if( entityManager != null ) entityManager.close();
-//         }
-//         return null;
-//     }
-
     @Override
     public Utilisateur deactivateUtilisateur(int id) {
         EntityManager entityManager = null;
@@ -333,7 +287,7 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
             entityManager = daoFactory.getEntityManager();
 
             System.out.println("------------------ DÉBUT DEACTIVATE ---------");
-// //. -------------------------------------------------------------------------------------------
+//. -------------------------------------------------------------------------------------------
 
             Utilisateur utilisateurADesactiver = entityManager.find( Utilisateur.class, id );
             if( utilisateurADesactiver != null ) {
