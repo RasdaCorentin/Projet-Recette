@@ -22,6 +22,7 @@ public interface IngredientDaoInterface {
     //Update (constructeur avec id)
     Ingredient updateIngredient(Ingredient ingredient, int id);
     
+
     //Lire un utilisateur à partir de son ID
     Ingredient findIngredientById(int id);
     

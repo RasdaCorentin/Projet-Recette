@@ -79,6 +79,7 @@ public class IngredientDaoImp implements IngredientDaoInterface {
         try {
             entityManager = daoFactory.getEntityManager();
             transaction = entityManager.getTransaction();
+
             
 // ------------------------------------------Methode-------------------------------------------------- 
             
@@ -91,11 +92,13 @@ public class IngredientDaoImp implements IngredientDaoInterface {
             transaction.commit();
 
             System.out.println("<----------- Création Ingrédient avec succès ------->");
+
             return ingredient;
  
 // ---------------------------------------FIN Methode-------------------------------------------------- 
 
         } catch (Exception ex) {
+
             transaction.rollback();
             System.out.println("Erreur création Ingrédient \n");
             ex.printStackTrace();
@@ -122,6 +125,7 @@ public class IngredientDaoImp implements IngredientDaoInterface {
         ingredient = (Ingredient) query.getResultList().get(0);
         return ingredient;
     }
+
 /*
 --------------------------------------------------------------------------------------------------------------------------
                                                 Update Ingredient avec DAO FACTORY 
@@ -139,6 +143,7 @@ public class IngredientDaoImp implements IngredientDaoInterface {
             if (ingredientAModifier != null) {
                 transaction = entityManager.getTransaction();
 
+
                 ingredientAModifier.setLibelle(ingredient.getLibelle());
                 ingredientAModifier.setQuantite(ingredient.getQuantite());
 
@@ -147,6 +152,7 @@ public class IngredientDaoImp implements IngredientDaoInterface {
                 transaction.begin();
                 entityManager.persist(ingredientAModifier);
                 transaction.commit();
+
                 System.out.println("<----------- Mise à jour de l'ingrédient avec succès ------->");
                 return ingredientAModifier;
 
@@ -156,7 +162,9 @@ public class IngredientDaoImp implements IngredientDaoInterface {
 
         } catch (Exception ex) {
             transaction.rollback();
+
             System.out.println("Erreur lors de la mise à jour de l'ingrédient \n");
+
             ex.printStackTrace();
 
         } finally {
@@ -187,6 +195,7 @@ public class IngredientDaoImp implements IngredientDaoInterface {
                 transaction.begin();
                 entityManager.remove(ingredientAModifier);
                 transaction.commit();
+
                 System.out.println("<-----------Suppression avec succès ------->");
                 return true;
 
@@ -196,6 +205,7 @@ public class IngredientDaoImp implements IngredientDaoInterface {
 
         } catch (Exception ex) {
             transaction.rollback();
+
             System.out.println("Erreur lors de la mise à jour de l'ingrédient \n");
             ex.printStackTrace();
 
@@ -208,4 +218,5 @@ public class IngredientDaoImp implements IngredientDaoInterface {
         
     }
 }
+
 

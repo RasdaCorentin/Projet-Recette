@@ -12,6 +12,7 @@ import jakarta.json.bind.JsonbBuilder;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
+
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
@@ -19,7 +20,9 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+
 import org.json.JSONObject;
+
 
 /**
  *
@@ -36,6 +39,7 @@ public class IngredientController {
                                                  Liste Ingredient
 --------------------------------------------------------------------------------------------------------------------------
      */
+
     @Path("/liste")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -44,7 +48,9 @@ public class IngredientController {
         //Creation d'une réponse
         Response response = Response
                 .status(Response.Status.CREATED)
+
                 //Ajouter To string pour info ciblée
+
                 .entity(ingredientDaoInterface.getListeIngredients())
                 .build();
 
@@ -52,6 +58,7 @@ public class IngredientController {
 
         return response;
     }
+
             /*
 --------------------------------------------------------------------------------------------------------------------------
                                                  Create Ingredient
@@ -77,6 +84,7 @@ public class IngredientController {
         return response;
     }
     
+
            /*
 --------------------------------------------------------------------------------------------------------------------------
                                                  Update Ingredient
@@ -94,6 +102,7 @@ public class IngredientController {
 
         Response response = Response
                 .ok(ingredient.toString())
+
                 .build();
 
         return response;
@@ -119,16 +128,17 @@ public class IngredientController {
         return response;
         
     }
+
             /*
 --------------------------------------------------------------------------------------------------------------------------
-                                                 Liste Ingredient
+                                                 Read Ingredient
 --------------------------------------------------------------------------------------------------------------------------
     */
    
     @Path("/read/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response readUtilisateur(@PathParam(value = "id") int id) {
+    public Response readIngredient(@PathParam(value = "id") int id) {
 
         DaoFactory daoFactory = new DaoFactory();
         IngredientDaoInterface ingredientDaoInterface = daoFactory.getIngredientDaoInterface();
@@ -144,4 +154,5 @@ public class IngredientController {
 
         return response;
     }
+
 }

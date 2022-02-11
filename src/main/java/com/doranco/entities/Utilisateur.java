@@ -10,16 +10,15 @@ package com.doranco.entities;
  * @author 33767
  */
 
-import jakarta.json.bind.annotation.JsonbTransient;
+
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,44 +28,46 @@ import javax.persistence.Transient;
 @Entity
 public class Utilisateur implements Serializable{
     private static final long serialVersionUID = 1L;
-    
+
     /*
-    
     Les attributs 
-    
     */
-    
+
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
+
+    private Date DateCrea;
+    private Date DateModif;
+
     @Column(unique = true, nullable = false)
     private String nom;
+
     private String newNom;
+    private String newPassword;
+
     private String password;
-    private String DateCrea;
-    private String DateModif;
+
     private String salt;
     private String email;
     private boolean statuts;
 
     @Enumerated(EnumType.STRING)
     private RoleUtilisateur role;
-    
+
     /*
-    
     Les relations
-    
     */
+
     @Transient
     @OneToMany(mappedBy = "utilisateur")
 //  @OneToMany(mappedBy = "utilisateur", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Recette> listeRecettes = new ArrayList<>();
-    
+
     /*
-    
     Booléen de vérification de rôle & de statuts
-    
     */
+
     /**
      * @param statuts the statuts to set
      */
@@ -75,54 +76,78 @@ public class Utilisateur implements Serializable{
     }
 
     public boolean isAdmin(){
-    return this.getRole().equals(RoleUtilisateur.ADMIN);
+
+        return this.getRole().equals(RoleUtilisateur.ADMIN);
     }
 
     public boolean isUser(){
-    return this.getRole().equals(RoleUtilisateur.USER);
+        return this.getRole().equals(RoleUtilisateur.USER);
     }
-        
+
+    public boolean isActif() {
+        return (this.statuts == true);
+    }
+
     /*
-        
     Les Constructeurs
-        
     */
-        
-    //Constructeur vide sans parametres
+
+    /**
+     * Constructeur vide sans paramètres.
+     */
     public Utilisateur() { 
     }
-    
-    //Constructeur avec id
+
+    /**
+     * Constructeur avec l'id.
+     * @param id
+     */
     public Utilisateur(int id) {
         this.id = id;
     }
-    
-    // Constructeur rôle
+
+    /**
+     * Constructeur rôle.
+     * @param nom
+     * @param password
+     * @param role
+     * @param email
+     */
+
     public Utilisateur(String nom, String password, RoleUtilisateur role, String email) {
         this.nom = nom;
         this.password = password;
         this.role = role;
         this.email = email;
     }
-    
-    //Constructeur sans id
+
+    /**
+     * Constructeur sans id.
+     * @param nom
+     * @param password
+     */
     public Utilisateur(String nom, String password) {
-      this.nom = nom;
-      this.password = password;
+        this.nom = nom;
+        this.password = password;
     }    
-    
-    //Constructeur complet
+
+    /**
+     * Constructeur complet.
+     * @param id
+     * @param nom
+     * @param password
+     * @param email
+     */
+
     public Utilisateur(int id, String nom, String password, String email) {
         this.id = id;
         this.nom = nom;
         this.password = password;
         this.email = email;
     }
-    
+
     /*
-    
-    Methode toString
-    
+    Méthode toString.
     */
 
     @Override
@@ -149,11 +174,8 @@ public class Utilisateur implements Serializable{
 
     }
 
-    
     /*
-    
     Getters & Setters
-    
     */
 
     /**
@@ -199,72 +221,88 @@ public class Utilisateur implements Serializable{
     }
 
     /**
+     * @return the newPassword
+     */
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    /**
+     * @param newPassword the newPassword to set
+     */
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    /*
      * @return the salt
      */
     public String getSalt() {
         return salt;
     }
 
-    /**
+    /*
      * @param salt the salt to set
      */
     public void setSalt(String salt) {
         this.salt = salt;
     }
 
-    /**
+    /*
      * @return the email
      */
     public String getEmail() {
         return email;
     }
 
-    /**
+    /*
      * @param email the email to set
      */
     public void setEmail(String email) {
         this.email = email;
     }
 
-    /**
+    /*
      * @return the role
      */
     public RoleUtilisateur getRole() {
         return role;
     }
 
-    /**
+    /*
      * @param role the role to set
      */
     public void setRole(RoleUtilisateur role) {
         this.role = role;
     }
 
-    /**
+    /*
      * @return the DateCrea
      */
-    public String getDateCrea() {
+
+    public Date getDateCrea() {
         return DateCrea;
     }
 
     /**
      * @param DateCrea the DateCrea to set
      */
-    public void setDateCrea(String DateCrea) {
+    public void setDateCrea(Date DateCrea) {
         this.DateCrea = DateCrea;
     }
 
     /**
      * @return the DateModif
      */
-    public String getDateModif() {
+    public Date getDateModif() {
         return DateModif;
     }
 
     /**
      * @param DateModif the DateModif to set
      */
-    public void setDateModif(String DateModif) {
+
+    public void setDateModif(Date DateModif) {
         this.DateModif = DateModif;
     }
     /**
@@ -286,13 +324,11 @@ public class Utilisateur implements Serializable{
     public void setNewNom(String newNom) {
         this.newNom = newNom;
     }
-    
+
     /*
-    
     Getters & Setters de Relation
-    
     */
-    
+
     /**
      * @return the listeRecettes
      */
