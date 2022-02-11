@@ -2,7 +2,7 @@ Persistence :
 <persistence-unit name="projet-recette" transaction-type="RESOURCE_LOCAL">
 <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/projet?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
 
-Environement:
+Environnement:
 {{http://localhost:8080/ProjetRecette/api/}}
 (Pour avoir un admin, passez manuellement dans phpMyadmin) le rôle de l'utilisateur créer de 1 à 0.
 End Point:
@@ -40,8 +40,16 @@ Exemple postman:
 -{{url_projet}}utilisateur/admin/deleteU/5
 Exemple postman: !!! Impossible de supprimer un utilisateur lié à une recette !!!
 
-	Deconnecter Utilisateur:
--{{url_projet}}utilisateur/admin/disconnect/1
+    Deactivate Utilisateur:
+-{{url_projet}}utilisateur/admin/deactivate/3
+Exemple postman: L'utilisateur 3 à été désactivé avec succès.
+
+    Activate Utilisateur:
+-{{url_projet}}utilisateur/admin/activate/7
+Exemple postman: L'utilisateur 7 à été activé avec succès.
+
+	Vanish Utilisateur:
+-{{url_projet}}utilisateur/admin/vanish/1
 Exemple postman: !!! Modifie le mot de passe de l'utilisateur le rendant inutilisable
 {
     "password" : "12345"
@@ -52,15 +60,17 @@ Exemple postman:
 
 
 User:
+
 	Update Utilisateur:
 -{{url_projet}}utilisateur/user/update
 Exemple postman:
 {
     "utilisateur" : {
-        "nom" : "cupidon",
+        "nom" : "DarkSasuke",
+        "password" : "1234",
         "newNom" : "DarkSasuke",
         "email" : "rasengan@gmail.com",
-        "password" : "12345"
+        "newPassword" : "1234"
     }
 }
 
