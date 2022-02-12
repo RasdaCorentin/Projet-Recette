@@ -6,11 +6,11 @@ package com.doranco.entities;
 
 import jakarta.json.bind.annotation.JsonbTransient;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 
@@ -89,8 +89,8 @@ public class Ingredient implements Serializable{
                     + this.getLibelle()
                     + "\n Quantite: "
                     + this.getQuantite()
-                    + "\nDATE CREA : " + this.DateCrea
-                    + "\nDATE MODIF : " + this.DateModif;
+                    + "\nDATE CREA : " + this.getDateCrea()
+                    + "\nDATE MODIF : " + this.getDateModif();
     }
     
     /*
@@ -141,13 +141,41 @@ public class Ingredient implements Serializable{
         this.quantite = quantite;
     }
 
-// Ajouter Getters & Setters Date
+
+    /**
+     * @return the DateCrea
+     */
+    public Date getDateCrea() {
+        return DateCrea;
+    }
+
+    /**
+     * @param DateCrea the DateCrea to set
+     */
+    public void setDateCrea(Date DateCrea) {
+        this.DateCrea = DateCrea;
+    }
+
+    /**
+     * @return the DateModif
+     */
+    public Date getDateModif() {
+        return DateModif;
+    }
+
+    /**
+     * @param DateModif the DateModif to set
+     */
+    public void setDateModif(Date DateModif) {
+        this.DateModif = DateModif;
+    }
+ 
     
     /*
     
     Getters & Setters de Relation
     
     */
- 
+
 
 }

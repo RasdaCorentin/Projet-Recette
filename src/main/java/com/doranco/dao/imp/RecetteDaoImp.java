@@ -14,6 +14,7 @@ import com.doranco.entities.Utilisateur;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -106,8 +107,8 @@ public class RecetteDaoImp implements RecetteDaoInterface {
 
 //          Ajouter la recette           
                 recette.setUtilisateur(utilisateur);
-                recette.setDateCrea(dtf.format(now));
-                recette.setDateModif(dtf.format(now));
+                recette.setDateCrea(new Date());
+                recette.setDateModif(new Date());
 
                 entityManager.persist(recette);
 

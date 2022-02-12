@@ -10,6 +10,7 @@ import com.doranco.entities.Ingredient;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -83,8 +84,8 @@ public class IngredientDaoImp implements IngredientDaoInterface {
             
 // ------------------------------------------Methode-------------------------------------------------- 
             
-            ingredient.setDateCrea(dtf.format(now));
-            ingredient.setDateModif(dtf.format(now));
+            ingredient.setDateCrea(new Date());
+            ingredient.setDateModif(new Date());
             
 //  Il faut ajouter le nom de la recette lié à l'ingrédient                    
             transaction.begin();
@@ -147,7 +148,7 @@ public class IngredientDaoImp implements IngredientDaoInterface {
                 ingredientAModifier.setLibelle(ingredient.getLibelle());
                 ingredientAModifier.setQuantite(ingredient.getQuantite());
 
-                ingredientAModifier.setDateModif(dtf.format(now));
+                ingredientAModifier.setDateModif(new Date());
 
                 transaction.begin();
                 entityManager.persist(ingredientAModifier);
