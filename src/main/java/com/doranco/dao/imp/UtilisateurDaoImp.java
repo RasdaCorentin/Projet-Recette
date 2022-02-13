@@ -164,6 +164,7 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
         if (comparePassword(passwordTemp, utilisateur)) {
             return utilisateur;
         }
+        
         return null;
     }
 

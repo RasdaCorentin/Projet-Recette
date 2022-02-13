@@ -7,6 +7,7 @@ package com.doranco.dao.imp;
 import com.doranco.dao.DaoFactory;
 import com.doranco.dao.iinterface.IngredientDaoInterface;
 import com.doranco.entities.Ingredient;
+import com.doranco.entities.Recette;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -64,8 +65,7 @@ public class IngredientDaoImp implements IngredientDaoInterface {
         }
         return listeIngredients;
     }
-    
-    
+
 /*
 --------------------------------------------------------------------------------------------------------------------------
                                                 Création Ingredient avec DAO FACTORY 
@@ -111,7 +111,11 @@ public class IngredientDaoImp implements IngredientDaoInterface {
         }
         return null;
     }
-    
+    /*
+--------------------------------------------------------------------------------------------------------------------------
+                                                Outils
+--------------------------------------------------------------------------------------------------------------------------
+*/
     @Override
     public Ingredient findIngredientById(int id) {
         EntityManager entityManager = null;
@@ -217,6 +221,11 @@ public class IngredientDaoImp implements IngredientDaoInterface {
         }
         return false;
         
+    }
+
+    @Override
+    public Ingredient findIngredientByLibelle(Ingredient ingredient) {
+       return null;
     }
 }
 

@@ -82,35 +82,37 @@ public class RecetteDaoImp implements RecetteDaoInterface {
         try {
             entityManager = daoFactory.getEntityManager();
             transaction = entityManager.getTransaction();
-
+            System.out.println(recette);
 // ------------------------------------------Methode--------------------------------------------------              
-// Marche pour ajouter une recette / utilisateur
+// Marche pour ajouter une recette / utilisateur / ingredient
             UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
             utilisateur = utilisateurDaoInterface.findUtilisateurByNom(utilisateur);
-
+            
             if (utilisateur != null) {
                 //Start transaction
                 transaction.begin();
-//          Ajouter les ingredient
 
 // Important !!!
-//                List<Ingredient> listeIngredient = new ArrayList<>(recette.getListeIngredients());
-//                IngredientDaoInterface ingredientDaoInterface = daoFactory.getIngredientDaoInterface();
-//                for (int index = 0; index < listeIngredient.size(); index++) {
-//                    Ingredient ingredient = listeIngredient.get(index);
-//                    ingredient.setRecette(recette);
-//                    System.out.println(ingredient);
-//                    ingredient = ingredientDaoInterface.createIngredient(ingredient);
-//                    entityManager.persist(ingredient);
-//                }
+                
+                List<Ingredient> listeIngredient = new ArrayList<>(recette.getListIngredients());
+                IngredientDaoInterface ingredientDaoInterface = daoFactory.getIngredientDaoInterface();
+                for (int index = 0; index < listeIngredient.size(); index++) {
+                    Ingredient ingredient = listeIngredient.get(index);
+                    //Je vérifie si l'ingrédient existe
+//                       ingredient.addRecette(recette);
+                        ingredient = ingredientDaoInterface.createIngredient(ingredient);
+                        System.out.println(ingredient);
+                        
+                }
 
 
-//          Ajouter la recette           
+//          Ajouter la recette
+                
                 recette.setUtilisateur(utilisateur);
                 recette.setDateCrea(new Date());
                 recette.setDateModif(new Date());
 
-                entityManager.persist(recette);
+                entityManager.merge(recette);
 
                 transaction.commit();
                 System.out.println("<----------- Creation Recette avec success ------->");
