@@ -12,12 +12,17 @@ import jakarta.json.bind.JsonbBuilder;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
+
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+
+import org.json.JSONObject;
+
 
 /**
  *
@@ -34,7 +39,8 @@ public class IngredientController {
                                                  Liste Ingredient
 --------------------------------------------------------------------------------------------------------------------------
      */
-    @Path("/admin/liste")
+
+    @Path("/liste")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getListeIngredient() {  
@@ -42,7 +48,9 @@ public class IngredientController {
         //Creation d'une réponse
         Response response = Response
                 .status(Response.Status.CREATED)
-                //Ajouter to To string pour info ciblé
+
+                //Ajouter To string pour info ciblée
+
                 .entity(ingredientDaoInterface.getListeIngredients())
                 .build();
 
@@ -50,6 +58,33 @@ public class IngredientController {
 
         return response;
     }
+
+            /*
+--------------------------------------------------------------------------------------------------------------------------
+                                                 Create Ingredient
+--------------------------------------------------------------------------------------------------------------------------
+     */
+    @Path("/create")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createIngredient(Ingredient ingredient) {
+        DaoFactory daoFactory = new DaoFactory();
+
+        IngredientDaoInterface ingredientDaoInterface = daoFactory.getIngredientDaoInterface();
+        ingredient = ingredientDaoInterface.createIngredient(ingredient);
+
+        Response response = Response
+                .status(Response.Status.CREATED)
+                .entity(ingredient.toString())
+                .build();
+
+        daoFactory.closeEntityManagerFactory();
+
+        return response;
+    }
+    
+
            /*
 --------------------------------------------------------------------------------------------------------------------------
                                                  Update Ingredient
@@ -61,10 +96,13 @@ public class IngredientController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateIngredient(Ingredient ingredient, @PathParam(value = "id") int id) {
         
-        ingredient = new Ingredient("Libelle update", "1");
+        DaoFactory daoFactory = new DaoFactory();
+        IngredientDaoInterface ingredientDaoInterface=daoFactory.getIngredientDaoInterface();
+        ingredient = ingredientDaoInterface.updateIngredient(ingredient, id);
 
         Response response = Response
-                .ok(ingredientDaoInterface.updateIngredient(ingredient, id))
+                .ok(ingredient.toString())
+
                 .build();
 
         return response;
@@ -90,4 +128,31 @@ public class IngredientController {
         return response;
         
     }
+
+            /*
+--------------------------------------------------------------------------------------------------------------------------
+                                                 Read Ingredient
+--------------------------------------------------------------------------------------------------------------------------
+    */
+   
+    @Path("/read/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response readIngredient(@PathParam(value = "id") int id) {
+
+        DaoFactory daoFactory = new DaoFactory();
+        IngredientDaoInterface ingredientDaoInterface = daoFactory.getIngredientDaoInterface();
+        Ingredient ingredient = ingredientDaoInterface.findIngredientById(id);
+
+        //Creation d'une réponse
+        Response response = Response
+                .status(Response.Status.CREATED)
+                .entity(ingredient.toString())
+                .build();
+
+        daoFactory.closeEntityManagerFactory();
+
+        return response;
+    }
+
 }

@@ -5,6 +5,7 @@
 package com.doranco.dao.iinterface;
 
 import com.doranco.entities.Ingredient;
+import com.doranco.entities.Recette;
 import java.util.List;
 
 /**
@@ -22,7 +23,12 @@ public interface IngredientDaoInterface {
     //Update (constructeur avec id)
     Ingredient updateIngredient(Ingredient ingredient, int id);
     
+
+    //Lire un utilisateur à partir de son ID
+    Ingredient findIngredientById(int id);
+    
     //Supprime un Ingredient (COMMAND ADMIN)
     boolean deleteIngredient(int id);
-    
+    //, Lire un Utilisateur a partir de son Nom.
+    Ingredient findIngredientByLibelle(Ingredient ingredient);
 }

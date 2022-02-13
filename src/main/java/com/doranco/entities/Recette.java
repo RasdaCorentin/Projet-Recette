@@ -8,6 +8,7 @@ package com.doranco.entities;
 import jakarta.json.bind.annotation.JsonbTransient;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,7 +33,7 @@ import javax.persistence.Transient;
 @Entity
 public class Recette implements Serializable {
    private static final long serialVersionUID = 1L;
-   
+
     /*
     
     Les attributs 
@@ -40,13 +41,16 @@ public class Recette implements Serializable {
     */
 
     @Id
-    @Column(name="id_recette")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="idRecette")
     private int id;
-    private String DateCrea;
-    private String DateModif;
+    
+    private Date dateCrea;
+    private Date dateModif;
+    
     private String libelle;
     private String description;
+    //Encore A IMPLEMENTER
     private String refImage;
     
     /*
@@ -55,28 +59,17 @@ public class Recette implements Serializable {
     
     */
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private Utilisateur utilisateur;
-    
-    @Transient
-    @OneToMany(mappedBy = "recette")
-    private List<Ingredient> listeIngredients = new ArrayList<>();
-    
-    /*
-    
-    Option ManyToMany
-    @Column(name="id_recette")
-    private int id;
-     */
-//    @ManyToMany()
-//    @JoinTable(name="Recette_Ingredient",
-//    joinColumns = {@JoinColumn(name= "id_recette")},
-//    inverseJoinColumns = {@JoinColumn(name="id_ingredient")})
-//    private List<Ingredient> listeIngredients = new ArrayList<>();
-    
-   
-    
-    
+  
+// A Implementer avec Ingredient + Many To Many
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "Ingredient_Recette_Assocition",
+            joinColumns = @JoinColumn(name = "idRecette"),
+            inverseJoinColumns = @JoinColumn(name = "idIngredient") )
+    private List<Ingredient> listIngredients = new ArrayList<>();
+  
     /*
         
     Les Constructeurs
@@ -108,27 +101,26 @@ public class Recette implements Serializable {
     Methode toString
     
     */
-
+//Changer la methode pour afficher liste Ingredient
 @Override
     public String toString() {
-        
-        if (listeIngredients != null) {
-        
-        return "ID :" + this.getId()
+        if(listIngredients != null){
+                    return "ID :" + this.getId()
                 + "\nLIBELLE : " + this.getLibelle()
                 + "\nDESCRIPTION : " + this.getDescription()
-                + "\nDATE CREA : " + this.DateCrea
-                + "\nDATE MODIF : " + this.DateModif
-                + "\nLISTE D'INGREDIENTS : " + this.getListeIngredients()
-                + "\n";
-    } else {
-        return "ID :" + this.getId()
-                + "\nLIBELLE : " + this.getLibelle()
-                + "\nDESCRIPTION : " + this.getDescription()
-                + "\nDATE CREA : " + this.DateCrea
-                + "\nDATE MODIF : " + this.DateModif
+                + "\nDATE CREA : " + this.getDateCrea()
+                + "\nDATE MODIF : " + this.getDateModif()
+                + "\nLISTE INGREDIENTS : " + this.getListIngredients().toString()
+
                 + "\n";
         }
+        return "ID :" + this.getId()
+                + "\nLIBELLE : " + this.getLibelle()
+                + "\nDESCRIPTION : " + this.getDescription()
+                + "\nDATE CREA : " + this.getDateCrea()
+                + "\nDATE MODIF : " + this.getDateModif()
+
+                + "\n";
     }
     /*
     
@@ -150,34 +142,34 @@ public class Recette implements Serializable {
         this.id = id;
     }
 
-    /**
+        /**
      * @return the DateCrea
      */
-    public String getDateCrea() {
-        return DateCrea;
+    public Date getDateCrea() {
+        return dateCrea;
     }
 
     /**
-     * @param DateCrea the DateCrea to set
+     * @param dateCrea
      */
-    public void setDateCrea(String DateCrea) {
-        this.DateCrea = DateCrea;
+    public void setDateCrea(Date dateCrea) {
+        this.dateCrea = dateCrea;
     }
 
     /**
      * @return the DateModif
      */
-    public String getDateModif() {
-        return DateModif;
+    public Date getDateModif() {
+        return dateModif;
     }
 
     /**
-     * @param DateModif the DateModif to set
+     * @param dateModif
      */
-    public void setDateModif(String DateModif) {
-        this.DateModif = DateModif;
+    public void setDateModif(Date dateModif) {
+        this.dateModif = dateModif;
     }
-
+  
     /**
      * @return the libelle
      */
@@ -241,17 +233,19 @@ public class Recette implements Serializable {
     }
 
     /**
-     * @return the listeIngredients
+     * @return the ListIngredients
      */
-    public List<Ingredient> getListeIngredients() {
-        return listeIngredients;
+    public List<Ingredient> getListIngredients() {
+        return listIngredients;
     }
 
     /**
-     * @param listeIngredients the listeIngredients to set
+     * @param listIngredients the listIngredients to set
      */
-    public void setListeIngredients(List<Ingredient> listeIngredients) {
-        this.listeIngredients = listeIngredients;
+    public void setListIngredients(List<Ingredient> listIngredients) {
+        this.listIngredients = listIngredients;
     }
+
+
 
 }
