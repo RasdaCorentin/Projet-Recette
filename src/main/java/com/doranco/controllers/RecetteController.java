@@ -6,6 +6,7 @@ package com.doranco.controllers;
 
 import com.doranco.dao.DaoFactory;
 import com.doranco.dao.iinterface.RecetteDaoInterface;
+import com.doranco.entities.Ingredient;
 import com.doranco.entities.Recette;
 import com.doranco.entities.Utilisateur;
 import jakarta.json.bind.Jsonb;
@@ -19,6 +20,8 @@ import jakarta.ws.rs.Produces;
 
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.List;
 import org.json.JSONObject;
 
 /**
@@ -94,10 +97,11 @@ public Response readRecette(@PathParam(value = "id") int id){
         String jsonRecette = jSONObjectData.get("recette").toString();
         //Recupération du user
         String jsonUtilisateur = jSONObjectData.get("utilisateur").toString();
-        // Instancie dans la classe utilisateur les infos récup
-        Utilisateur utilisateur = jsonb.fromJson(jsonUtilisateur, Utilisateur.class);
         // Instancie dans la classe recette les infos récup
         Recette recette = jsonb.fromJson(jsonRecette, Recette.class);
+        // Instancie dans la classe utilisateur les infos récup
+        Utilisateur utilisateur = jsonb.fromJson(jsonUtilisateur, Utilisateur.class);
+        
 
 //      Lancement de la Methode Connect                 
         DaoFactory daoFactory = new DaoFactory();

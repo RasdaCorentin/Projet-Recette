@@ -20,9 +20,9 @@ public class ResponseFilter implements ContainerResponseFilter {
     /**
      * Ajout dans la partie Headers de la page.
      */
+
     @Override
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
         responseContext.getHeaders().add("X-Powered-By", "Smith Enterprise");
     }
-
 }

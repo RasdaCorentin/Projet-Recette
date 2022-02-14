@@ -6,6 +6,7 @@ package com.doranco.controllers;
 
 import com.doranco.dao.DaoFactory;
 import com.doranco.dao.iinterface.UtilisateurDaoInterface;
+import com.doranco.entities.RoleUtilisateur;
 import com.doranco.entities.Utilisateur;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
@@ -20,6 +21,8 @@ import java.util.Base64;
  * @author Admin
  */
 
+//A ajouter pour implémenter  les conditions
+
 @Provider
 public class RequestFilter implements ContainerRequestFilter {
 
@@ -28,6 +31,7 @@ public class RequestFilter implements ContainerRequestFilter {
                                             % Vérification Rôle Authentification 
 --------------------------------------------------------------------------------------------------------------------------
     */
+
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
@@ -57,9 +61,11 @@ public class RequestFilter implements ContainerRequestFilter {
         String basicAuth = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
         basicAuth = basicAuth.replace("Basic ", "");
         String authDecode = new String(Base64.getDecoder().decode(basicAuth));
+
         String[] credentials = authDecode.split(":");
         String nom = credentials[0];
         String password = credentials[1];
+
 
 
         /*
@@ -69,13 +75,14 @@ public class RequestFilter implements ContainerRequestFilter {
         = Sinon, s'il ne renvoie rien alors je bloque la connexion.
         = Ensuite je passe à la vérification pour la pages réservés aux administrateurs.
         */
+      
         Utilisateur utilisateur = new Utilisateur(nom, password);
         DaoFactory daoFactory = new DaoFactory();
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
         utilisateur = utilisateurDaoInterface.loginUtilisateur(utilisateur);
 
-        //? Ici je créer les condition d'authentification,
-        //? J'ajoute une condition pour enregistrez les nouveau utilisateurs
+        //? Ici je crée les conditions d'authentification,
+        //? J'ajoute une condition pour enregistrer les nouveaux utilisateurs
 
         if ((utilisateur != null)) {
 
@@ -118,7 +125,7 @@ public class RequestFilter implements ContainerRequestFilter {
             else {
                 Response response = Response
                     .status(Response.Status.FORBIDDEN)
-                    .entity("Vous avez été bannis !")
+                    .entity("Vous avez été banni !")
                     .build();
                 requestContext.abortWith(response);
             }

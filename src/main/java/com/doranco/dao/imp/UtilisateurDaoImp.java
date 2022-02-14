@@ -4,8 +4,7 @@
 */
 package com.doranco.dao.imp;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -53,6 +52,7 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
             Query query = entityManager.createQuery("SELECT e FROM Utilisateur e", Utilisateur.class);
             listeUtilisateurs = query.getResultList();
 
+
 //. ---------------------------------------FIN--------------------------------------------------            
         } catch (Exception ex) {
             System.out.println("Erreur lors de la recherche de la liste des Utilisateurs. \n" + ex);
@@ -72,6 +72,7 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
 
     @Override
     public Utilisateur createUtilisateur(Utilisateur utilisateur) {
+
         EntityManager entityManager = null;
         EntityTransaction transaction = null;
 
@@ -98,6 +99,7 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
             transaction.rollback();
             System.out.println("Erreur lors de la création de l'utilisateur. \n");
             ex.printStackTrace();
+
         } finally {
             if (entityManager != null) {
                 entityManager.close();
@@ -136,14 +138,18 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
         Query query = entityManager.createQuery("select util from Utilisateur util where id=:id");
         query.setParameter("id", id);
         if (query.getResultList().isEmpty()) {
+
             System.out.println("---------- Cet id d'utilisateur n'existe pas. ----------");
+
             return null;
         }
         utilisateur = (Utilisateur) query.getResultList().get(0);
         return utilisateur;
     }
 
+
     //. ----------Permettre à un utilisateur de se connecter.----------
+
     @Override
     public Utilisateur loginUtilisateur(Utilisateur utilisateur) {
         EntityManager entityManager = null;
@@ -158,17 +164,22 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
         if (comparePassword(passwordTemp, utilisateur)) {
             return utilisateur;
         }
+        
         return null;
     }
 
+
     //. ----------Comparer le mot de passe donné par un utilisateur à celui de la base de donnée.----------
+
     @Override
     public boolean comparePassword(String passwordTemp, Utilisateur utilisateur) {
         String passwordHash = BCrypt.hashpw(passwordTemp, utilisateur.getSalt());
         if (passwordHash.compareTo(utilisateur.getPassword()) == 0) {
             return true;
         }
-        System.out.println("---------- Le mot de passe entré ne correspond pas à celui trouvé dans la base de donnée. ----------");
+
+        System.out.println("---------- Le mot de passe entré ne correspond pas à celui trouvé dans la base de données. ----------");
+
         return false;
     }
 
@@ -201,11 +212,14 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
                 return true;
             }
             System.out.println("<----------- Aucun utilisateur associé à cette id n'a pus être trouvé pour la suppression. ------->");
+
             return false;
 
         } catch (Exception ex) {
             transaction.rollback();
+
             System.out.println("Erreur lors de la tentative de suppression d'un utilisateur. \n");
+
             ex.printStackTrace();
 
         } finally {
@@ -221,14 +235,12 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
                                                 % Update Utilisateur 
 :--------------------------------------------------------------------------------------------------------------------------
     */
-
     @Override
     public Utilisateur updateUtilisateur(Utilisateur utilisateur) {
         EntityManager entityManager = null;
         EntityTransaction transaction = null;
         try {
             entityManager = daoFactory.getEntityManager();
-
 //. -------------------------------------------------------------------------------------------
 
             //§ Récupération de l'utilisateur qui va être modifié.
@@ -258,6 +270,7 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
         } catch (Exception ex) {
             transaction.rollback();
             System.out.println("Il y a eu une erreur lors de l'update de l'utilisateur. \n");
+
             ex.printStackTrace();
 
         } finally {
@@ -440,6 +453,7 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
         } catch (Exception ex) {
             transaction.rollback();
             System.out.println("Erreur lors de la mise à jour du status de l'utilisateur. \n");
+
             ex.printStackTrace();
 
         } finally {
@@ -473,3 +487,4 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
     }
 
 }
+

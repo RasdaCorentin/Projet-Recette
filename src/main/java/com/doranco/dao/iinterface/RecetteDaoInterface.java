@@ -4,6 +4,9 @@
  */
 package com.doranco.dao.iinterface;
 
+
+import com.doranco.entities.Ingredient;
+
 import com.doranco.entities.Recette;
 import com.doranco.entities.Utilisateur;
 import java.util.List;
@@ -24,3 +27,4 @@ public interface RecetteDaoInterface {
     Recette findRecetteById(int id);
 
 }
+
