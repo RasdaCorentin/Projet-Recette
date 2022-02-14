@@ -4,8 +4,7 @@
 */
 package com.doranco.dao.imp;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -165,6 +164,7 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
         if (comparePassword(passwordTemp, utilisateur)) {
             return utilisateur;
         }
+        
         return null;
     }
 

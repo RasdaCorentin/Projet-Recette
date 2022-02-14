@@ -6,11 +6,19 @@ package com.doranco.entities;
 
 import jakarta.json.bind.annotation.JsonbTransient;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 
 
@@ -30,11 +38,14 @@ public class Ingredient implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="idIngredient")
     private int id;
+    
     private String libelle;
     private String quantite;
-    private Date DateCrea;
-    private Date DateModif;
+    
+    private Date dateCrea;
+    private Date dateModif;
     
     /*
     
@@ -43,7 +54,9 @@ public class Ingredient implements Serializable{
     */
 
 // A Implementer avec Recette + Many To Many
-    
+
+    @ManyToMany( mappedBy = "listIngredients", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER) 
+    private List<Recette> listRecettes = new ArrayList<>();
     /*
         
     Les Constructeurs
@@ -83,14 +96,25 @@ public class Ingredient implements Serializable{
 
     @Override
     public String toString() {
+                if(listRecettes != null){
+               return "\n Id: "
+                    + this.getId()
+                    + "\n Libelle: "
+                    + this.getLibelle()
+                    + "\n Quantite: "
+                    + this.getQuantite()
+                    + "\nDATE CREA : " + this.getDateCrea()
+                    + "\nDATE MODIF : " + this.getDateModif()
+                    + "\nLISTE RECETTES : " + this.getListRecettes();
+        }
             return "\n Id: "
                     + this.getId()
                     + "\n Libelle: "
                     + this.getLibelle()
                     + "\n Quantite: "
                     + this.getQuantite()
-                    + "\nDATE CREA : " + this.DateCrea
-                    + "\nDATE MODIF : " + this.DateModif;
+                    + "\nDATE CREA : " + this.getDateCrea()
+                    + "\nDATE MODIF : " + this.getDateModif();
     }
     
     /*
@@ -141,13 +165,52 @@ public class Ingredient implements Serializable{
         this.quantite = quantite;
     }
 
-// Ajouter Getters & Setters Date
+
+    /**
+     * @return the DateCrea
+     */
+    public Date getDateCrea() {
+        return dateCrea;
+    }
+
+    /**
+     * @param dateCrea
+     */
+    public void setDateCrea(Date dateCrea) {
+        this.dateCrea = dateCrea;
+    }
+
+    /**
+     * @return the DateModif
+     */
+    public Date getDateModif() {
+        return dateModif;
+    }
+
+    /**
+     * @param dateModif
+     */
+    public void setDateModif(Date dateModif) {
+        this.dateModif = dateModif;
+    }
+ 
     
     /*
     
     Getters & Setters de Relation
     
     */
- 
+
+    /**
+     * @return the ListRecettes
+     */
+    public List<Recette> getListRecettes() {
+        return listRecettes;
+    }
+
+    public void addRecette(Recette recette) {
+        listRecettes.add(recette);
+        recette.getListIngredients().add(this);
+    }
 
 }

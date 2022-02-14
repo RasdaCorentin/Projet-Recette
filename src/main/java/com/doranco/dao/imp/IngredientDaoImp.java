@@ -7,9 +7,11 @@ package com.doranco.dao.imp;
 import com.doranco.dao.DaoFactory;
 import com.doranco.dao.iinterface.IngredientDaoInterface;
 import com.doranco.entities.Ingredient;
+import com.doranco.entities.Recette;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -63,8 +65,7 @@ public class IngredientDaoImp implements IngredientDaoInterface {
         }
         return listeIngredients;
     }
-    
-    
+
 /*
 --------------------------------------------------------------------------------------------------------------------------
                                                 Création Ingredient avec DAO FACTORY 
@@ -83,8 +84,8 @@ public class IngredientDaoImp implements IngredientDaoInterface {
             
 // ------------------------------------------Methode-------------------------------------------------- 
             
-            ingredient.setDateCrea(dtf.format(now));
-            ingredient.setDateModif(dtf.format(now));
+            ingredient.setDateCrea(new Date());
+            ingredient.setDateModif(new Date());
             
 //  Il faut ajouter le nom de la recette lié à l'ingrédient                    
             transaction.begin();
@@ -110,7 +111,11 @@ public class IngredientDaoImp implements IngredientDaoInterface {
         }
         return null;
     }
-    
+    /*
+--------------------------------------------------------------------------------------------------------------------------
+                                                Outils
+--------------------------------------------------------------------------------------------------------------------------
+*/
     @Override
     public Ingredient findIngredientById(int id) {
         EntityManager entityManager = null;
@@ -147,7 +152,7 @@ public class IngredientDaoImp implements IngredientDaoInterface {
                 ingredientAModifier.setLibelle(ingredient.getLibelle());
                 ingredientAModifier.setQuantite(ingredient.getQuantite());
 
-                ingredientAModifier.setDateModif(dtf.format(now));
+                ingredientAModifier.setDateModif(new Date());
 
                 transaction.begin();
                 entityManager.persist(ingredientAModifier);
@@ -216,6 +221,11 @@ public class IngredientDaoImp implements IngredientDaoInterface {
         }
         return false;
         
+    }
+
+    @Override
+    public Ingredient findIngredientByLibelle(Ingredient ingredient) {
+       return null;
     }
 }
 

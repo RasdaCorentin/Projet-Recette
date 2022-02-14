@@ -3,6 +3,12 @@
     <!-- Define Persistence Unit -->
     <persistence-unit name="projet-recette" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+    
+    <!-- Entity classes -->
+        <class>com.doranco.entities.Utilisateur</class>
+        <class>com.doranco.entities.Recette</class>
+        <class>com.doranco.entities.Ingredient</class>
+        
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/projet?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
