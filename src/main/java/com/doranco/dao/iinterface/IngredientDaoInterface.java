@@ -5,30 +5,31 @@
 package com.doranco.dao.iinterface;
 
 import com.doranco.entities.Ingredient;
-import com.doranco.entities.Recette;
 import java.util.List;
 
 /**
  *
  * @author 33767
  */
-public interface IngredientDaoInterface {
-    
-    //Lister tout les Ingredient
-    List<Ingredient> getListeIngredients();
-    
-    //Creer un Ingredient
-    Ingredient createIngredient(Ingredient ingredient);
-    
-    //Update (constructeur avec id)
-    Ingredient updateIngredient(Ingredient ingredient, int id);
-    
 
-    //Lire un utilisateur à partir de son ID
+public interface IngredientDaoInterface {
+
+    //, Lister tout les ingrédients.
+    List<Ingredient> getListeIngredients();
+
+    //, Créer un ingrédient.
+    Ingredient createIngredient(Ingredient ingredient);
+
+    //, Update (constructeur avec id).
+    Ingredient updateIngredient(Ingredient ingredient, int id);
+
+    //, Lire un ingrédient à partir de son id.
     Ingredient findIngredientById(int id);
-    
-    //Supprime un Ingredient (COMMAND ADMIN)
-    boolean deleteIngredient(int id);
-    //, Lire un Utilisateur a partir de son Nom.
+
+    //, Lire un ingrédient a partir de son libelle.
     Ingredient findIngredientByLibelle(Ingredient ingredient);
+
+    //, Supprime un Ingredient (COMMAND ADMIN).
+    boolean deleteIngredient(int id);
+
 }

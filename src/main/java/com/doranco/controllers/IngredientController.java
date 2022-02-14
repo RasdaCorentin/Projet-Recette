@@ -36,7 +36,7 @@ public class IngredientController {
     Jsonb jsonb = JsonbBuilder.create();
         /*
 --------------------------------------------------------------------------------------------------------------------------
-                                                 Liste Ingredient
+                                                Liste Ingredient
 --------------------------------------------------------------------------------------------------------------------------
      */
 
@@ -51,7 +51,7 @@ public class IngredientController {
 
                 //Ajouter To string pour info ciblée
 
-                .entity(ingredientDaoInterface.getListeIngredients())
+                .entity(ingredientDaoInterface.getListeIngredients().toString())
                 .build();
 
         daoFactory.closeEntityManagerFactory();
@@ -59,11 +59,12 @@ public class IngredientController {
         return response;
     }
 
-            /*
---------------------------------------------------------------------------------------------------------------------------
-                                                 Create Ingredient
---------------------------------------------------------------------------------------------------------------------------
-     */
+    /*
+.--------------------------------------------------------------------------------------------------------------------------
+                                                . Create Ingredient
+.--------------------------------------------------------------------------------------------------------------------------
+    */
+
     @Path("/create")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -83,13 +84,13 @@ public class IngredientController {
 
         return response;
     }
-    
 
-           /*
---------------------------------------------------------------------------------------------------------------------------
-                                                 Update Ingredient
---------------------------------------------------------------------------------------------------------------------------
+    /*
+.--------------------------------------------------------------------------------------------------------------------------
+                                                . Update Ingredient
+.--------------------------------------------------------------------------------------------------------------------------
     */
+
     @PUT
     @Path("/update/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -102,17 +103,17 @@ public class IngredientController {
 
         Response response = Response
                 .ok(ingredient.toString())
-
                 .build();
-
         return response;
         
     }
-        /*
---------------------------------------------------------------------------------------------------------------------------
-                                                 Delete Ingredient
---------------------------------------------------------------------------------------------------------------------------
+
+    /*
+.--------------------------------------------------------------------------------------------------------------------------
+                                                . Delete Ingredient
+.--------------------------------------------------------------------------------------------------------------------------
     */
+
     @DELETE
     @Path("admin/delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -120,21 +121,19 @@ public class IngredientController {
     public Response deleteIngredient(Ingredient ingredient, @PathParam(value = "id") int id) {
         
         Response response = Response
-                .ok(ingredientDaoInterface.deleteIngredient(id))
-                .build();
-
+            .ok(ingredientDaoInterface.deleteIngredient(id))
+            .build();
         daoFactory.closeEntityManagerFactory();
-        
         return response;
-        
+
     }
 
-            /*
---------------------------------------------------------------------------------------------------------------------------
-                                                 Read Ingredient
---------------------------------------------------------------------------------------------------------------------------
+    /*
+.--------------------------------------------------------------------------------------------------------------------------
+                                                . Read Ingredient.
+.--------------------------------------------------------------------------------------------------------------------------
     */
-   
+
     @Path("/read/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -144,14 +143,12 @@ public class IngredientController {
         IngredientDaoInterface ingredientDaoInterface = daoFactory.getIngredientDaoInterface();
         Ingredient ingredient = ingredientDaoInterface.findIngredientById(id);
 
-        //Creation d'une réponse
+        //§ Création d'une réponse.
         Response response = Response
-                .status(Response.Status.CREATED)
-                .entity(ingredient.toString())
-                .build();
-
+            .status(Response.Status.CREATED)
+            .entity(ingredient.toString())
+            .build();
         daoFactory.closeEntityManagerFactory();
-
         return response;
     }
 

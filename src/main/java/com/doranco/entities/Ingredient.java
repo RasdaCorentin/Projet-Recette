@@ -4,7 +4,6 @@
  */
 package com.doranco.entities;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,10 +15,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.Transient;
 
 
 /**
@@ -29,75 +25,85 @@ import javax.persistence.Transient;
 @Entity
 public class Ingredient implements Serializable{
     private static final long serialVersionUID = 1L;
-    
+
     /*
-    
-    Les attributs 
-    
+    . Les attributs 
     */
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idIngredient")
     private int id;
-    
+
     private String libelle;
     private String quantite;
-    
+
     private Date dateCrea;
     private Date dateModif;
-    
+
     /*
-    
-    Les relations
-    
+    . Les relations.
     */
 
-// A Implementer avec Recette + Many To Many
-
+    //! À Implementer avec Recette + Many To Many.
     @ManyToMany( mappedBy = "listIngredients", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER) 
     private List<Recette> listRecettes = new ArrayList<>();
-    /*
-        
-    Les Constructeurs
-        
-    */
-    
 
-    // Constructeur vide sans parametres
-    public Ingredient() {
-        
-    }
-    //Constructeur avec id
+    /*
+    .Les Constructeurs.
+    */
+
+    /**
+     * Constructeur vide sans paramètre.
+     */
+    public Ingredient() {  }
+
+    /**
+     * Constructeur avec id.
+     * @param id
+     */
     public Ingredient(int id) {
         this.id = id;
     }
-    // Constructeur sans id
+
+    /**
+     * Constructeur sans id.
+     * @param libelle
+     * @param quantite
+     */
     public Ingredient(String libelle, String quantite) {
         this.libelle = libelle;
         this.quantite = quantite;
     }
-    //Constructeur libelle
+
+    /**
+     * Constructeur libelle.
+     * @param libelle
+     */
     public Ingredient(String libelle) {
         this.libelle = libelle;
     }
-    //Constructeur complet
+
+    /**
+     * Constructeur complet.
+     * @param id
+     * @param libelle
+     * @param quantite
+     */
     public Ingredient(int id, String libelle, String quantite) {
         this.id = id;
         this.libelle = libelle;
         this.quantite = quantite;
     }
-    
+
     /*
-    
-    Methode toString
-    
+    . Méthode toString.
     */
 
     @Override
     public String toString() {
                 if(listRecettes != null){
-               return "\n Id: "
+                return "\n Id: "
                     + this.getId()
                     + "\n Libelle: "
                     + this.getLibelle()
@@ -116,13 +122,11 @@ public class Ingredient implements Serializable{
                     + "\nDATE CREA : " + this.getDateCrea()
                     + "\nDATE MODIF : " + this.getDateModif();
     }
-    
+
     /*
-    
-    Getters & Setters
-    
+    . Getters & Setters.
     */
-    
+
     /**
      * @return the id
      */
@@ -150,7 +154,7 @@ public class Ingredient implements Serializable{
     public void setLibelle(String libelle) {
         this.libelle = libelle;
     }
- 
+
     /**
      * @return the quantite
      */
@@ -164,7 +168,6 @@ public class Ingredient implements Serializable{
     public void setQuantite(String quantite) {
         this.quantite = quantite;
     }
-
 
     /**
      * @return the DateCrea
@@ -193,12 +196,9 @@ public class Ingredient implements Serializable{
     public void setDateModif(Date dateModif) {
         this.dateModif = dateModif;
     }
- 
-    
+
     /*
-    
-    Getters & Setters de Relation
-    
+    . Getters & Setters de Relation.
     */
 
     /**

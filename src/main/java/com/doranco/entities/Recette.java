@@ -5,7 +5,6 @@
 package com.doranco.entities;
 
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,97 +20,101 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
-
-
 
 /**
  *
  * @author Admin
  */
+
 @Entity
 public class Recette implements Serializable {
-   private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     /*
-    
-    Les attributs 
-    
+    . Les attributs .
     */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idRecette")
     private int id;
-    
+
     private Date dateCrea;
     private Date dateModif;
-    
+
     private String libelle;
     private String description;
-    //Encore A IMPLEMENTER
+
+    //! Encore A IMPLEMENTER
     private String refImage;
-    
+
     /*
-    
-    Les relations
-    
+    . Les relations.
     */
-    
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private Utilisateur utilisateur;
-  
-// A Implementer avec Ingredient + Many To Many
 
+    //! À Implementer avec Ingredient + Many To Many.
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(name = "Ingredient_Recette_Assocition",
             joinColumns = @JoinColumn(name = "idRecette"),
             inverseJoinColumns = @JoinColumn(name = "idIngredient") )
     private List<Ingredient> listIngredients = new ArrayList<>();
-  
+
     /*
-        
-    Les Constructeurs
-        
+    . Les Constructeurs.
     */
 
-    // Constructeur vide sans parametres
-    public Recette() {
-        
-    }
-    //Constructeur avec id
+    /**
+     * Constructeur vide sans paramètres.
+     */
+    public Recette() {  }
+
+    /**
+     * Constructeur avec id.
+     * @param id
+     */
     public Recette(int id) {
         this.id = id;
     }
-    // Constructeur sans id
+
+    /**
+     * Constructeur sans id.
+     * @param libelle
+     * @param description
+     */
     public Recette(String libelle, String description) {
         this.libelle = libelle;
         this.description = description;
     }
-    //Constructeur complet
+
+    /**
+     * Constructeur complet.
+     * @param id
+     * @param libelle
+     * @param description
+     */
     public Recette(int id, String libelle, String description) {
         this.id = id;
         this.libelle = libelle;
         this.description = description;
     }
-    
+
     /*
-    
-    Methode toString
-    
+    . Méthode toString
     */
-//Changer la methode pour afficher liste Ingredient
-@Override
+
+    //! Changer la méthode pour afficher liste ingrédient.
+    @Override
     public String toString() {
         if(listIngredients != null){
-                    return "ID :" + this.getId()
+                return "ID :" + this.getId()
                 + "\nLIBELLE : " + this.getLibelle()
                 + "\nDESCRIPTION : " + this.getDescription()
                 + "\nDATE CREA : " + this.getDateCrea()
                 + "\nDATE MODIF : " + this.getDateModif()
                 + "\nLISTE INGREDIENTS : " + this.getListIngredients().toString()
-
                 + "\n";
         }
         return "ID :" + this.getId()
@@ -119,13 +122,11 @@ public class Recette implements Serializable {
                 + "\nDESCRIPTION : " + this.getDescription()
                 + "\nDATE CREA : " + this.getDateCrea()
                 + "\nDATE MODIF : " + this.getDateModif()
-
                 + "\n";
     }
+
     /*
-    
-    Getters & Setters
-    
+    . Getters & Setters.
     */
 
     /**
@@ -169,7 +170,7 @@ public class Recette implements Serializable {
     public void setDateModif(Date dateModif) {
         this.dateModif = dateModif;
     }
-  
+
     /**
      * @return the libelle
      */
@@ -211,11 +212,9 @@ public class Recette implements Serializable {
     public void setRefImage(String refImage) {
         this.refImage = refImage;
     }
-    
+
     /*
-    
-    Getters & Setters de Relation
-    
+    . Getters & Setters de Relation.
     */
 
     /**
@@ -245,7 +244,5 @@ public class Recette implements Serializable {
     public void setListIngredients(List<Ingredient> listIngredients) {
         this.listIngredients = listIngredients;
     }
-
-
 
 }

@@ -34,89 +34,85 @@ public class RecetteController {
     Jsonb jsonb = JsonbBuilder.create();
 
     /*
---------------------------------------------------------------------------------------------------------------------------
-                                                 Liste Recette
---------------------------------------------------------------------------------------------------------------------------
+.--------------------------------------------------------------------------------------------------------------------------
+                                                . Liste Recette.
+.--------------------------------------------------------------------------------------------------------------------------
      */
+
     @Path("/admin/liste")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getListeRecette() {
-
         DaoFactory daoFactory = new DaoFactory();
-
         RecetteDaoInterface recetteDaoInterface = daoFactory.getRecetteDaoInterface();
 
-        //Creation d'une réponse
+        //§ Création d'une réponse.
         Response response = Response
-                .status(Response.Status.CREATED)
-                //Ajouter to To string pour info ciblé
-                .entity(recetteDaoInterface.getListeRecettes())
-                .build();
+            .status(Response.Status.CREATED)
+            //! Ajouter to To string pour info ciblé.
+            .entity(recetteDaoInterface.getListeRecettes())
+            .build();
 
         daoFactory.closeEntityManagerFactory();
-
         return response;
     }
+
     /*
---------------------------------------------------------------------------------------------------------------------------
-                                                 Read Recette
---------------------------------------------------------------------------------------------------------------------------
+.--------------------------------------------------------------------------------------------------------------------------
+                                                . Read Recette.
+.--------------------------------------------------------------------------------------------------------------------------
      */
-@Path("/read/{id}")
-@GET
-@Produces(MediaType.APPLICATION_JSON)
-public Response readRecette(@PathParam(value = "id") int id){
-    
-    DaoFactory daoFactory = new DaoFactory();
-    RecetteDaoInterface recetteDaoInterface = daoFactory.getRecetteDaoInterface();
-    
-    //Creation d'une réponse
+
+    @Path("/read/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response readRecette(@PathParam(value = "id") int id){
+        DaoFactory daoFactory = new DaoFactory();
+        RecetteDaoInterface recetteDaoInterface = daoFactory.getRecetteDaoInterface();
+
+        //§ Creation d'une réponse
         Response response = Response
-                .status(Response.Status.CREATED)
-                .entity(recetteDaoInterface.findRecetteById(id))
-                .build();
+            .status(Response.Status.CREATED)
+            .entity(recetteDaoInterface.findRecetteById(id))
+            .build();
 
         daoFactory.closeEntityManagerFactory();
-        
         return response;
 }
+
     /*
---------------------------------------------------------------------------------------------------------------------------
-                                                Création Recette
---------------------------------------------------------------------------------------------------------------------------
-     */
+.--------------------------------------------------------------------------------------------------------------------------
+                                                . Création Recette.
+.--------------------------------------------------------------------------------------------------------------------------
+    */
+
     @Path("/create")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createRecette(String stringUserData) {
-        //Convertis String en un objet Json data
+        //µ Convertis String en un objet Json data
         JSONObject jSONObjectData = new JSONObject(stringUserData);
-        //Recupération du recette
+        //µ Récupération du recette
         String jsonRecette = jSONObjectData.get("recette").toString();
-        //Recupération du user
+        //µ Récupération du user
         String jsonUtilisateur = jSONObjectData.get("utilisateur").toString();
-        // Instancie dans la classe recette les infos récup
+        //µ Instancie dans la classe recette les infos récup
         Recette recette = jsonb.fromJson(jsonRecette, Recette.class);
-        // Instancie dans la classe utilisateur les infos récup
+        //µ Instancie dans la classe utilisateur les infos récup
         Utilisateur utilisateur = jsonb.fromJson(jsonUtilisateur, Utilisateur.class);
-        
 
-//      Lancement de la Methode Connect                 
+        //§ Lancement de la Méthode Connect.
         DaoFactory daoFactory = new DaoFactory();
         RecetteDaoInterface recetteDaoInterface = daoFactory.getRecetteDaoInterface();
         recette = recetteDaoInterface.createRecette(recette, utilisateur);
 
-
-//Creation d'une réponse
+        //§ Création d'une réponse.
         Response response = Response
-                .status(Response.Status.CREATED)
-                .entity(recette)
-                .build();
-
+            .status(Response.Status.CREATED)
+            .entity(recette)
+            .build();
         return response;
     }
+
 }
-
-
