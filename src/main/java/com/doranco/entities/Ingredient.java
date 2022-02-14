@@ -4,6 +4,7 @@
  */
 package com.doranco.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.json.bind.annotation.JsonbTransient;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -54,8 +55,8 @@ public class Ingredient implements Serializable{
     */
 
 // A Implementer avec Recette + Many To Many
-
-    @ManyToMany( mappedBy = "listIngredients", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER) 
+    @Transient
+    @ManyToMany( mappedBy = "listIngredients", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY) 
     private List<Recette> listRecettes = new ArrayList<>();
     /*
         
@@ -96,8 +97,7 @@ public class Ingredient implements Serializable{
 
     @Override
     public String toString() {
-                if(listRecettes != null){
-               return "\n Id: "
+            return "\n Id: "
                     + this.getId()
                     + "\n Libelle: "
                     + this.getLibelle()
@@ -106,17 +106,8 @@ public class Ingredient implements Serializable{
                     + "\nDATE CREA : " + this.getDateCrea()
                     + "\nDATE MODIF : " + this.getDateModif()
                     + "\nLISTE RECETTES : " + this.getListRecettes();
-        }
-            return "\n Id: "
-                    + this.getId()
-                    + "\n Libelle: "
-                    + this.getLibelle()
-                    + "\n Quantite: "
-                    + this.getQuantite()
-                    + "\nDATE CREA : " + this.getDateCrea()
-                    + "\nDATE MODIF : " + this.getDateModif();
     }
-    
+
     /*
     
     Getters & Setters

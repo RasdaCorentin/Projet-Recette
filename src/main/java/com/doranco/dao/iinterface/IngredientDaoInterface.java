@@ -29,6 +29,7 @@ public interface IngredientDaoInterface {
     
     //Supprime un Ingredient (COMMAND ADMIN)
     boolean deleteIngredient(int id);
+    
     //, Lire un Utilisateur a partir de son Nom.
     Ingredient findIngredientByLibelle(Ingredient ingredient);
 }

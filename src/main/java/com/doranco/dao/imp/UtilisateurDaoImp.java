@@ -56,11 +56,7 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
 //. ---------------------------------------FIN--------------------------------------------------            
         } catch (Exception ex) {
             System.out.println("Erreur lors de la recherche de la liste des Utilisateurs. \n" + ex);
-        } finally {
-            if (entityManager != null) {
-                entityManager.close();
-            }
-        }
+        } 
         return listeUtilisateurs;
     }
 
@@ -472,10 +468,12 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
 
     @Override
     public Utilisateur readUtilisateur(int id) {
+        
         EntityManager entityManager = null;
         Utilisateur utilisateur = new Utilisateur();
         entityManager = daoFactory.getEntityManager();
-        Query query = entityManager.createQuery("select util from Recette util where id=:id");
+        
+        Query query = entityManager.createQuery("select util from Utilisateur util where id=:id");
         query.setParameter("id", id);
         if (query.getResultList().isEmpty()) {
             System.out.println("Il n'existe aucun utilisateur d'associer à cette id.");

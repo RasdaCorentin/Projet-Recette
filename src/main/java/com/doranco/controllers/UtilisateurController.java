@@ -13,7 +13,6 @@ import com.doranco.dao.iinterface.UtilisateurDaoInterface;
 import com.doranco.entities.RoleUtilisateur;
 import com.doranco.entities.Utilisateur;
 
-import org.json.JSONObject;
 import org.mindrot.jbcrypt.BCrypt;
 
 
@@ -243,10 +242,18 @@ public class UtilisateurController {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createUtilisateur(Utilisateur utilisateur) {
+    public Response createUtilisateur(String stringUserData) {
+        //µ Convertis String en un objet Json data.
+        JSONObject jSONObjectData = new JSONObject(stringUserData);
+        //µ Récupération du user.
+        String jsonUtilisateur = jSONObjectData.get("utilisateur").toString();
+        //µ Instancie dans la classe utilisateur les infos récupérer.
+        Utilisateur utilisateur = jsonb.fromJson(jsonUtilisateur, Utilisateur.class);
+        //µ Lancement de la méthode Connect.
+        
         DaoFactory daoFactory = new DaoFactory();
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
-
+        System.out.println(utilisateur);
         //§ Je vérifie dans la base de donnée l'existence du nom que souhaite prendre l'utilisateur.
         EntityManager entityManager = daoFactory.getEntityManager();
         Query query = entityManager.createQuery( "SELECT user FROM Utilisateur user WHERE nom=:nom" );
@@ -261,7 +268,7 @@ public class UtilisateurController {
     
             Response response = Response
                     .status(Response.Status.CREATED)
-                    .entity("Bienvenue : " + utilisateur.toString() + "Tu dois maintenant allez te connecter.")
+                    .entity(utilisateur)
                     .build();
     
             daoFactory.closeEntityManagerFactory();
@@ -324,7 +331,7 @@ public class UtilisateurController {
 
                     Response response = Response
                             .status(Response.Status.ACCEPTED)
-                            .entity("Bienvenue : " + utilisateur.toString() + ", tu as obtenues ton laisser passer A38. Tu peux maintenant publier tes recettes.")
+                            .entity(utilisateur)
                             .build();
                     return response;
 
@@ -447,7 +454,7 @@ public class UtilisateurController {
 
             Response response = Response
                     .status(Response.Status.CREATED)
-                    .entity(utilisateur.toString())
+                    .entity(utilisateur)
                     .build();
             return response;
 
@@ -483,7 +490,7 @@ public class UtilisateurController {
         if (utilisateur != null) {
             Response response = Response
             .status(Response.Status.CREATED)
-            .entity(utilisateur.toString())
+            .entity(utilisateur)
             .build();
 
         daoFactory.closeEntityManagerFactory();

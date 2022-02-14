@@ -11,6 +11,10 @@ package com.doranco.entities;
  */
 
 
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import java.io.Serializable;
@@ -62,8 +66,8 @@ public class Utilisateur implements Serializable{
     Les relations
     */
 
-    
-    @OneToMany(mappedBy = "utilisateur", fetch = FetchType.LAZY)
+    @Transient
+    @OneToMany(mappedBy = "utilisateur")
     private List<Recette> listeRecettes = new ArrayList<>();
 
     /*
@@ -154,26 +158,13 @@ public class Utilisateur implements Serializable{
 
     @Override
     public String toString() {
-        if (listeRecettes != null) {
 
             return "ID :" + this.id
                     + "\nNOM : " + this.nom
                     + "\nEMAIL : " + this.email
                     + "\nDATE CREA : " + this.DateCrea
                     + "\nDATE MODIF : " + this.DateModif
-                    + "\nROLE : " + this.role
-                    + "\nLISTE DES RECETTES : " + this.listeRecettes
-                    + "\n";
-        } else {
-            return "ID :" + this.id
-                    + "\nNOM : " + this.nom
-                    + "\nEMAIL : " + this.email
-                    + "\nDATE CREA : " + this.DateCrea
-                    + "\nDATE MODIF : " + this.DateModif
-                    + "\nROLE : " + this.role
-                    + "\n";
-        }
-
+                    + "\nROLE : " + this.role;
     }
 
     /*
