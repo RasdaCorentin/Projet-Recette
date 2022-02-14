@@ -30,7 +30,7 @@ import org.json.JSONObject;
  */
 @Path("/utilisateur/recette")
 public class RecetteController {
-
+    Recette recette;
     Jsonb jsonb = JsonbBuilder.create();
 
     /*
@@ -70,11 +70,12 @@ public Response readRecette(@PathParam(value = "id") int id){
     
     DaoFactory daoFactory = new DaoFactory();
     RecetteDaoInterface recetteDaoInterface = daoFactory.getRecetteDaoInterface();
+    recette = recetteDaoInterface.findRecetteById(id);
     
     //Creation d'une réponse
         Response response = Response
                 .status(Response.Status.CREATED)
-                .entity(recetteDaoInterface.findRecetteById(id))
+                .entity(recette)
                 .build();
 
         daoFactory.closeEntityManagerFactory();
@@ -98,7 +99,7 @@ public Response readRecette(@PathParam(value = "id") int id){
         //Recupération du user
         String jsonUtilisateur = jSONObjectData.get("utilisateur").toString();
         // Instancie dans la classe recette les infos récup
-        Recette recette = jsonb.fromJson(jsonRecette, Recette.class);
+         recette = jsonb.fromJson(jsonRecette, Recette.class);
         // Instancie dans la classe utilisateur les infos récup
         Utilisateur utilisateur = jsonb.fromJson(jsonUtilisateur, Utilisateur.class);
         
