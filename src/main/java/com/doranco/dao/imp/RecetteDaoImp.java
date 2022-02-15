@@ -153,4 +153,100 @@ public class RecetteDaoImp implements RecetteDaoInterface {
         recette = (Recette) query.getResultList().get(0);
         return recette;
     }
+        /*
+--------------------------------------------------------------------------------------------------------------------------
+                                                Update Recette (ID) 
+--------------------------------------------------------------------------------------------------------------------------
+     */
+    @Override
+    public Recette updateRecette(Recette recette, int id) {
+        EntityManager entityManager = null;
+        EntityTransaction transaction = null;
+        try {
+            entityManager = daoFactory.getEntityManager();
+
+            Recette recetteAModifier = entityManager.find(Recette.class, id);
+            
+            System.out.println("Recuperation de la recette !!!!!!!!!!!! " + recetteAModifier);
+                        
+            if (recetteAModifier != null) {
+                transaction = entityManager.getTransaction();
+
+                Date now = new Date();
+        
+                recetteAModifier.setLibelle(recette.getLibelle());
+                recetteAModifier.setDescription(recette.getDescription());
+                recetteAModifier.setRefImage(recette.getRefImage());
+
+                recetteAModifier.setUtilisateur(recette.getUtilisateur());
+
+                recetteAModifier.setDateModif(now);
+
+                transaction.begin();
+                List<Ingredient> listeIngredient = new ArrayList<>(recette.getListIngredients());
+                IngredientDaoInterface ingredientDaoInterface = daoFactory.getIngredientDaoInterface();
+                for (int index = 0; index < listeIngredient.size(); index++) {
+                    Ingredient ingredient = listeIngredient.get(index);
+                    ingredient = ingredientDaoInterface.createIngredient(ingredient);
+                }
+                entityManager.persist(recetteAModifier);
+                transaction.commit();
+                System.out.println("<----------- Mise a jour Recette avec succes ------->");
+                return recette;
+
+            }
+            System.out.println("<----------- Recette avec id non trouvee ------->");
+            return null;
+
+        } catch (Exception ex) {
+            transaction.rollback();
+            System.out.println("Erreur mise a jour Recette \n");
+            ex.printStackTrace();
+
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+        return null;
+
+    }
+      /*
+--------------------------------------------------------------------------------------------------------------------------
+                                                 Liste Recette avec DAO FACTORY 
+--------------------------------------------------------------------------------------------------------------------------
+     */
+//Utilise Jquery pour avoir une liste d'recette depuis la base de données
+    @Override
+    public List<Recette> getListeRecettesByIdUser(int id) {
+
+        EntityManager entityManager = null;
+        List<Recette> listeRecettes = new ArrayList<>();
+
+        try {
+// ------------------------------------------Methode-------------------------------------------------- 
+
+            entityManager = daoFactory.getEntityManager();
+
+            Query query = entityManager.createQuery("SELECT e FROM Recette e where utilisateur_idUtilisateur=:id", Recette.class);
+            query.setParameter("id", id);
+            if (query.getResultList().isEmpty()) {
+            System.out.println("Cet id utilisateur n'existe pas");
+            return null;
+        }
+            listeRecettes = query.getResultList();
+
+// ---------------------------------------FIN Methode--------------------------------------------------            
+        } catch (Exception ex) {
+
+            System.out.println("Erreur lister Recettes \n" + ex);
+//            ex.printStackTrace();
+
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+        return listeRecettes;
+    }
 }
