@@ -83,6 +83,7 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
             utilisateur.setPassword(passwordHash);
             utilisateur.setSalt(salt);
             utilisateur.setStatuts(false);
+            utilisateur.setSeau(100);
             transaction.begin();
             entityManager.persist(utilisateur);
             transaction.commit();
@@ -164,7 +165,6 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
         return null;
     }
 
-
     //. ----------Comparer le mot de passe donné par un utilisateur à celui de la base de donnée.----------
 
     @Override
@@ -177,6 +177,48 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
         System.out.println("---------- Le mot de passe entré ne correspond pas à celui trouvé dans la base de données. ----------");
 
         return false;
+    }
+
+    //. ----------Utilise un jeton.----------
+
+
+    @Override
+    public Utilisateur useJeton(Utilisateur utilisateur) {
+        EntityManager entityManager = null;
+        EntityTransaction transaction = null;
+        try {
+            entityManager = daoFactory.getEntityManager();
+//. -------------------------------------------------------------------------------------------
+
+            if (utilisateur != null) {
+                transaction = entityManager.getTransaction();
+
+                    utilisateur.setDateModif(new Date());
+                    utilisateur.setSeau(utilisateur.getSeau() - 1);
+
+                    transaction.begin();
+                    entityManager.merge(utilisateur);
+                    transaction.commit();
+                    System.out.println("<----------- Un jeton vient d'être utilisé. ------->");
+                    return utilisateur;
+            }
+
+            System.out.println("<----------- Utilisation d'un jeton impossible. ------->");
+            return null;
+
+//. ---------------------------------------FIN-------------------------------------------------- 
+        } catch (Exception ex) {
+            transaction.rollback();
+            System.out.println("Il y a eu une erreur lors de l'utilisation d'un jeton. \n");
+
+            ex.printStackTrace();
+
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+        return null;
     }
 
     /*
@@ -231,6 +273,7 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
                                                 % Update Utilisateur 
 :--------------------------------------------------------------------------------------------------------------------------
     */
+
     @Override
     public Utilisateur updateUtilisateur(Utilisateur utilisateur) {
         EntityManager entityManager = null;
@@ -266,6 +309,53 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
         } catch (Exception ex) {
             transaction.rollback();
             System.out.println("Il y a eu une erreur lors de l'update de l'utilisateur. \n");
+
+            ex.printStackTrace();
+
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+        return null;
+    }
+
+    /*
+:--------------------------------------------------------------------------------------------------------------------------
+                                                % Remplir seau
+:--------------------------------------------------------------------------------------------------------------------------
+    */
+
+    @Override
+    public Utilisateur remplirSeau(int id) {
+        EntityManager entityManager = null;
+        EntityTransaction transaction = null;
+        try {
+            entityManager = daoFactory.getEntityManager();
+//. -------------------------------------------------------------------------------------------
+
+            //§ Récupération de l'utilisateur dont le seau a besoin d'être remplie.
+            Utilisateur utilisateur = findUtilisateurById(id);
+
+            if (utilisateur != null) {
+                transaction = entityManager.getTransaction();
+
+                    utilisateur.setDateModif(new Date());
+                    utilisateur.setSeau(100);
+
+                    transaction.begin();
+                    entityManager.merge(utilisateur);
+                    transaction.commit();
+                    System.out.println("<----------- Seau remplie avec succès. ------->");
+                    return utilisateur;
+            }
+            System.out.println("<----------- Aucun utilisateur ne correspond à cette id. ------->");
+            return null;
+
+//. ---------------------------------------FIN-------------------------------------------------- 
+        } catch (Exception ex) {
+            transaction.rollback();
+            System.out.println("Il y a eu une erreur lors du remplissage du seau. \n");
 
             ex.printStackTrace();
 
@@ -485,4 +575,3 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
     }
 
 }
-

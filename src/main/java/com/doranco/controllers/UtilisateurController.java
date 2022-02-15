@@ -212,11 +212,51 @@ public class UtilisateurController {
         if (utilisateurBdd != null) {
             Response response = Response
                 .status(Response.Status.ACCEPTED)
-                .entity("Utilisateur id :" + id + " Supprimé")
+                .entity("Utilisateur id : " + id + " supprimé.")
                 .build();
             daoFactory.closeEntityManagerFactory();
             return response;
         } 
+
+        //! ----------Si l'id n'est pas trouvé.----------
+        else {
+            Response response = Response
+                .status(Response.Status.NOT_FOUND)
+                .entity("Aucun utilisateur ne possédant cette id n'a pus être trouvé.")
+                .build();
+            return response;
+        }
+
+    }
+
+    /*
+:--------------------------------------------------------------------------------------------------------------------------
+                                                % Remplir le seau d'un utilisateur
+:--------------------------------------------------------------------------------------------------------------------------
+    */
+
+    @Path("/admin/remplir/{id}")
+    @PUT
+    @Produces( MediaType.APPLICATION_JSON )
+    @Consumes( MediaType.APPLICATION_JSON )
+    public Response remplirSeau(@PathParam(value = "id") int id) {
+        DaoFactory daoFactory = new DaoFactory();
+
+        UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
+        Utilisateur utilisateurBdd = utilisateurDaoInterface.findUtilisateurById(id);
+        daoFactory.closeEntityManagerFactory();
+
+        //. ----------Vérification de l'id.----------
+
+        //$ ----------Si l'id est bien trouvé.----------
+        if (utilisateurBdd != null) {
+            Response response = Response
+                .status(Response.Status.ACCEPTED)
+                .entity("Le seau de l'utilisateur ayant l'id : " + id + " a bien été remplie.")
+                .build();
+            daoFactory.closeEntityManagerFactory();
+            return response;
+        }
 
         //! ----------Si l'id n'est pas trouvé.----------
         else {
