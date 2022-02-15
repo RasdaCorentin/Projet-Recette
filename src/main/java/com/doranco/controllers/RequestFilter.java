@@ -21,6 +21,8 @@ import java.util.Base64;
  * @author Admin
  */
 
+//A ajouter pour implémenter  les conditions
+
 @Provider
 public class RequestFilter implements ContainerRequestFilter {
 
@@ -29,6 +31,7 @@ public class RequestFilter implements ContainerRequestFilter {
                                             % Vérification Rôle Authentification 
 --------------------------------------------------------------------------------------------------------------------------
     */
+
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
@@ -63,6 +66,8 @@ public class RequestFilter implements ContainerRequestFilter {
         String nom = credentials[0];
         String password = credentials[1];
 
+
+
         /*
         = J'enregistre le username et password.
         = Puis je les utilise dans la fonction login.
@@ -70,7 +75,7 @@ public class RequestFilter implements ContainerRequestFilter {
         = Sinon, s'il ne renvoie rien alors je bloque la connexion.
         = Ensuite je passe à la vérification pour la pages réservés aux administrateurs.
         */
-
+      
         Utilisateur utilisateur = new Utilisateur(nom, password);
         DaoFactory daoFactory = new DaoFactory();
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
@@ -91,69 +96,23 @@ public class RequestFilter implements ContainerRequestFilter {
 
                 /*
 :--------------------------------------------------------------------------------------------------------------------------
-                                                % Reste t'il des jetons à l'utilisateur ?
-:--------------------------------------------------------------------------------------------------------------------------
-                */
-
-                if (utilisateur.verificationSeau()) {
-
-                /*
-:--------------------------------------------------------------------------------------------------------------------------
                                                 % Si la page est réservé aux administrateurs.
 :--------------------------------------------------------------------------------------------------------------------------
                 */
 
-                    if (urlPath.contains("admin")) {
-                        if (utilisateur.isAdmin()) {
-
-                            utilisateurDaoInterface.useJeton(utilisateur);
-                            return;
-
-                        }
-
-                /*
-:--------------------------------------------------------------------------------------------------------------------------
-                                                % Si l'utilisateur n'est pas un administrateur.
-:--------------------------------------------------------------------------------------------------------------------------
-                */
-
-                    else {
-
+                if (urlPath.contains("admin")) {
+                    if (utilisateur.isAdmin()) {
+                        return;
+                    } else {
                         Response response = Response
                             .status(Response.Status.FORBIDDEN)
                             .entity("T'es pas Admin COCO !")
                             .build();
                         requestContext.abortWith(response);
-
                     }
                 }
 
-                /*
-:--------------------------------------------------------------------------------------------------------------------------
-                                                % Les pages pour les utilisateurs simple.
-:--------------------------------------------------------------------------------------------------------------------------
-                */
-
-                else {
-                    utilisateurDaoInterface.useJeton(utilisateur);
-                    return;
-                }
-
-                }
-
-                /*
-:--------------------------------------------------------------------------------------------------------------------------
-                                                % Si l'utilisateur n'a plus de jeton.
-:--------------------------------------------------------------------------------------------------------------------------
-                */
-
-                else {
-                    Response response = Response
-                    .status(Response.Status.TOO_MANY_REQUESTS)
-                    .entity("Vous êtes sur un site de recette, pas à un buffet à volonté ! Calmez-vous sur les requêtes !")
-                    .build();
-                    requestContext.abortWith(response);
-                }
+                return;
 
             }
 
