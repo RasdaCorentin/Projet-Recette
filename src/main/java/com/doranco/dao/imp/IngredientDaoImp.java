@@ -223,10 +223,20 @@ public class IngredientDaoImp implements IngredientDaoInterface {
         
     }
 
-    @Override
+       @Override
     public Ingredient findIngredientByLibelle(Ingredient ingredient) {
-       return null;
+       EntityManager entityManager = null;
+        entityManager = daoFactory.getEntityManager();
+        Query query = entityManager.createQuery("select ing from Ingredient ing where libelle=:libelle");
+        query.setParameter("libelle", ingredient.getLibelle());
+        if (query.getResultList().isEmpty()) {
+            System.out.println("---------- Ce nom d'ingrédient n'existe pas. ----------");
+            return null;
+        }
+        ingredient = (Ingredient) query.getResultList().get(0);
+        return ingredient;
     }
-}
+ }
+
 
 

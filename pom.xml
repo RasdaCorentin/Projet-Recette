@@ -17,12 +17,7 @@
     </properties>
     
     <dependencies>
-        <!--        Ajout JSON      -->
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20160810</version>
-        </dependency>
+        
         <!--        Ajout des methodes Jakarta        -->
         <dependency>
             <groupId>jakarta.platform</groupId>
@@ -59,8 +54,18 @@
             <artifactId>validation-api</artifactId>
             <version>2.0.1.Final</version>
         </dependency>
-    </dependencies>
-    
+    <!--        Ajout JSON      -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20160810</version>
+        </dependency>
+    <dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.13.0</version>
+    </dependency>
+</dependencies>
     <build>
         <plugins>
             <plugin>

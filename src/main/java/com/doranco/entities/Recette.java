@@ -5,6 +5,7 @@
 package com.doranco.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.json.bind.annotation.JsonbTransient;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -58,14 +59,14 @@ public class Recette implements Serializable {
     Les relations
     
     */
-    
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Utilisateur utilisateur;
   
 // A Implementer avec Ingredient + Many To Many
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "Ingredient_Recette_Assocition",
+    @JoinTable(name = "Ingredient_Recette_Association",
             joinColumns = @JoinColumn(name = "idRecette"),
             inverseJoinColumns = @JoinColumn(name = "idIngredient") )
     private List<Ingredient> listIngredients = new ArrayList<>();
@@ -110,7 +111,8 @@ public class Recette implements Serializable {
                 + "\nDESCRIPTION : " + this.getDescription()
                 + "\nDATE CREA : " + this.getDateCrea()
                 + "\nDATE MODIF : " + this.getDateModif()
-                + "\nLISTE INGREDIENTS : " + this.getListIngredients().toString()
+                + "\nLISTE INGREDIENTS : " + this.getListIngredients()
+                +"\nUTILISATEUR : " + this.getUtilisateur()
 
                 + "\n";
         }
@@ -119,7 +121,7 @@ public class Recette implements Serializable {
                 + "\nDESCRIPTION : " + this.getDescription()
                 + "\nDATE CREA : " + this.getDateCrea()
                 + "\nDATE MODIF : " + this.getDateModif()
-
+                +"\nUTILISATEUR : " + this.getUtilisateur()
                 + "\n";
     }
     /*
