@@ -29,7 +29,10 @@ public interface UtilisateurDaoInterface {
 
     //, Supprimer un utilisateur.
     boolean deleteUtilisateur(int id);
-    
+
+    //, Renflouer le seau d'un utilisateur.
+    Utilisateur remplirSeau(int id);
+
 //.----------------------------------ADMIN/NEW USER COMMAND (À interdire aux user-------------------------------------------------
     
     //, Créer un Utilisateur.
@@ -51,6 +54,9 @@ public interface UtilisateurDaoInterface {
 
     //, Lire un utilisateur à partir de son ID.
     Utilisateur findUtilisateurById(int id);
+
+    //, Utiliser un jeton.
+    Utilisateur useJeton(Utilisateur utilisateur);
 
 //.---------------------------------------------ADMIN / USER-------------------------------------------------
 
