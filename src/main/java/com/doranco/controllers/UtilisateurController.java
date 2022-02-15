@@ -244,6 +244,7 @@ public class UtilisateurController {
 
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
         Utilisateur utilisateurBdd = utilisateurDaoInterface.findUtilisateurById(id);
+        utilisateurDaoInterface.remplirSeau(id);
         daoFactory.closeEntityManagerFactory();
 
         //. ----------Vérification de l'id.----------
