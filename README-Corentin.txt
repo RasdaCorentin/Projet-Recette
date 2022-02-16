@@ -3,7 +3,7 @@ Persistence :
 <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/projet?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
 
 
-Environement:
+Environnement:
 {{http://localhost:8080/ProjetRecette/api/}}
 (Pour avoir un admin, passez manuellement dans phpMyadmin) le rôle de l'utilisateur créer de 1 à 0.
 End Point:
@@ -33,6 +33,7 @@ Exemple postman:
 
 
 Admin:
+
 	Liste Utilisateur:
 -{{url_projet}}utilisateur/admin/liste
 Exemple postman:
@@ -60,6 +61,9 @@ Exemple postman: !!! Modifie le mot de passe de l'utilisateur le rendant inutili
 -{{url_projet}}utilisateur/recette/admin/liste
 Exemple postman:
 
+    Remplir un seau:
+-{{url_projet}}utilisateur/admin/remplir/4
+Exemple postman : 
 
 User:
 
