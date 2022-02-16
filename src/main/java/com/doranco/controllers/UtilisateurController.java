@@ -13,7 +13,6 @@ import com.doranco.dao.iinterface.UtilisateurDaoInterface;
 import com.doranco.entities.RoleUtilisateur;
 import com.doranco.entities.Utilisateur;
 
-import org.json.JSONObject;
 import org.mindrot.jbcrypt.BCrypt;
 
 
@@ -213,11 +212,52 @@ public class UtilisateurController {
         if (utilisateurBdd != null) {
             Response response = Response
                 .status(Response.Status.ACCEPTED)
-                .entity("Utilisateur id :" + id + " Supprimé")
+                .entity("Utilisateur id : " + id + " supprimé.")
                 .build();
             daoFactory.closeEntityManagerFactory();
             return response;
         } 
+
+        //! ----------Si l'id n'est pas trouvé.----------
+        else {
+            Response response = Response
+                .status(Response.Status.NOT_FOUND)
+                .entity("Aucun utilisateur ne possédant cette id n'a pus être trouvé.")
+                .build();
+            return response;
+        }
+
+    }
+
+    /*
+:--------------------------------------------------------------------------------------------------------------------------
+                                                % Remplir le seau d'un utilisateur
+:--------------------------------------------------------------------------------------------------------------------------
+    */
+
+    @Path("/admin/remplir/{id}")
+    @PUT
+    @Produces( MediaType.APPLICATION_JSON )
+    @Consumes( MediaType.APPLICATION_JSON )
+    public Response remplirSeau(@PathParam(value = "id") int id) {
+        DaoFactory daoFactory = new DaoFactory();
+
+        UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
+        Utilisateur utilisateurBdd = utilisateurDaoInterface.findUtilisateurById(id);
+        utilisateurDaoInterface.remplirSeau(id);
+        daoFactory.closeEntityManagerFactory();
+
+        //. ----------Vérification de l'id.----------
+
+        //$ ----------Si l'id est bien trouvé.----------
+        if (utilisateurBdd != null) {
+            Response response = Response
+                .status(Response.Status.ACCEPTED)
+                .entity("Le seau de l'utilisateur ayant l'id : " + id + " a bien été remplie.")
+                .build();
+            daoFactory.closeEntityManagerFactory();
+            return response;
+        }
 
         //! ----------Si l'id n'est pas trouvé.----------
         else {
@@ -243,10 +283,18 @@ public class UtilisateurController {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createUtilisateur(Utilisateur utilisateur) {
+    public Response createUtilisateur(String stringUserData) {
+        //µ Convertis String en un objet Json data.
+        JSONObject jSONObjectData = new JSONObject(stringUserData);
+        //µ Récupération du user.
+        String jsonUtilisateur = jSONObjectData.get("utilisateur").toString();
+        //µ Instancie dans la classe utilisateur les infos récupérer.
+        Utilisateur utilisateur = jsonb.fromJson(jsonUtilisateur, Utilisateur.class);
+        //µ Lancement de la méthode Connect.
+        
         DaoFactory daoFactory = new DaoFactory();
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
-
+        System.out.println(utilisateur);
         //§ Je vérifie dans la base de donnée l'existence du nom que souhaite prendre l'utilisateur.
         EntityManager entityManager = daoFactory.getEntityManager();
         Query query = entityManager.createQuery( "SELECT user FROM Utilisateur user WHERE nom=:nom" );
@@ -261,7 +309,7 @@ public class UtilisateurController {
     
             Response response = Response
                     .status(Response.Status.CREATED)
-                    .entity("Bienvenue : " + utilisateur.toString() + "Tu dois maintenant allez te connecter.")
+                    .entity(utilisateur)
                     .build();
     
             daoFactory.closeEntityManagerFactory();
@@ -324,7 +372,7 @@ public class UtilisateurController {
 
                     Response response = Response
                             .status(Response.Status.ACCEPTED)
-                            .entity("Bienvenue : " + utilisateur.toString() + ", tu as obtenues ton laisser passer A38. Tu peux maintenant publier tes recettes.")
+                            .entity(utilisateur)
                             .build();
                     return response;
 
@@ -447,7 +495,7 @@ public class UtilisateurController {
 
             Response response = Response
                     .status(Response.Status.CREATED)
-                    .entity(utilisateur.toString())
+                    .entity(utilisateur)
                     .build();
             return response;
 
@@ -483,7 +531,7 @@ public class UtilisateurController {
         if (utilisateur != null) {
             Response response = Response
             .status(Response.Status.CREATED)
-            .entity(utilisateur.toString())
+            .entity(utilisateur)
             .build();
 
         daoFactory.closeEntityManagerFactory();

@@ -4,12 +4,10 @@
  */
 package com.doranco.entities;
 
-
 /**
  *
  * @author 33767
  */
-
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -17,10 +15,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -51,6 +47,7 @@ public class Utilisateur implements Serializable{
 
     private String password;
 
+    private int seau;
     private String salt;
     private String email;
     private boolean statuts;
@@ -62,8 +59,8 @@ public class Utilisateur implements Serializable{
     Les relations
     */
 
-    
-    @OneToMany(mappedBy = "utilisateur", fetch = FetchType.LAZY)
+    @Transient
+    @OneToMany(mappedBy = "utilisateur")
     private List<Recette> listeRecettes = new ArrayList<>();
 
     /*
@@ -88,6 +85,10 @@ public class Utilisateur implements Serializable{
 
     public boolean isActif() {
         return (this.statuts == true);
+    }
+
+    public boolean verificationSeau() {
+        return this.seau >= 0;
     }
 
     /*
@@ -140,12 +141,12 @@ public class Utilisateur implements Serializable{
      * @param password
      * @param email
      */
-
-    public Utilisateur(int id, String nom, String password, String email) {
+    public Utilisateur(int id, String nom, String password, String email, int seau) {
         this.id = id;
         this.nom = nom;
         this.password = password;
         this.email = email;
+        this.seau = seau;
     }
 
     /*
@@ -154,26 +155,13 @@ public class Utilisateur implements Serializable{
 
     @Override
     public String toString() {
-        if (listeRecettes != null) {
 
             return "ID :" + this.id
                     + "\nNOM : " + this.nom
                     + "\nEMAIL : " + this.email
                     + "\nDATE CREA : " + this.DateCrea
                     + "\nDATE MODIF : " + this.DateModif
-                    + "\nROLE : " + this.role
-                    + "\nLISTE DES RECETTES : " + this.listeRecettes
-                    + "\n";
-        } else {
-            return "ID :" + this.id
-                    + "\nNOM : " + this.nom
-                    + "\nEMAIL : " + this.email
-                    + "\nDATE CREA : " + this.DateCrea
-                    + "\nDATE MODIF : " + this.DateModif
-                    + "\nROLE : " + this.role
-                    + "\n";
-        }
-
+                    + "\nROLE : " + this.role;
     }
 
     /*
@@ -312,7 +300,8 @@ public class Utilisateur implements Serializable{
      */
     public boolean isStatuts() {
         return statuts;
-    }    
+    }
+
     /**
      * @return the newNom
      */
@@ -325,6 +314,22 @@ public class Utilisateur implements Serializable{
      */
     public void setNewNom(String newNom) {
         this.newNom = newNom;
+    }
+
+    /**
+     * 
+     * @return the seau
+     */
+    public int getSeau() {
+        return this.seau;
+    }
+
+
+    /**
+     * @param seau the new seau to set
+     */
+    public void setSeau(int seau) {
+        this.seau = seau;
     }
 
     /*

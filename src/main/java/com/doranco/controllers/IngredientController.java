@@ -20,8 +20,8 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
 import org.json.JSONObject;
+
 
 
 /**
@@ -69,9 +69,8 @@ public class IngredientController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createIngredient(Ingredient ingredient) {
-        DaoFactory daoFactory = new DaoFactory();
-
-        IngredientDaoInterface ingredientDaoInterface = daoFactory.getIngredientDaoInterface();
+        
+         ingredientDaoInterface = daoFactory.getIngredientDaoInterface();
         ingredient = ingredientDaoInterface.createIngredient(ingredient);
 
         Response response = Response
@@ -96,12 +95,11 @@ public class IngredientController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateIngredient(Ingredient ingredient, @PathParam(value = "id") int id) {
         
-        DaoFactory daoFactory = new DaoFactory();
-        IngredientDaoInterface ingredientDaoInterface=daoFactory.getIngredientDaoInterface();
+        ingredientDaoInterface=daoFactory.getIngredientDaoInterface();
         ingredient = ingredientDaoInterface.updateIngredient(ingredient, id);
 
         Response response = Response
-                .ok(ingredient.toString())
+                .ok(ingredient)
 
                 .build();
 
@@ -140,8 +138,7 @@ public class IngredientController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response readIngredient(@PathParam(value = "id") int id) {
 
-        DaoFactory daoFactory = new DaoFactory();
-        IngredientDaoInterface ingredientDaoInterface = daoFactory.getIngredientDaoInterface();
+        ingredientDaoInterface = daoFactory.getIngredientDaoInterface();
         Ingredient ingredient = ingredientDaoInterface.findIngredientById(id);
 
         //Creation d'une réponse
@@ -154,5 +151,28 @@ public class IngredientController {
 
         return response;
     }
+@Path("/read")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response readIngredientParNom(String stringUserData) {
+        //Convertis String en un objet Json data
+        JSONObject jSONObjectData = new JSONObject(stringUserData);
+        //Recupération de l'ingrédient
+        String jsonRecette = jSONObjectData.get("ingredient").toString();
+        // Instancie dans la classe ingredient les infos récup
+        Ingredient ingredient = jsonb.fromJson(jsonRecette, Ingredient.class);
 
+        ingredientDaoInterface = daoFactory.getIngredientDaoInterface();
+        ingredient = ingredientDaoInterface.findIngredientByLibelle(ingredient);
+
+        //Creation d'une réponse
+        Response response = Response
+                .status(Response.Status.CREATED)
+                .entity(ingredient.toString())
+                .build();
+
+        daoFactory.closeEntityManagerFactory();
+
+        return response;
+    }
 }

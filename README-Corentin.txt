@@ -3,7 +3,7 @@ Persistence :
 <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/projet?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
 
 
-Environement:
+Environnement:
 {{http://localhost:8080/ProjetRecette/api/}}
 (Pour avoir un admin, passez manuellement dans phpMyadmin) le rôle de l'utilisateur créer de 1 à 0.
 End Point:
@@ -80,22 +80,22 @@ Exemple postman:
 -{{url_projet}}utilisateur/recette/create
 Exemple postman: 
 {
-    "recette" : {
-        "libelle" : "Sushi",
-        "description" : "Repas à base de poisson et de riz",
-        "listeIngredients" : [
+    "recette": {
+        "libelle": "Sushi",
+        "description": "Repas à base de poisson et de riz",
+        "listIngredients": [
             {
-                "libelle" : "Algues séché",
-                "quantite" : "1"
+                "libelle": "Algues séché",
+                "quantite": "1"
             },
             {
-                "libelle" : "Thon en tranche",
-                "quantite" : "1"
+                "libelle": "Thon en tranche",
+                "quantite": "1"
             }
         ]
     },
-    "utilisateur" : {
-        "nom" : "Mousse"
+    "utilisateur": {
+        "nom": "Corentin"
     }
 }
 
