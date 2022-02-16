@@ -4,9 +4,7 @@
  */
 
 /*
- 
- Methode Post Formulaire Connexion
- 
+Méthode Post Formulaire Connexion
  */
 
 var form = document.getElementById("myForm");
@@ -14,10 +12,7 @@ var http = new XMLHttpRequest();
 var url = 'http://localhost:8080/Projet-Recette/api/utilisateur/enregistrez/connect';
 var method = 'PUT';
 
-
-
-
-// … et prenez en charge l'événement submit.
+// ... et prenez en charge l'événement submit.
 form.addEventListener("submit", function (event) {
     event.preventDefault();
     var data = {
@@ -42,5 +37,4 @@ function requestTest(data) {
         }
     };
     http.send(data);
-}
-;
+};
