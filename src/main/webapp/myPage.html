@@ -9,7 +9,7 @@
 
         <!-- Latest compiled JavaScript -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-         <script src="javascript/myPage.js" async></script>
+         <script src="javascript/myPage.js" defer></script>
         <script src="javascript/script_lien.js"></script>
     </head>
     <body>
@@ -24,7 +24,7 @@
                 <th>Recette</th>
             </tr>
 
-            <tbody id="MaListRecettes">
+            <tbody id="ListRecettes">
                 
             </tbody>
         </table>
@@ -47,45 +47,6 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>    
-        <script async>
-            
-//    let form = document.getElementById("myForm");
-//
-//form.addEventListener("submit", function (event) {
-//event.preventDefault();
-//var url = 'http://localhost:8080/Projet-Recette/api/utilisateur/recette/liste/1';
-//var headers = new Headers();
-//    var username = document.getElementById("nom").value;
-//    var password = document.getElementById("password").value;
-//    var authBasic = username + ":" + password;
-// function fetchData() {
-//    //headers.append('Content-Type', 'application/json');
-//    headers.set('Authorization', 'Basic ' + btoa(authBasic));
-//
-//    
-//        let response = fetch(url, {method: 'GET',
-//            headers: headers
-//        });
-//        console.log(response.status); // 200
-//        console.log(response.statusText); // OK
-//        if (response.status === 201) {
-//            let data =  response.json();
-//            console.log(data);
-//
-//            var table = document.getElementById("ListUtilisateurs");
-//            var i;
-//            /* i est égal à 0; tant que i plus petit que myArr, relancer la boucle */
-//            for (i = 0; i < data.length; i++) {
-//                var text = "<tr>"
-//                text += "<td>" + data[i].nom + "</td>"
-//                        + "<td>" + data[i].email + "</td>"
-//                text += "</tr>";
-//                table.innerHTML += text;
-//            }
-//        }
-//    }
-//});
-</script>
   <div w3-include="javascript/footer.html"></div>         
         <script>
             includeHTML();
