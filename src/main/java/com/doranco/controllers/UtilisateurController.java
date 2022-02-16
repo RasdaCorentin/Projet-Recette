@@ -212,7 +212,7 @@ public class UtilisateurController {
         if (utilisateurBdd != null) {
             Response response = Response
                 .status(Response.Status.ACCEPTED)
-                .entity("Utilisateur id : " + id + " supprimé.")
+                .entity("L'utilisateur ayant l'id : " + id + " a bien été supprimé.")
                 .build();
             daoFactory.closeEntityManagerFactory();
             return response;
@@ -308,22 +308,21 @@ public class UtilisateurController {
             utilisateur = utilisateurDaoInterface.createUtilisateur(utilisateur);
     
             Response response = Response
-                    .status(Response.Status.CREATED)
-                    .entity(utilisateur)
-                    .build();
-    
+                .status(Response.Status.CREATED)
+                .entity(utilisateur)
+                .build();
+
             daoFactory.closeEntityManagerFactory();
-    
             return response;
         }
 
         //! ----------Le nom est déjà utilisé par un autre utilisateur.----------
         else {
-                Response response = Response
-                    .status(Response.Status.FORBIDDEN)
-                    .entity("Le nom " + utilisateur.getNom() + " est déjà utilisé par un autre utilisateur.")
-                    .build();
-                return response;
+            Response response = Response
+                .status(Response.Status.FORBIDDEN)
+                .entity("Le nom " + utilisateur.getNom() + " est déjà utilisé par un autre utilisateur.")
+                .build();
+            return response;
         }
 
     }
@@ -334,12 +333,13 @@ public class UtilisateurController {
 :--------------------------------------------------------------------------------------------------------------------------
     */
 
-
     @Path("/enregistrez/connect")
+    // @Path("/enregistrez/connect/{url}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response connectUtilisateur(String stringUserData) {
+    // public Response connectUtilisateur(String stringUserData, @PathParam(value = "url") String url) {
 
         //µ Convertis String en un objet Json data.
         JSONObject jSONObjectData = new JSONObject(stringUserData);
@@ -351,6 +351,8 @@ public class UtilisateurController {
         DaoFactory daoFactory = new DaoFactory();
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
         Utilisateur utilisateurAConnecter = utilisateurDaoInterface.findUtilisateurByNom(utilisateur);
+
+        // url = utilisateurAConnecter.getSalt();
 
         //. ----------Vérification du faite que l'utilisateur existe dans la base de donnée.----------
 
@@ -423,6 +425,7 @@ public class UtilisateurController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateUtilisateur(String stringUserData) {
+
         //µ Convertis String en un objet Json data.
         JSONObject jSONObjectData = new JSONObject(stringUserData);
         //µ Récupération du user.
@@ -525,12 +528,13 @@ public class UtilisateurController {
         DaoFactory daoFactory = new DaoFactory();
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
         Utilisateur utilisateur = utilisateurDaoInterface.findUtilisateurById(id);
+
         //. ----------Vérification de l'id.----------
 
         //$ ----------Si l'id est bien trouvé.----------
         if (utilisateur != null) {
             Response response = Response
-            .status(Response.Status.CREATED)
+            .status(Response.Status.ACCEPTED)
             .entity(utilisateur)
             .build();
 
