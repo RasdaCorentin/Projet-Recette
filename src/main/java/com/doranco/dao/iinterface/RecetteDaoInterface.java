@@ -19,12 +19,18 @@ public interface RecetteDaoInterface {
 
     //, Lister toutes les Recette.
     List<Recette> getListeRecettes();
+    
+    //, Lister toutes les Recette.
+    List<Recette> getListeRecettesByIdUser(int id);
 
     //, Créer un Recette.
     Recette createRecette(Recette recette, Utilisateur utilisateur);
 
     //, Lire une recette.
     Recette findRecetteById(int id);
+    
+    // Update recette
+    Recette updateRecette(Recette recette, int id);
 
 }
 

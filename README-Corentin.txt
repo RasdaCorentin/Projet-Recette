@@ -3,7 +3,7 @@ Persistence :
 <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/projet?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
 
 
-Environnement:
+Environement:
 {{http://localhost:8080/ProjetRecette/api/}}
 (Pour avoir un admin, passez manuellement dans phpMyadmin) le rôle de l'utilisateur créer de 1 à 0.
 End Point:

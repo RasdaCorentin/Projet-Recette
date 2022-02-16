@@ -4,9 +4,6 @@
  */
 package com.doranco.entities;
 
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.json.bind.annotation.JsonbTransient;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
