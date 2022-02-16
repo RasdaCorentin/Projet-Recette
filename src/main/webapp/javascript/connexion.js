@@ -34,13 +34,13 @@ function requestTest(data) {
     http.open(method, url);
     http.setRequestHeader('Content-Type', 'application/json');
     http.onreadystatechange = function () {
-        if (http.readyState === XMLHttpRequest.DONE && http.status === 201) {
-            console.log(http.responseText);
-        } else if (http.readyState === XMLHttpRequest.DONE && http.status !== 201) {
+        if (http.readyState === XMLHttpRequest.DONE && http.status === 202) {
+            var res = JSON.parse(http.responseText);
+            console.log(res);
+        } else if (http.readyState === XMLHttpRequest.DONE && http.status !== 202) {
             console.log("Error");
         }
     };
     http.send(data);
-    alert(data);
 }
 ;
