@@ -15,24 +15,20 @@ var method = 'POST';
 // … et prenez en charge l'événement submit.
 form.addEventListener("submit", function (event) {
 
+    var nom = document.getElementById("nom").value;
+    var password = document.getElementById("password").value;
     event.preventDefault();
 
     var data = {
         "utilisateur": {
-            "nom": document.getElementById("nom").value,
-            "password": document.getElementById("password").value,
+            "nom": nom,
+            "password": password,
             "email": document.getElementById("email").value
         }
     };
 
     data = JSON.stringify(data);
     requestTest(data);
-
-    var nom = document.getElementById("nom").value;
-    var password = document.getElementById("password").value;
-
-    document.cookie = 'utilisateur=' + nom + ':' + password + '; path=/; max-age=600; samesite=lax'; //$ max-age=31536000 pour une année entière.
-    alert(document.cookie);
 
     //§ Renvoie l'utilisateur vers la page d'accueil.
     location.href = "index.html"
@@ -53,6 +49,4 @@ function requestTest(data) {
     };
 
     http.send(data);
-    alert(data);
-
 };
