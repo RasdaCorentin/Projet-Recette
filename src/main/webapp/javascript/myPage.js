@@ -6,7 +6,7 @@ let form = document.getElementById("myForm");
 
 form.addEventListener("submit", function (event) {
     event.preventDefault();
-    var url = 'http://localhost:8080/Projet-Recette/api/utilisateur/recette/liste/1';
+    var url = "'http://localhost:8080/Projet-Recette/api/utilisateur/recette/liste/";
     var headers = new Headers();
     var username = document.getElementById("nom").value;
     var password = document.getElementById("password").value;

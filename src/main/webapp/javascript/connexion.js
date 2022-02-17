@@ -42,5 +42,4 @@ function requestTest(data) {
         }
     };
     http.send(data);
-}
-;
+};
