@@ -3,14 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
 
-var myModal = new bootstrap.Modal(document.getElementById('myModal'));
-
-//. --------------------Les variables pour les hide and show.--------------------
-var elementsACacher = document.getElementById("elementsACacher");
-var cacherConnexion = document.getElementById("cacherConnexion");
-var cacherInscription = document.getElementById("cacherInscription");
-var elementAMontrer = document.getElementById("elementAMontrer");
-
 async function fetchData() {
     let response = await fetch('http://localhost:8080/Projet-Recette/api/utilisateur/recette/enregistrez/liste');
 
@@ -48,10 +40,4 @@ function search_recettes() {
     }
 }
 
-//. --------------------Les hide and show.--------------------
-if (cookieUtilisateur != "") {
-    elementsACacher.classList.add('hide'); //: Permet de cacher le lien vers la page de connexion si l'utilisateur est déjà connecté.
-    cacherConnexion.classList.add('hide'); //: Permet de cacher le lien vers la page de connexion si l'utilisateur est déjà connecté.
-    cacherInscription.classList.add('hide'); //: Permet de cacher le lien vers la page d'inscription si l'utilisateur est déjà connecté.
-    elementAMontrer.classList.remove('hide'); //: Permet de montré le lien vers la page de déconnexion si l'utilisateur est connecté.
-}
+var myModal = new bootstrap.Modal(document.getElementById('myModal'));
