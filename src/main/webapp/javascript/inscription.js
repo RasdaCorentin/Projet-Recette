@@ -5,7 +5,7 @@
 
 /*
 Méthode Post Formulaire Inscription
- */
+*/
 
 var form = document.getElementById("myForm");
 var http = new XMLHttpRequest();

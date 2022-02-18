@@ -24,7 +24,6 @@ if (cookieUtilisateur != "") {
     
         case "http://localhost:8080/Projet-Recette/" :
             elementsACacher.classList.add('hide');
-            elementsACacher2.classList.add('hide');
             elementAMontrer.classList.remove('hide');
             break;
     
@@ -33,13 +32,11 @@ if (cookieUtilisateur != "") {
             getCookie("utilisateur");
             connectWithCookieXML();
             elementsACacher.classList.add('hide');
-            elementsACacher2.classList.add('hide');
             elementAMontrer.classList.remove('hide');
             break;
     
         case "http://localhost:8080/Projet-Recette/myPage.html" :
             elementsACacher.classList.add('hide');
-            elementsACacher2.classList.add('hide');
             elementAMontrer.classList.remove('hide');
             break;
     
