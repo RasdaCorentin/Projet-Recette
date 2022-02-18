@@ -4,9 +4,7 @@
  */
 
 /*
- 
- Methode Post Formulaire Inscription
- 
+Méthode Post Formulaire Inscription
  */
 
 var form = document.getElementById("myForm");
@@ -14,12 +12,11 @@ var http = new XMLHttpRequest();
 var url = 'http://localhost:8080/Projet-Recette/api/utilisateur/enregistrez';
 var method = 'POST';
 
-
-
-
 // … et prenez en charge l'événement submit.
 form.addEventListener("submit", function (event) {
+
     event.preventDefault();
+
     var data = {
         "utilisateur": {
             "nom": document.getElementById("nom").value,
@@ -27,15 +24,23 @@ form.addEventListener("submit", function (event) {
             "email": document.getElementById("email").value
         }
     };
+
     var password = document.getElementById("password").value;
     data = JSON.stringify(data);
     requestTest(data, password);
+
+    //§ Renvoie l'utilisateur vers la page d'accueil.
+    location.href = "index.html"
+
 });
 
 function requestTest(data, password) {
+
     http.open(method, url);
     http.setRequestHeader('Content-Type', 'application/json');
+
     http.onreadystatechange = function () {
+
         if (http.readyState === XMLHttpRequest.DONE && http.status === 201) {
             res = JSON.parse(http.responseText);
             var nom = res.nom;
@@ -46,11 +51,10 @@ function requestTest(data, password) {
         } else if (http.readyState === XMLHttpRequest.DONE && http.status !== 201) {
             console.log("Error");
         }
+
     };
+
     http.send(data);
     alert(data);
-}
-;
 
-//document.cookie = "utilisateur=Corentin:123:1"; "path=/"; "max-age=600000000"; "samesite=lax";
-            
+};

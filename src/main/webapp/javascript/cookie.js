@@ -4,34 +4,46 @@
  */
 
 var urlCourante = document.location.href;
+let cookieUtilisateur = getCookie("utilisateur");
+var urlCourante = document.location.href;
 
-switch (urlCourante) {
-    case "http://localhost:8080/Projet-Recette/connexion.html" :
-        var urlCookie = 'http://localhost:8080/Projet-Recette/api/utilisateur/enregistrez/connect';
-        break;
-    case "http://localhost:8080/Projet-Recette/" :
-        alert("index");
-        break;
+//. --------------------Si le cookie de connexion de l'utilisateur existe.--------------------
+if (cookieUtilisateur != "") {
+    switch (urlCourante) {
 
-    case "http://localhost:8080/Projet-Recette/adminpage.html" :
-        var urlCookie = "http://localhost:8080/Projet-Recette/api/utilisateur/admin/liste";
-        break;
+        //* La page d'accueil.
+        case "http://localhost:8080/Projet-Recette/" :
+            break;
 
-    case "http://localhost:8080/Projet-Recette/myPage.html" :
-        let username = getCookie("utilisateur");
-        username = username.split(":");
-        var urlCookie2 = "http://localhost:8080/Projet-Recette/api/utilisateur/recette/liste/" + username[2] + "";
-        break;
+        //* La page de connexion.
+        case "http://localhost:8080/Projet-Recette/connexion.html" :
+            var urlCookie = 'http://localhost:8080/Projet-Recette/api/utilisateur/enregistrez/connect';
+            break;
 
-    default :
-        alert("Nop");
-        break;
+        //* La page d'affichage de la liste des utilisateurs.
+        case "http://localhost:8080/Projet-Recette/adminpage.html" :
+            var urlCookie = "http://localhost:8080/Projet-Recette/api/utilisateur/admin/liste";
+            break;
+
+        //* La page pour afficher la liste de recette de l'utilisateur connecté.
+        case "http://localhost:8080/Projet-Recette/myPage.html" :
+            let username = getCookie("utilisateur");
+            username = username.split(":");
+            var urlCookie2 = "http://localhost:8080/Projet-Recette/api/utilisateur/recette/liste/" + username[2] + "";
+            break;
+
+        default :
+            alert("Il y a une erreur au niveau du système de cookie.");
+            break;
+
+    }
 }
 
 function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
     let ca = decodedCookie.split(";");
+
     for (let i = 0; i < ca.length; i++) {
         let c = ca[i];
         while (c.charAt(0) == " ") {
@@ -42,6 +54,7 @@ function getCookie(cname) {
             return c.substring(name.length, c.length);
         }
     }
+
     return "";
 }
 
@@ -52,7 +65,6 @@ function connectWithCookieXMLAdminPage() {
     if (username != "") {
 
         var httpCookie = new XMLHttpRequest();
-        // var urlCookie = "http://localhost:8080/Projet-Recette/api/utilisateur/admin/liste";
         var authBasicCookie = username[0] + ":" + username[1];
 
         httpCookie.open("GET", urlCookie, true);
@@ -67,7 +79,6 @@ function connectWithCookieXMLAdminPage() {
                     ) {
                 var dataListUserCookie = JSON.parse(this.responseText);
                 tableAdmin(dataListUserCookie);
-                alert("Le cookie a marché!");
             } else if (
                     httpCookie.readyState === XMLHttpRequest.DONE &&
                     httpCookie.status !== 201
@@ -77,11 +88,11 @@ function connectWithCookieXMLAdminPage() {
 
         };
         httpCookie.send();
+
     } else {
         console.log("no cookies");
     }
-}
-;
+};
 
 function connectWithCookieXMLConnection() {
     let username = getCookie("utilisateur");
@@ -106,7 +117,6 @@ function connectWithCookieXMLConnection() {
             http.onreadystatechange = function () {
                 if (http.readyState === XMLHttpRequest.DONE && http.status === 202) {
                     var res = JSON.parse(http.responseText);
-                    alert("Le cookie a marché! Connection Réussi");
                     console.log(res);
                 } else if (http.readyState === XMLHttpRequest.DONE && http.status !== 202) {
                     console.log("Error");
@@ -119,8 +129,7 @@ function connectWithCookieXMLConnection() {
     } else {
         console.log("no cookies");
     }
-}
-;
+};
 
 function tableAdmin(data) {
     var table = document.getElementById("ListUtilisateurs");
@@ -137,26 +146,25 @@ function tableAdmin(data) {
 function connectWithCookieFetchMyPage() {    
     let username = getCookie("utilisateur");
     username = username.split(":");
-    
+
     if (username != "") {
     var headers = new Headers();
     var authBasic = username[0] + ":" + username[1];
-    
+
     async function fetchData() {
         headers.set('Authorization', 'Basic ' + btoa(authBasic));
 
         let response = await fetch(urlCookie2, {method: 'GET',
             headers: headers
         });
-        
+
         console.log(response.status); // 200
         console.log(response.statusText); // OK
-        
+
         if (response.status === 201) {
-            alert("Le cookie a marché! Connection Réussi");
             let data = await response.json();
             console.log(data);
-            
+
             var table = document.getElementById("ListRecettes");
 
             for (let i in data) {
@@ -166,13 +174,13 @@ function connectWithCookieFetchMyPage() {
                 text += "</tr>";
                 table.innerHTML += text;
             }
-            
+
         }
     }
     fetchData();
-        
+
     } else {
         console.log("no cookies");
     }
-    
+
 }

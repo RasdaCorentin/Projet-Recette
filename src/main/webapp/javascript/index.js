@@ -15,7 +15,6 @@ async function fetchData() {
         var table = document.getElementById("ListRecettes");
 
         for (let i in data) {
-
             var text = "<tr>";
             text += "<td class='recettes'><button type='button' data-bs-toggle='modal' data-bs-target='#exampleModal'>" + data[i].libelle + "</button></td>";
             text += "</tr>";
@@ -24,6 +23,7 @@ async function fetchData() {
         console.log(text);
     }
 }
+
 fetchData();
 
 function search_recettes() {
