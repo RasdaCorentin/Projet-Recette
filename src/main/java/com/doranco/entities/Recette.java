@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,18 +19,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+
+
 
 /**
  *
  * @author Admin
  */
-
 @Entity
 public class Recette implements Serializable {
-    private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
     /*
+    
     Les attributs 
+    
     */
 
     @Id
@@ -63,7 +67,7 @@ public class Recette implements Serializable {
             joinColumns = @JoinColumn(name = "idRecette"),
             inverseJoinColumns = @JoinColumn(name = "idIngredient") )
     private List<Ingredient> listIngredients = new ArrayList<>();
-
+  
     /*
         
     Les Constructeurs
