@@ -3,6 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
 
+/********************************
+ 
+ Methode Fetch Index List Recette
+ 
+ *******************************/
+
+//Fonction fetch async/await pour l'affichage de la liste utilisateur
 async function fetchData() {
     let response = await fetch('http://localhost:8080/Projet-Recette/api/utilisateur/recette/enregistrez/liste');
 
@@ -10,11 +17,13 @@ async function fetchData() {
     console.log(response.statusText); // OK
 
     if (response.status === 201) {
+        //await attente d'une réponse serveur pour afficher la liste utilisateur
         let data = await response.json();
         console.log(data);
         var table = document.getElementById("ListRecettes");
 
         for (let i in data) {
+
             var text = "<tr>";
             text += "<td class='recettes'><button type='button' data-bs-toggle='modal' data-bs-target='#exampleModal'>" + data[i].libelle + "</button></td>";
             text += "</tr>";
@@ -23,8 +32,36 @@ async function fetchData() {
         console.log(text);
     }
 }
-
 fetchData();
+
+async function fetchData2() {
+    let response = await fetch('http://localhost:8080/Projet-Recette/api/utilisateur/ingredient/enregistrez/liste');
+
+    console.log(response.status); // 200
+    console.log(response.statusText); // OK
+
+    if (response.status === 201) {
+        //await attente d'une réponse serveur pour afficher la liste utilisateur
+        let data = await response.json();
+        console.log(data);
+        var table = document.getElementById("ListIng");
+
+        for (let i in data) {
+
+            var text = "<tr>";
+            text += "<td class='recettes'><button type='button' data-bs-toggle='modal' data-bs-target='#exampleModal'>" + data[i].libelle + "</button></td>";
+            text += "</tr>";
+            table.innerHTML += text;
+        }
+        console.log(text);
+    }
+}
+fetchData2();
+/********************************
+ 
+ Methode Search Reactive pour Index List Recette
+ 
+ *******************************/
 
 function search_recettes() {
     let input = document.getElementById('searchbar').value;
@@ -39,5 +76,3 @@ function search_recettes() {
         }
     }
 }
-
-var myModal = new bootstrap.Modal(document.getElementById('myModal'));

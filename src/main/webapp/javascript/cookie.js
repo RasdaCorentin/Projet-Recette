@@ -9,6 +9,9 @@ var urlCourante = document.location.href;
 
 //. --------------------Si le cookie de connexion de l'utilisateur existe.--------------------
 if (cookieUtilisateur != "") {
+/*********************************************************************************************
+                                    Fonction switch selon l'url actuel
+ ************************************************************************************************/
     switch (urlCourante) {
 
         //* La page d'accueil.
@@ -38,12 +41,13 @@ if (cookieUtilisateur != "") {
 
     }
 }
-
+/*********************************************************************************************
+                                    Fonction Récupération COOKIE
+ ************************************************************************************************/
 function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
     let ca = decodedCookie.split(";");
-
     for (let i = 0; i < ca.length; i++) {
         let c = ca[i];
         while (c.charAt(0) == " ") {
@@ -51,13 +55,15 @@ function getCookie(cname) {
         }
         if (c.indexOf(name) == 0) {
             console.log(c.substring(name.length, c.length));
+            //retourne ("utilisateur:nom:password:id")
             return c.substring(name.length, c.length);
         }
     }
-
     return "";
 }
-
+/*********************************************************************************************
+                                    Connection automatique à Admin Page AVEC COOKIE
+ ************************************************************************************************/
 function connectWithCookieXMLAdminPage() {
     let username = getCookie("utilisateur");
     username = username.split(":");
@@ -65,6 +71,7 @@ function connectWithCookieXMLAdminPage() {
     if (username != "") {
 
         var httpCookie = new XMLHttpRequest();
+        // var urlCookie = "http://localhost:8080/Projet-Recette/api/utilisateur/admin/liste";
         var authBasicCookie = username[0] + ":" + username[1];
 
         httpCookie.open("GET", urlCookie, true);
@@ -78,7 +85,9 @@ function connectWithCookieXMLAdminPage() {
                     httpCookie.status === 201
                     ) {
                 var dataListUserCookie = JSON.parse(this.responseText);
+                //Affichage automatique avec cookie
                 tableAdmin(dataListUserCookie);
+                alert("Le cookie a marché!");
             } else if (
                     httpCookie.readyState === XMLHttpRequest.DONE &&
                     httpCookie.status !== 201
@@ -88,12 +97,16 @@ function connectWithCookieXMLAdminPage() {
 
         };
         httpCookie.send();
-
+        
     } else {
+        //Réponse au console si pas de cookie
         console.log("no cookies");
     }
-};
-
+}
+;
+/*********************************************************************************************
+                                    Connection automatique à Connexion.html AVEC COOKIE
+ ************************************************************************************************/
 function connectWithCookieXMLConnection() {
     let username = getCookie("utilisateur");
     username = username.split(":");
@@ -117,6 +130,7 @@ function connectWithCookieXMLConnection() {
             http.onreadystatechange = function () {
                 if (http.readyState === XMLHttpRequest.DONE && http.status === 202) {
                     var res = JSON.parse(http.responseText);
+                    alert("Le cookie a marché! Connection Réussi");
                     console.log(res);
                 } else if (http.readyState === XMLHttpRequest.DONE && http.status !== 202) {
                     console.log("Error");
@@ -129,12 +143,15 @@ function connectWithCookieXMLConnection() {
     } else {
         console.log("no cookies");
     }
-};
-
+}
+;
+/*********************************************************************************************
+                                    Fonction d'affichage de table pour Adminpage.html 
+ ************************************************************************************************/
 function tableAdmin(data) {
     var table = document.getElementById("ListUtilisateurs");
     var i;
-    /* i est égal à 0; tant que i plus petit que myArr, relancer la boucle */
+    /* i est égal à 0; tant que i plus petit que data, relancer la boucle */
     for (i = 0; i < data.length; i++) {
         var text = "<tr>";
         text += "<td>" + data[i].nom + "</td>" + "<td>" + data[i].email + "</td>";
@@ -142,29 +159,33 @@ function tableAdmin(data) {
         table.innerHTML += text;
     }
 };
-
+;
+/*********************************************************************************************
+                                    Connection automatique à MyPage.html AVEC COOKIE
+ ************************************************************************************************/
 function connectWithCookieFetchMyPage() {    
     let username = getCookie("utilisateur");
     username = username.split(":");
-
+    
     if (username != "") {
     var headers = new Headers();
     var authBasic = username[0] + ":" + username[1];
-
+    
     async function fetchData() {
         headers.set('Authorization', 'Basic ' + btoa(authBasic));
 
         let response = await fetch(urlCookie2, {method: 'GET',
             headers: headers
         });
-
+        
         console.log(response.status); // 200
         console.log(response.statusText); // OK
-
+        
         if (response.status === 201) {
+            alert("Le cookie a marché! Connection Réussi");
             let data = await response.json();
             console.log(data);
-
+            
             var table = document.getElementById("ListRecettes");
 
             for (let i in data) {
@@ -174,13 +195,13 @@ function connectWithCookieFetchMyPage() {
                 text += "</tr>";
                 table.innerHTML += text;
             }
-
+            
         }
     }
     fetchData();
-
+        
     } else {
         console.log("no cookies");
     }
-
+    
 }
