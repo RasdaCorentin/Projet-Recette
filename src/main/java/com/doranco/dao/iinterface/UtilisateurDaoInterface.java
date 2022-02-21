@@ -33,7 +33,7 @@ public interface UtilisateurDaoInterface {
     //, Renflouer le seau d'un utilisateur.
     Utilisateur remplirSeau(int id);
 
-//.----------------------------------ADMIN/NEW USER COMMAND (À interdire aux user-------------------------------------------------
+//.----------------------------------ADMIN/NEW USER COMMAND (À interdire aux user)-------------------------------------------------
     
     //, Créer un Utilisateur.
     Utilisateur createUtilisateur(Utilisateur utilisateur);

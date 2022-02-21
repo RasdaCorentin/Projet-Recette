@@ -4,9 +4,9 @@
  */
 
 /*
-***********************************
-% Méthode PUT Formulaire Connexion
-************************************
+: ***********************************
+% Méthode PUT Formulaire Connexion.
+: ************************************
 */
 
 //= Méthode d'écoute sur Formulaire.
@@ -95,7 +95,8 @@ function requestTest(data, password) {
             location.href = "index.html"
 
         } else if (http.readyState === XMLHttpRequest.DONE && http.status !== 202) {
-            console.log("Error " + http.responseText);
+            document.getElementById("messageErreur").innerHTML = http.responseText;
+            console.log("Erreur : " + http.responseText);
         }
     };
 

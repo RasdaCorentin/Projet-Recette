@@ -3,13 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
 
-/********************************
- 
- Methode Fetch Index List Recette
- 
- *******************************/
+/*
+: ************************************************************************************************************
+                                    % Méthode Fetch Index List Recette.
+: ************************************************************************************************************
+*/
 
-//Fonction fetch async/await pour l'affichage de la liste utilisateur
+//? Fonction fetch async/await pour l'affichage de la liste utilisateur.
 async function fetchData() {
     let response = await fetch('http://localhost:8080/Projet-Recette/api/utilisateur/recette/enregistrez/liste');
 
@@ -17,7 +17,7 @@ async function fetchData() {
     console.log(response.statusText); // OK
 
     if (response.status === 201) {
-        //await attente d'une réponse serveur pour afficher la liste utilisateur
+        //= J'attend une réponse du serveur avant d'afficher la liste des utilisateurs.
         let data = await response.json();
         console.log(data);
         var table = document.getElementById("ListRecettes");
@@ -41,13 +41,12 @@ async function fetchData2() {
     console.log(response.statusText); // OK
 
     if (response.status === 201) {
-        //await attente d'une réponse serveur pour afficher la liste utilisateur
+        //= J'attend une réponse du serveur pour afficher la liste des utilisateurs.
         let data = await response.json();
         console.log(data);
         var table = document.getElementById("ListIng");
 
         for (let i in data) {
-
             var text = "<tr>";
             text += "<td class='recettes'><button type='button' data-bs-toggle='modal' data-bs-target='#exampleModal'>" + data[i].libelle + "</button></td>";
             text += "</tr>";
@@ -57,11 +56,12 @@ async function fetchData2() {
     }
 }
 fetchData2();
-/********************************
- 
- Methode Search Reactive pour Index List Recette
- 
- *******************************/
+
+/*
+: ************************************************************************************************************
+                                    % Méthode Search Reactive pour Index List Recette.
+: ************************************************************************************************************
+*/
 
 function search_recettes() {
     let input = document.getElementById('searchbar').value;

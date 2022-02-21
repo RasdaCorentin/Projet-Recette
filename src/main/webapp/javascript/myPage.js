@@ -3,41 +3,33 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
 
-/********************************
- 
- Methode Fetch myPage List Recette du User
- 
- *******************************/
-//Methode d'écoute sur Formulaire
+/*
+: ***********************************************************************************************************************
+                                    % Méthode Fetch myPage List Recette du User.
+: ***********************************************************************************************************************
+*/
+
+//? Méthode d'écoute sur le formulaire.
 let form = document.getElementById("myForm");
 
-//. --------------------Les variables pour les hide and show.--------------------
-var elementsACacher = document.getElementById("elementsACacher");
-var cacherConnexion = document.getElementById("cacherConnexion");
-var cacherInscription = document.getElementById("cacherInscription");
-var elementAMontrer = document.getElementById("elementAMontrer");
-
-//Ecoute bouton submit
+//? Écoute du bouton submit.
 form.addEventListener("submit", function (event) {
-    //J'enléve les paramétres par défaut du formulaire
+    //= J'enlève les paramètres par défaut du formulaire.
     event.preventDefault();
 
-    //Url api
+    //= Url api.
     var url = "'http://localhost:8080/Projet-Recette/api/utilisateur/recette/liste/";
-    //Mise en place des variable pour la connection à la BDD
 
+    //= Mise en place des variable pour la connection à la BDD.
     var headers = new Headers();
     var username = document.getElementById("nom").value;
     var password = document.getElementById("password").value;
     var authBasic = username + ":" + password;
     async function fetchData() {
-        //Authentification + Réponse de l'API en JSON
+        //= Authentification + Réponse de l'API en JSON.
         headers.set('Authorization', 'Basic ' + btoa(authBasic));
 
-
-        let response = await fetch(url, {method: 'GET',
-            headers: headers
-        });
+        let response = await fetch(url, {method: 'GET', headers: headers});
 
         console.log(response.status); // 200
         console.log(response.statusText); // OK
@@ -46,7 +38,7 @@ form.addEventListener("submit", function (event) {
             let data = await response.json();
             console.log(data);
             var table = document.getElementById("ListRecettes")
-            // Fonction d'affichage JSON => HTML
+            //= Fonction d'affichage JSON => HTML
             for (let i in data) {
                 var text = "<tr>"
                 text += "<td>" + data[i].libelle + "</td>"
@@ -58,19 +50,51 @@ form.addEventListener("submit", function (event) {
     }
     fetchData();
 });
-/********************************
- 
- Methode Ajouter recette User
- 
- *******************************/
-//Methode d'écoute sur Formulaire
+
+/*
+: ************************************************************************************************************
+                                    % Méthode Ajouter recette User.
+: ************************************************************************************************************
+*/
+
+//= Méthode d'écoute du formulaire.
 let formCreaR = document.getElementById("creationRecette");
-//Ecoute bouton submit
+
+//? Écoute du bouton submit.
 formCreaR.addEventListener("submit", function (event) {
-    //J'enléve les paramétres par défaut du formulaire
+    //= J'enlève les paramètres par défaut du formulaire.
     event.preventDefault();
-    alert("OK!");
+    console.log("OK!");
     });
+
+/*
+: ************************************************************************************************************
+                                    % Méthode Update utilisateur.
+: ************************************************************************************************************
+*/
+
+//= Méthode d'écoute du formulaire.
+let formUpdate = document.getElementById("UpdateUtilisateur");
+
+//? Écoute du bouton submit.
+formUpdate.addEventListener("submit", function (event) {
+    //= J'enlève les paramètres par défaut du formulaire.
+    event.preventDefault();
+
+    //= Url api.
+    var url = "'http://localhost:8080/Projet-Recette/api/utilisateur/update";
+})
+
+
+
+
+
+
+//. --------------------Les variables pour les hide and show.--------------------
+var elementsACacher = document.getElementById("elementsACacher");
+var cacherConnexion = document.getElementById("cacherConnexion");
+var cacherInscription = document.getElementById("cacherInscription");
+var elementAMontrer = document.getElementById("elementAMontrer");
 
 //. --------------------Les hide and show.--------------------
 if (cookieUtilisateur != "") {

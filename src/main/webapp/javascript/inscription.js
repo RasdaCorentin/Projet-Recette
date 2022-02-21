@@ -4,9 +4,9 @@
  */
 
 /*
-****************************************
-% Méthode Post Formulaire Inscription.
-****************************************
+: ************************************************************************************************************
+                                    % Méthode Post Formulaire Inscription.
+: ************************************************************************************************************
 */
 
 //= Méthode d'écoute sur Formulaire
@@ -21,6 +21,7 @@ var method = 'POST';
 
 //? Écoute d'un bouton submit.
 form.addEventListener("submit", function (event) {
+    //= J'enlève les paramètres par défaut du formulaire.
     event.preventDefault();
 
     //= J'initialise les variable à envoyer à l'API.
@@ -33,10 +34,11 @@ form.addEventListener("submit", function (event) {
     };
 
     /*
-    ***************************************************************************
-    % Je prend une seconde fois le mot de passe pour le mettre dans le cookie.
-    ***************************************************************************
+    : ************************************************************************************************************
+                                    % Je prend une seconde fois le mot de passe pour le mettre dans le cookie.
+    : ************************************************************************************************************
     */
+
     var password = document.getElementById("password").value;
 
     //= Je change data en JSON & lance fonction requestTest.
@@ -99,11 +101,12 @@ function requestTest(data, password) {
             location.href = "index.html"
 
         } else if (http.readyState === XMLHttpRequest.DONE && http.status !== 201) {
-            console.log("Error " + http.responseText);
+            document.getElementById("messageErreur").innerHTML = http.responseText;
+            console.log("Erreur : " + http.responseText);
         }
     };
 
     http.send(data);
-    alert(data);
+    console.log(data);
 
 };

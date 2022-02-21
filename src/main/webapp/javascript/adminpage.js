@@ -3,34 +3,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
 
-//. --------------------Les variables pour les hide and show.--------------------
-var elementsACacher = document.getElementById("elementsACacher");
-var cacherConnexion = document.getElementById("cacherConnexion");
-var cacherInscription = document.getElementById("cacherInscription");
-var elementAMontrer = document.getElementById("elementAMontrer");
+/*
+: ************************************************************************************************************
+                                    % Méthode Get List Utilisateur
+: ************************************************************************************************************
+*/
 
-/******************************
- 
- Methode Get List Utilisateur
- 
- *****************************/
-
-//Methode d'écoute sur Formulaire
+//? Méthode d'écoute sur Formulaire.
 var form = document.getElementById("myForm");
-//Ecoute bouton submit
+//= Écoute du bouton submit.
 form.addEventListener("submit", function (event) {
-    //J'enléve les paramétres par défaut du formulaire
+    //= J'enlève les paramètres par défaut du formulaire.
     event.preventDefault();
-    //Mise en place des variable pour la connection à la BDD
+    //= Mise en place des variable pour la connection à la BDD.
     var http = new XMLHttpRequest();
-    //Url api
+    //= Url api.
     var url = "http://localhost:8080/Projet-Recette/api/utilisateur/admin/liste";
-    //On submit je prend les infos de l'utilisateur
+    //= On envoie le formulaire, je prend les infos de l'utilisateur.
     var username = document.getElementById("nom").value;
     var password = document.getElementById("password").value;
     var authBasic = username + ":" + password;
 
-    //Authentification + Réponse de l'API en JSON
+    //= Authentification + Réponse de l'API en JSON.
     http.open("GET", url, true);
     http.withCredentials = true;
     http.setRequestHeader('Content-Type', 'application/json');
@@ -45,7 +39,7 @@ form.addEventListener("submit", function (event) {
     };
     http.send();
 
-    // Fonction d'affichage JSON => HTML
+    //= Fonction d'affichage JSON => HTML.
     function myFunction(data) {
         var table = document.getElementById("ListUtilisateurs");
         var i;
@@ -60,6 +54,12 @@ form.addEventListener("submit", function (event) {
 
     }
 });
+
+//. --------------------Les variables pour les hide and show.--------------------
+var elementsACacher = document.getElementById("elementsACacher");
+var cacherConnexion = document.getElementById("cacherConnexion");
+var cacherInscription = document.getElementById("cacherInscription");
+var elementAMontrer = document.getElementById("elementAMontrer");
 
 //. --------------------Les hide and show.--------------------
 if (cookieUtilisateur != "") {

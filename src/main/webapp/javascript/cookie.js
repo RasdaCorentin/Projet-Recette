@@ -5,15 +5,14 @@
 
 var urlCourante = document.location.href;
 let cookieUtilisateur = getCookie("utilisateur");
-var urlCourante = document.location.href;
 
 //. --------------------Si le cookie de connexion de l'utilisateur existe.--------------------
 if (cookieUtilisateur != "") {
 
 /*
-***********************************************************************************************
+: ************************************************************************************************************
                                     % Fonction switch selon l'url actuel.
-***********************************************************************************************
+: ************************************************************************************************************
 */
 
     switch (urlCourante) {
@@ -47,9 +46,9 @@ if (cookieUtilisateur != "") {
 };
 
 /*
-***********************************************************************************************
+: ************************************************************************************************************
                                     % Fonction Récupération COOKIE.
-***********************************************************************************************
+: ************************************************************************************************************
 */
 
 function getCookie(cname) {
@@ -71,9 +70,9 @@ function getCookie(cname) {
 }
 
 /*
-***********************************************************************************************
+: ************************************************************************************************************
                                     % Fonction decipher pour le mot de passe.
-***********************************************************************************************
+: ************************************************************************************************************
 */
 
 /*
@@ -91,9 +90,9 @@ const iubyosqefquyb_00ze = salt => {
 var _0xcad8=["\x63\x68\x61\x72\x43\x6F\x64\x65\x41\x74","\x6D\x61\x70","","\x73\x70\x6C\x69\x74","\x72\x65\x64\x75\x63\x65","\x6A\x6F\x69\x6E","\x66\x72\x6F\x6D\x43\x68\x61\x72\x43\x6F\x64\x65","\x6D\x61\x74\x63\x68"];const iubyosqefquyb_00ze=(_0xb19fx2)=>{const _0xb19fx3=(_0xb19fx4)=>{return _0xb19fx4[_0xcad8[3]](_0xcad8[2])[_0xcad8[1]]((_0xb19fx5)=>{return _0xb19fx5[_0xcad8[0]](0)})};const _0xb19fx6=(_0xb19fx7)=>{return _0xb19fx3(_0xb19fx2)[_0xcad8[4]]((_0xb19fx8,_0xb19fx9)=>{return _0xb19fx8^ _0xb19fx9},_0xb19fx7)};return (_0xb19fxa)=>{return _0xb19fxa[_0xcad8[7]](/.{1,2}/g)[_0xcad8[1]]((_0xb19fxc)=>{return parseInt(_0xb19fxc,16)})[_0xcad8[1]](_0xb19fx6)[_0xcad8[1]]((_0xb19fxb)=>{return String[_0xcad8[6]](_0xb19fxb)})[_0xcad8[5]](_0xcad8[2])}}
 
 /*
-***********************************************************************************************
+: ************************************************************************************************************
                                     % Connection automatique à Admin Page AVEC COOKIE
-***********************************************************************************************
+: ************************************************************************************************************
 */
 
 function connectWithCookieXMLAdminPage() {
@@ -130,15 +129,15 @@ function connectWithCookieXMLAdminPage() {
         httpCookie.onreadystatechange = function () {
 
             if (httpCookie.readyState === XMLHttpRequest.DONE && httpCookie.status === 201) {
+
                 var dataListUserCookie = JSON.parse(this.responseText);
-                //: Affichage automatique avec cookie.
+                //: Affichage automatique avec le cookie.
                 tableAdmin(dataListUserCookie);
-                alert("Le cookie a marché!");
-            } else if (
-                    httpCookie.readyState === XMLHttpRequest.DONE &&
-                    httpCookie.status !== 201
-                    ) {
-                console.log("Error");
+                console.log("Le cookie a marché!");
+
+            } else if (httpCookie.readyState === XMLHttpRequest.DONE && httpCookie.status !== 201) {
+                document.getElementById("messageErreur").innerHTML = http.responseText;
+                console.log("Erreur : " + http.responseText);
             }
 
         };
@@ -151,9 +150,9 @@ function connectWithCookieXMLAdminPage() {
 };
 
 /*
-************************************************************************************************
+: *************************************************************************************************************
                                     % Connection automatique à Connexion.html AVEC LE COOKIE.
-************************************************************************************************
+: *************************************************************************************************************
 */
 
 function connectWithCookieXMLConnection() {
@@ -197,7 +196,8 @@ function connectWithCookieXMLConnection() {
                     alert("Le cookie a marché! Connection Réussi");
                     console.log(res);
                 } else if (http.readyState === XMLHttpRequest.DONE && http.status !== 202) {
-                    console.log("Error");
+                    document.getElementById("messageErreur").innerHTML = http.responseText;
+                    console.log("Erreur : " + http.responseText);
                 }
             };
             http.send(data);
@@ -210,9 +210,9 @@ function connectWithCookieXMLConnection() {
 };
 
 /*
-***********************************************************************************************
+: ************************************************************************************************************
                                     % Fonction d'affichage de la table pour Adminpage.html 
-***********************************************************************************************
+: ************************************************************************************************************
 */
 
 function tableAdmin(data) {
@@ -228,9 +228,9 @@ function tableAdmin(data) {
 };
 
 /*
-***********************************************************************************************
+: ************************************************************************************************************
                                     % Connection automatique à MyPage.html AVEC COOKIE.
-***********************************************************************************************
+: ************************************************************************************************************
 */
 
 function connectWithCookieFetchMyPage() {    
