@@ -515,23 +515,30 @@ public class UtilisateurController {
 
     /*
 :--------------------------------------------------------------------------------------------------------------------------
-                                                % Read Utilisateur
+                                                % Read Utilisateur by Name
 :--------------------------------------------------------------------------------------------------------------------------
     */
 
 
-    @Path("/read/{id}")
-    @GET
+    @Path("/read")
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response readUtilisateur(@PathParam(value = "id") int id) {
-
+    @Consumes( MediaType.APPLICATION_JSON )
+    public Response readUtilisateur(String stringUserData) {
+        //µ Convertis String en un objet Json data.
+        JSONObject jSONObjectData = new JSONObject(stringUserData);
+        //µ Récupération du user.
+        String jsonUtilisateur = jSONObjectData.get("utilisateur").toString();
+        //µ Instancie dans la classe utilisateur les infos récupérer.
+        Utilisateur utilisateur = jsonb.fromJson(jsonUtilisateur, Utilisateur.class);
+        
         DaoFactory daoFactory = new DaoFactory();
         UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
-        Utilisateur utilisateur = utilisateurDaoInterface.findUtilisateurById(id);
+        utilisateur = utilisateurDaoInterface.findUtilisateurByNom(utilisateur);
 
         //. ----------Vérification de l'id.----------
 
-        //$ ----------Si l'id est bien trouvé.----------
+        //$ ----------Si le nom est bien trouvé.----------
         if (utilisateur != null) {
             Response response = Response
             .status(Response.Status.ACCEPTED)
@@ -546,7 +553,7 @@ public class UtilisateurController {
         else {
             Response response = Response
                 .status(Response.Status.NOT_FOUND)
-                .entity("Aucun utilisateur ne possédant cette id n'a pus être trouvé.")
+                .entity("Aucun utilisateur ne possédant ce nom n'a pu être trouvé.")
                 .build();
             return response;
         }
