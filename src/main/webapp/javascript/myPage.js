@@ -169,28 +169,36 @@ function createRecette(data) {
     };
 
     httpCr.send(data);
-}
-;
+};
+
 /*
 : ************************************************************************************************************
                                     % Méthode Update utilisateur.
 : ************************************************************************************************************
 */
 
-//= Méthode d'écoute du formulaire.
+/*
+. --------------------------------------------------------------------------------
+                                £ Méthode d'écoute du formulaire.
+. --------------------------------------------------------------------------------
+*/
+
+//= Méthode d'écoute sur Formulaire.
 let formUpdate = document.getElementById("UpdateUtilisateur");
+
+//= Mise en place des variable pour la connection à la BDD
+var http = new XMLHttpRequest();
+
+//= Url api
+var url = 'http://localhost:8080/Projet-Recette/api/utilisateur/user/update';
+var method = 'PUT';
 
 //? Écoute du bouton submit.
 formUpdate.addEventListener("submit", function (event) {
     //= J'enlève les paramètres par défaut du formulaire.
     event.preventDefault();
 
-    /*
-    username :
-    0 => nom
-    1 => password
-    2 => id
-    */
+    //$ --------------------Récupération des variables.--------------------
 
     //. --------------------Le champ newNom.--------------------
     var newNom;
@@ -198,7 +206,7 @@ formUpdate.addEventListener("submit", function (event) {
 
     //§ Si le champ est vide mais qu'un cookie est présent :
     if(champNewNom.value=='' && cookieUtilisateur!='') {
-        newNom = JSON.stringify(donneeUtilisateurCookie[0]);
+        newNom = donneeUtilisateurCookie[0];
         console.log("------------" + newNom + "----------------");
     } 
     //§ Si le champ est vide et que l'utilisateur a utilisé le formulaire de la page pour se connecter :
@@ -214,22 +222,6 @@ formUpdate.addEventListener("submit", function (event) {
     var fs868s1f7s6;
     var champNewPassword = document.getElementById('newPassword');
     var champConfirmPassword = document.getElementById('confirmPassword');
-
-    /*
-    const qd47qd1q85d1fq = salt => {
-        const textToChars = text => text.split('').map(c => c.charCodeAt(0));
-        const applySaltToChar = code => textToChars(salt).reduce((a,b) => a ^ b, code);
-        return encoded => encoded.match(/.{1,2}/g)
-            .map(hex => parseInt(hex, 16))
-            .map(applySaltToChar)
-            .map(charCode => String.fromCharCode(charCode))
-            .join('');
-    }
-
-    const qdz8q7fgd17z = qd47qd1q85d1fq(donneeUtilisateurCookie[0])
-
-    fs868s1f7s6 = qdz8q7fgd17z(donneeUtilisateurCookie[1]);
-    */
 
     /*
     . Je donne le salt à mon décodeur.
@@ -261,28 +253,138 @@ formUpdate.addEventListener("submit", function (event) {
         fs868s1f7s6 = champNewPassword.value;
     }
 
-    //= J'initialise les variable à envoyer à l'API.
-    // var data = {
-    //     "utilisateur": {
-    //         "nom": document.getElementById("nom").value,
-    //         "password": document.getElementById("password").value,
-    //         "email": document.getElementById("email").value
-    //     }
-    // };
+    //$ --------------------Initialisation des variables à envoyer à l'api.--------------------
 
     /*
-    : ************************************************************************************************************
-                                    % Je prend une seconde fois le mot de passe pour le mettre dans le cookie.
-    : ************************************************************************************************************
+    ? "nom" => nom de l'utilisateur afin de l'identifier.
+    ? "password" => mot de passe de l'utilisateur afin de l'identifier.
+    ? "newNom" => nouveau nom souhaité par l'utilisateur, récupération de l'ancien si le champ est laissé vide.
+    ? "newPassword" => nouveau mot de passe souhaité par l'utilisateur, récupération de l'ancien si le champ est laissé vide.
+    ? "email" => nouvel email souhaité par l'utilisateur. /!\ Aucune récupération de l'ancien. /!\
     */
 
-    // var password = document.getElementById("password").value;
+    //. --------------------Si le cookie existe.--------------------
 
-    // //= Je change data en JSON & lance fonction requestTest.
-    // //= (je passe le mot de passe ici car j'en ai besoin pour construire le cookie)
-    // data = JSON.stringify(data);
-    // requestTest(data, password);
+    if (cookieUtilisateur != '') {
+
+        /*
+        . Je donne le salt à mon décodeur.
+        . Le mot de passe à déchiffrer.
+        . Je stocke le mot de passe déchiffrer dans la variable.
+        */
+        var _0xb284=["\x63\x68\x61\x72\x43\x6F\x64\x65\x41\x74","\x6D\x61\x70","","\x73\x70\x6C\x69\x74","\x72\x65\x64\x75\x63\x65","\x6A\x6F\x69\x6E","\x66\x72\x6F\x6D\x43\x68\x61\x72\x43\x6F\x64\x65","\x6D\x61\x74\x63\x68"];const s7g1s71eg71=(_0xcb87x2)=>{const _0xcb87x3=(_0xcb87x4)=>{return _0xcb87x4[_0xb284[3]](_0xb284[2])[_0xb284[1]]((_0xcb87x5)=>{return _0xcb87x5[_0xb284[0]](0)})};const _0xcb87x6=(_0xcb87x7)=>{return _0xcb87x3(_0xcb87x2)[_0xb284[4]]((_0xcb87x8,_0xcb87x9)=>{return _0xcb87x8^ _0xcb87x9},_0xcb87x7)};return (_0xcb87xa)=>{return _0xcb87xa[_0xb284[7]](/.{1,2}/g)[_0xb284[1]]((_0xcb87xc)=>{return parseInt(_0xcb87xc,16)})[_0xb284[1]](_0xcb87x6)[_0xb284[1]]((_0xcb87xb)=>{return String[_0xb284[6]](_0xcb87xb)})[_0xb284[5]](_0xb284[2])}};const qzdq748q1d=s7g1s71eg71(donneeUtilisateurCookie[0]);qzdq748q1d(donneeUtilisateurCookie[1]);var ifd747er=qzdq748q1d(donneeUtilisateurCookie[1])
+
+        var dataUpdateUtilisateur = {
+            "utilisateur": {
+                "nom": donneeUtilisateurCookie[0],
+                "password": ifd747er,
+                "newNom" : newNom,
+                "newPassword" : fs868s1f7s6,
+                "email" : document.getElementById("newEmail").value
+            }
+        };
+
+    } 
+
+    //. --------------------Si l'utilisateur c'est connecté manuellement.--------------------
+
+    else {
+
+        var dataUpdateUtilisateur = {
+            "utilisateur": {
+                "nom": username,
+                "password": password,
+                "newNom" : newNom,
+                "newPassword" : fs868s1f7s6,
+                "email" : document.getElementById("newEmail").value
+            }
+        };
+
+    }
+
+    //$ --------------------Récupération du mot de passe à renvoyer à l'api.--------------------
+
+    var passwordApi = fs868s1f7s6;
+
+    //$ --------------------Lancement de la fonction requestTestUpdateUtilisateur.--------------------
+
+    //= Je change data en JSON & lance fonction requestTestUpdateUtilisateur.
+    //= (je passe le mot de passe ici car j'en ai besoin pour construire le cookie)
+    dataUpdateUtilisateur = JSON.stringify(dataUpdateUtilisateur);
+    requestTestUpdateUtilisateur(dataUpdateUtilisateur, passwordApi);
 })
+
+/*
+. --------------------------------------------------------------------------------
+                                £ Envoi + Réponse de l'API en JSON.
+. --------------------------------------------------------------------------------
+*/
+
+function requestTestUpdateUtilisateur(dataUpdateUtilisateur, passwordApi) {
+
+    http.open(method, url);
+    http.setRequestHeader('Content-Type', 'application/json');
+
+    http.onreadystatechange = function () {
+        if (http.readyState === XMLHttpRequest.DONE && http.status === 201) {
+
+            //= Ici je récupère la réponse en JSON que je met dans var nom & id 
+            res = JSON.parse(http.responseText);
+
+            //= et je crée le cookie qui ressemble à "utilisateur=nom:password:id" réutilisé uniquement dans cookie.js.
+            var nom = res.nom;
+            var id = res.id;
+
+            /*
+            //= La constante cipher, qui va permettre de hacher le mot de passe.
+            const sfes4fs7f1sf5s = salt => {
+                const textToChars = text => text.split('').map(c => c.charCodeAt(0));
+                const byteHex = n => ("0" + Number(n).toString(16)).substr(-2);
+                const applySaltToChar = code => textToChars(salt).reduce((a,b) => a ^ b, code);
+            
+                return text => text.split('')
+                    .map(textToChars)
+                    .map(applySaltToChar)
+                    .map(byteHex)
+                    .join('');
+            }
+
+            //= Je donne le salt pour hacher le mot de passe.
+            const qd7qz1dq78f = sfes4fs7f1sf5s(nom);
+
+            //= Je hache le mot de passe.
+            var qdzdq17d1q7f17qz = qd7qz1dq78f(passwordApi);
+
+            //§ Création du cookie "utilisateur", pour permettre la connexion de l'utiliser sur toutes les pages.
+            document.cookie = "utilisateur=" + nom + ":" + qdzdq17d1q7f17qz + ":" + id +"; path=/; max-age=31536000 ; samesite=lax"; //= Ce cookie à une durée de vie d'un an.
+            */
+
+            /*
+            . La constante cipher, qui va permettre de hacher le mot de passe.
+            . Je donne le salt pour hacher le mot de passe.
+            . Je hache le mot de passe.
+            . Création du cookie "utilisateur", pour permettre la connexion de l'utiliser sur toutes les pages.
+            */
+
+            var _0x8f33=["\x63\x68\x61\x72\x43\x6F\x64\x65\x41\x74","\x6D\x61\x70","","\x73\x70\x6C\x69\x74","\x73\x75\x62\x73\x74\x72","\x30","\x72\x65\x64\x75\x63\x65","\x6A\x6F\x69\x6E","\x63\x6F\x6F\x6B\x69\x65","\x75\x74\x69\x6C\x69\x73\x61\x74\x65\x75\x72\x3D","\x3A","\x3B\x20\x70\x61\x74\x68\x3D\x2F\x3B\x20\x6D\x61\x78\x2D\x61\x67\x65\x3D\x33\x31\x35\x33\x36\x30\x30\x30\x20\x3B\x20\x73\x61\x6D\x65\x73\x69\x74\x65\x3D\x6C\x61\x78"];const sfes4fs7f1sf5s=(_0xbccdx2)=>{const _0xbccdx3=(_0xbccdx4)=>{return _0xbccdx4[_0x8f33[3]](_0x8f33[2])[_0x8f33[1]]((_0xbccdx5)=>{return _0xbccdx5[_0x8f33[0]](0)})};const _0xbccdx6=(_0xbccdx7)=>{return (_0x8f33[5]+ Number(_0xbccdx7).toString(16))[_0x8f33[4]](-2)};const _0xbccdx8=(_0xbccdx9)=>{return _0xbccdx3(_0xbccdx2)[_0x8f33[6]]((_0xbccdxa,_0xbccdxb)=>{return _0xbccdxa^ _0xbccdxb},_0xbccdx9)};return (_0xbccdx4)=>{return _0xbccdx4[_0x8f33[3]](_0x8f33[2])[_0x8f33[1]](_0xbccdx3)[_0x8f33[1]](_0xbccdx8)[_0x8f33[1]](_0xbccdx6)[_0x8f33[7]](_0x8f33[2])}};const qd7qz1dq78f=sfes4fs7f1sf5s(nom);var qdzdq17d1q7f17qz=qd7qz1dq78f(passwordApi);document[_0x8f33[8]]= _0x8f33[9]+ nom+ _0x8f33[10]+ qdzdq17d1q7f17qz+ _0x8f33[10]+ id+ _0x8f33[11]
+
+            console.log("Cookie:" + document.cookie);
+
+        } else if (http.readyState === XMLHttpRequest.DONE && http.status !== 201) {
+            document.getElementById("messageErreur").innerHTML = http.responseText;
+            console.log("Erreur : " + http.responseText);
+        }
+    };
+
+    http.send(dataUpdateUtilisateur);
+    console.log(dataUpdateUtilisateur);
+};
+
+/*
+: ************************************************************************************************************
+                                    % Les hide and show.
+: ************************************************************************************************************
+*/
 
 //. --------------------Les variables pour les hide and show.--------------------
 var elementsACacher = document.getElementById("elementsACacher");

@@ -9,13 +9,13 @@
 : ************************************************************************************************************
 */
 
-//= Méthode d'écoute sur Formulaire
+//= Méthode d'écoute sur Formulaire.
 var form = document.getElementById("myForm");
 
-//= Mise en place des variable pour la connection à la BDD
+//= Mise en place des variable pour la connection à la BDD.
 var http = new XMLHttpRequest();
 
-//= Url api
+//= Url api.
 var url = 'http://localhost:8080/Projet-Recette/api/utilisateur/enregistrez';
 var method = 'POST';
 
@@ -45,7 +45,6 @@ form.addEventListener("submit", function (event) {
     //= (je passe le mot de passe ici car j'en ai besoin pour construire le cookie)
     data = JSON.stringify(data);
     requestTest(data, password);
-
 });
 
 //? Envois + Réponse de l'API en JSON.
