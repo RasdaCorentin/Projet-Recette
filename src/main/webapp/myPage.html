@@ -13,7 +13,6 @@
         <!-- Latest compiled JavaScript -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="javascript/cookie.js"></script>
-        <script src="javascript/myPage.js" defer></script>
         <script src="javascript/script_lien.js"></script>
 
     </head>
@@ -59,7 +58,6 @@
 
             </div>
         </nav>
-
         <!--§ La modal pour créer une recette. -->
         <button class="pulse" data-bs-toggle="modal" data-bs-target="#exampleModal1">Créer une recette</button>
 
@@ -68,7 +66,7 @@
             <div class="modal-dialog modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Formulaire de créeation de recette</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Formulaire de création de recette</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -76,7 +74,7 @@
                         <form class="was-validated" id="creationRecette">
                             <h5>Recette :</h5>
                             <div class="mb-3 mt-3">
-                                <label for="libelleRecette" class="form-label">Libelle Recette :</label>
+                                <label for="libelleRecette" class="form-label">Libellé Recette :</label>
                                 <input type="text" class="form-control" id="libelleRecette" placeholder="Entrer le nom de la recette" name="libelleRecette" required>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
@@ -87,20 +85,20 @@
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
-                            <h5>Ingredient :</h5>
+                            <h5>Ingrédient :</h5>
                             <div class="mb-3 mt-3">
-                                <label for="libelleIngredient" class="form-label">Libelle Ingredient :</label>
+                                <label for="libelleIngredient" class="form-label">Libellé Ingrédient :</label>
                                 <input type="text" class="form-control" id="libelleIngredient" placeholder="Entrer le nom de l'ingredient" name="libelleIngredient" required>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                             <div class="mb-3">
-                                <label for="quantiteIngredient" class="form-label">Quantite Ingredient :</label>
+                                <label for="quantiteIngredient" class="form-label">Quantité Ingrédient :</label>
                                 <input type="text" class="form-control" id="quantiteIngredient" placeholder="Ex : 1kg" name="quantiteIngredient" required>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
-                            <button id="addIngredient" class="btn btn-secondary">Ajouter un ingredient</button>
+                            <button id="addIngredient" class="btn btn-secondary">Ajouter un ingrédient</button>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>  
                         <!--Fin formulaire-->
@@ -169,7 +167,7 @@
 
             <tr>
                 <th>Libelle</th>
-                <th>Recette</th>
+                <th>Description</th>
             </tr>
 
             <tbody id="ListRecettes">
@@ -207,6 +205,6 @@
 
         <div w3-include="javascript/footer.html"></div>      
         <script> includeHTML();</script>
-
+<script src="javascript/myPage.js" async></script>
     </body>
 </html>

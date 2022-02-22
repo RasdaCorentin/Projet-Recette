@@ -69,4 +69,3 @@ public interface UtilisateurDaoInterface {
     //, Lire un utilisateur.
     Utilisateur readUtilisateur(int id);
 }
-

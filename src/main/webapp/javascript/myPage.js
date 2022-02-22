@@ -2,126 +2,114 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
-
-/*
-: ************************************************************************************************************
-                                    % Récupération du cookie.
-: ************************************************************************************************************
-*/
-
-function getCookie(cname) {
-    let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(";");
-    for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) == " ") {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            console.log(c.substring(name.length, c.length));
-            //retourne ("utilisateur:nom:password:id")
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
-
-let qges7f4s71ef5 = getCookie("utilisateur");
-qges7f4s71ef5 = qges7f4s71ef5.split(":");
-
-/*
-: ************************************************************************************************************
-                                    % Méthode Fetch myPage List Recette du User.
-: ************************************************************************************************************
-*/
+/********************************
+ 
+ Methode Fetch myPage List Recette du User
+ 
+ *******************************/
 
 let formIdUser = document.getElementById("Identification");
 var authBasicUser = {};
 var username = {};
 var password = {};
 
-//Écoute bouton submit
+//Ecoute bouton submit
 formIdUser.addEventListener("submit", async function (event) {
-    //J'enlève les paramètres par défaut du formulaire
+    //J'enléve les paramétres par défaut du formulaire
     event.preventDefault();
+    elementsIdentificationACacher.classList.add('hide');
     username = document.getElementById("nom").value;
     password = document.getElementById("password").value;
     authBasicUser = username + ":" + password;
 
-let _data = {
-    "utilisateur": {
-        "nom": username
-    }
-}
-var headers = new Headers();
-headers.set("Content-type", "application/json");
-headers.set('Authorization', 'Basic ' + btoa(authBasicUser));
-responseIdUser = await fetch('http://localhost:8080/Projet-Recette/api/utilisateur/read', {
-    method: "POST",
-    body: JSON.stringify(_data),
-    headers:headers
-})
-        console.log(responseIdUser.status); // 200
-        console.log(responseIdUser.statusText); // OK
 
-        if (responseIdUser.status === 202) {
-            let data = await responseIdUser.json();
-            idUser = data.id;
+    let _data = {
+        "utilisateur": {
+            "nom": username
         }
+    }
+    var headers = new Headers();
+    headers.set("Content-type", "application/json");
+    headers.set('Authorization', 'Basic ' + btoa(authBasicUser));
+    responseIdUser = await fetch('http://localhost:8080/Projet-Recette/api/utilisateur/read', {
+        method: "POST",
+        body: JSON.stringify(_data),
+        headers: headers
+    })
+    console.log(responseIdUser.status); // 200
+    console.log(responseIdUser.statusText); // OK
+
+    if (responseIdUser.status === 202) {
+        let data = await responseIdUser.json();
+        idUser = data.id;
+    }
     fetchData(idUser);
 });
+/********************************
+ 
+ Methode Fetch myPage List Recette du User
+ 
+ *******************************/
 
-/*
-: ************************************************************************************************************
-                                    % Méthode Fetch myPage List Recette du User.
-: ************************************************************************************************************
-*/
-
-    async function fetchData(id) {
-        //Url api
-        var url = "http://localhost:8080/Projet-Recette/api/utilisateur/recette/liste/" + id + "";
-        //Mise en place des variable pour la connection à la BDD
-        var headers = new Headers();
-        //Authentification + Réponse de l'API en JSON
-        headers.set('Authorization', 'Basic ' + btoa(authBasicUser));
+async function fetchData(id) {
+    //Url api
+    var url = "http://localhost:8080/Projet-Recette/api/utilisateur/recette/liste/" + id + "";
+    //Mise en place des variable pour la connection à la BDD
+    var headers = new Headers();
+    //Authentification + Réponse de l'API en JSON
+    headers.set('Authorization', 'Basic ' + btoa(authBasicUser));
 
 
-        let response = await fetch(url, {method: 'GET',
-            headers: headers
-        });
+    let response = await fetch(url, {method: 'GET',
+        headers: headers
+    });
 
-        console.log(response.status); // 200
-        console.log(response.statusText); // OK
+    console.log(response.status); // 200
+    console.log(response.statusText); // OK
 
-        if (response.status === 201) {
-            let data = await response.json();
-            console.log(data);
-            var table = document.getElementById("ListRecettes")
-            // Fonction d'affichage JSON => HTML
-            for (let i in data) {
-                var text = "<tr>"
-                text += "<td>" + data[i].libelle + "</td>"
-                        + "<td>" + data[i].description + "</td>"
-                text += "</tr>";
+    if (response.status === 201) {
+        let dataRecette = await response.json();
+        console.log(dataRecette);
+        var table = document.getElementById("ListRecettes")
+        // Fonction d'affichage JSON => HTML
+        for (let iterRecette in dataRecette) {
+            var text = "<tr>"
+            text += "<td>" + dataRecette[iterRecette].libelle + "</td>"
+                        + "<td data-bs-toggle='modal' data-bs-target='#exampleModal"+ iterRecette +"'>" + dataRecette[iterRecette].description + "</button></td>"+
+        '<div class="modal fade" id="exampleModal'+ iterRecette +'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">' +
+            '<div class="modal-dialog">' +
+                '<div class="modal-content">'+
+
+                    '<div class="modal-header">'+
+                        '<h5 class="modal-title" id="exampleModalLabel">' + dataRecette[iterRecette].libelle + '</h5>'+
+                        '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>'+
+                    '</div>'+
+                    '<div class="modal-footer">'+
+                        '<button type="button" onclick="deleteRecette('+ dataRecette[iterRecette].id +')" class="btn btn-danger">Supprimer Recette</button>'+
+                        '<button type="button" onclick="modifRecette()" class="btn btn-secondary">Modifier Recette</button>'+
+                    '</div>'+
+
+                '</div>'+
+            '</div>'+
+        '</div>';
+            text += "</tr>";
                 table.innerHTML += text;
             }
-            elementsIdentificationACacher.classList.add('hide');
         }
     }
 
-/*
-: ************************************************************************************************************
-                                    % Méthode Ajouter recette User.
-: ************************************************************************************************************
-*/
+/********************************
+ 
+ Methode Ajouter recette User
+ 
+ *******************************/
 
 
-//Méthode d'écoute sur Formulaire
+//Methode d'écoute sur Formulaire
 let formCreaR = document.getElementById("creationRecette");
-//Écoute bouton submit
+//Ecoute bouton submit
 formCreaR.addEventListener("submit", function (event) {
-    //J'enlève les paramètres par défaut du formulaire
+    //J'enléve les paramétres par défaut du formulaire
     event.preventDefault();
 
     //J'initialise les variable à envoyer à l'API
@@ -137,7 +125,7 @@ formCreaR.addEventListener("submit", function (event) {
             ]
         },
         "utilisateur": {
-            "nom": "Corentin"
+            "nom": username
         }
     };
     dataRecette = JSON.stringify(dataRecette);
@@ -158,19 +146,17 @@ function createRecette(data) {
     httpCr.setRequestHeader("Authorization", "Basic " + btoa(authBasicUser));
     httpCr.onreadystatechange = function () {
         if (httpCr.readyState === XMLHttpRequest.DONE && httpCr.status === 201) {
-            //Ici je récupère la réponse en JSON que je met dans var nom & id 
+            //Ici je récupére la réponse en JSON que je met dans var nom & id 
             res = JSON.parse(httpCr.responseText);
             //§ Renvoie l'utilisateur vers la page d'accueil.
             location.href = "myPage.html";
         } else if (httpCr.readyState === XMLHttpRequest.DONE && httpCr.status !== 201) {
-            document.getElementById("messageErreur").innerHTML = http.responseText;
-            console.log("Erreur : " + http.responseText);
+            alert("Error : " + httpCr.responseText);
         }
     };
-
     httpCr.send(data);
-};
-
+}
+;
 /*
 : ************************************************************************************************************
                                     % Méthode Update utilisateur.
@@ -430,6 +416,7 @@ var elementsACacher = document.getElementById("elementsACacher");
 var cacherConnexion = document.getElementById("cacherConnexion");
 var cacherInscription = document.getElementById("cacherInscription");
 var elementAMontrer = document.getElementById("elementAMontrer");
+var elementsIdentificationACacher = document.getElementById("Identification");
 
 //. --------------------Les hide and show.--------------------
 if (cookieUtilisateur != "") {
@@ -437,4 +424,5 @@ if (cookieUtilisateur != "") {
     cacherConnexion.classList.add('hide'); //: Permet de cacher le lien vers la page de connexion si l'utilisateur est déjà connecté.
     cacherInscription.classList.add('hide'); //: Permet de cacher le lien vers la page d'inscription si l'utilisateur est déjà connecté.
     elementAMontrer.classList.remove('hide'); //: Permet de montré le lien vers la page de déconnexion si l'utilisateur est connecté.
+    elementsIdentificationACacher.classList.add('hide'); //: Permet de cacher le formulaire si l'utilisateur est déjà connecté.
 }
