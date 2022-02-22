@@ -29,7 +29,7 @@ async function fetchRecette() {
                 '<div class="modal-content">'+
 
                     '<div class="modal-header">'+
-                        '<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>'+
+                        '<h5 class="modal-title" id="exampleModalLabel">'+ dataRecette[iterRecette].libelle +'</h5>'+
                         '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>'+
                     '</div>'+
 
@@ -77,7 +77,7 @@ async function fetchIngredient() {
                 '<div class="modal-content">'+
 
                     '<div class="modal-header">'+
-                        '<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>'+
+                        '<h5 class="modal-title" id="exampleModalLabel">'+ dataIng[iterIng].libelle +'</h5>'+
                         '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>'+
                     '</div>'+
 
@@ -118,4 +118,18 @@ function search_recettes() {
             x[i].style.display = "list-item";
         }
     }
+}
+/********************************
+ 
+ Index Ingredient (WIP)
+ 
+ *******************************/
+for (i = 0; i < 26; i++) {
+
+  var li = document.createElement("li");
+  li.innerHTML = (String.fromCharCode(65+i)) + " ";
+  li.style.listStyle = "none";
+  li.style.display = "inline";
+  document.getElementById("letter-main").appendChild(li);
+
 }

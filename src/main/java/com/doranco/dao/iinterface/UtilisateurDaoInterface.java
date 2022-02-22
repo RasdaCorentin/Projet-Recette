@@ -63,7 +63,9 @@ public interface UtilisateurDaoInterface {
     //, Modifier un utilisateur.
     Utilisateur updateUtilisateur(Utilisateur utilisateur);
 
+    //, Modifier un utilisateur sans donner de nouvel e-mail.
+    Utilisateur updateUtilisateurSansEmail(Utilisateur utilisateur);
+
     //, Lire un utilisateur.
     Utilisateur readUtilisateur(int id);
 }
-

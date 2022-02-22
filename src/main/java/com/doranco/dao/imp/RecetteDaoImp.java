@@ -153,20 +153,21 @@ public class RecetteDaoImp implements RecetteDaoInterface {
         recette = (Recette) query.getResultList().get(0);
         return recette;
     }
-        /*
+    /*
 --------------------------------------------------------------------------------------------------------------------------
-                                                Update Recette (ID) 
+                                                Update Recette
 --------------------------------------------------------------------------------------------------------------------------
-     */
+    */
     @Override
-    public Recette updateRecette(Recette recette, int id) {
+    public Recette updateRecette(Recette recette, Utilisateur utilisateur) {
         EntityManager entityManager = null;
         EntityTransaction transaction = null;
         try {
             entityManager = daoFactory.getEntityManager();
 
-            Recette recetteAModifier = entityManager.find(Recette.class, id);
-            
+            Recette recetteAModifier = entityManager.find(Recette.class, recette.getId());
+            UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
+            utilisateur = utilisateurDaoInterface.findUtilisateurByNom(utilisateur);
             System.out.println("Recuperation de la recette !!!!!!!!!!!! " + recetteAModifier);
                         
             if (recetteAModifier != null) {
@@ -178,7 +179,7 @@ public class RecetteDaoImp implements RecetteDaoInterface {
                 recetteAModifier.setDescription(recette.getDescription());
                 recetteAModifier.setRefImage(recette.getRefImage());
 
-                recetteAModifier.setUtilisateur(recette.getUtilisateur());
+                recetteAModifier.setUtilisateur(utilisateur);
 
                 recetteAModifier.setDateModif(now);
 
@@ -189,7 +190,7 @@ public class RecetteDaoImp implements RecetteDaoInterface {
                     Ingredient ingredient = listeIngredient.get(index);
                     ingredient = ingredientDaoInterface.createIngredient(ingredient);
                 }
-                entityManager.persist(recetteAModifier);
+                entityManager.merge(recetteAModifier);
                 transaction.commit();
                 System.out.println("<----------- Mise a jour Recette avec succes ------->");
                 return recette;
@@ -248,5 +249,57 @@ public class RecetteDaoImp implements RecetteDaoInterface {
             }
         }
         return listeRecettes;
+    }
+      /*
+--------------------------------------------------------------------------------------------------------------------------
+                                                 Delete Recette sans les ingredient. 
+--------------------------------------------------------------------------------------------------------------------------
+     */
+    @Override
+    public Recette deleteRecetteSSIng(Recette recette, Utilisateur utilisateur) {
+       
+        EntityManager entityManager = null;
+        EntityTransaction transaction = null;
+        try {
+            entityManager = daoFactory.getEntityManager();
+
+//. -------------------------------------------------------------------------------------------
+             
+            recette = entityManager.find(Recette.class, recette.getId());
+
+            
+            if (recette != null) {
+                
+                recette.setUtilisateur(null);
+                recette.setListIngredients(null);
+                
+                transaction = entityManager.getTransaction();
+
+                transaction.begin();
+                entityManager.remove(recette);
+                transaction.commit();
+                System.out.println("<-----------Suppression de la recette avec succès. ------->");
+
+//. ---------------------------------------FIN-------------------------------------------------- 
+                return recette;
+            }
+            System.out.println("<----------- Aucun utilisateur associé à cette id n'a pus être trouvé pour la suppression. ------->");
+
+            return null;
+
+        } catch (Exception ex) {
+            transaction.rollback();
+
+            System.out.println("Erreur lors de la tentative de suppression d'un utilisateur. \n");
+
+            ex.printStackTrace();
+
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+        return null;
+       
     }
 }

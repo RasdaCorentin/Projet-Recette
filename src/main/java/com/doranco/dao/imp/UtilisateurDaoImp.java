@@ -322,6 +322,57 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
 
     /*
 :--------------------------------------------------------------------------------------------------------------------------
+                                                % Update Utilisateur sans nouvel e-mail
+:--------------------------------------------------------------------------------------------------------------------------
+    */
+
+    @Override
+    public Utilisateur updateUtilisateurSansEmail(Utilisateur utilisateur) {
+        EntityManager entityManager = null;
+        EntityTransaction transaction = null;
+        try {
+            entityManager = daoFactory.getEntityManager();
+//. -------------------------------------------------------------------------------------------
+
+            //§ Récupération de l'utilisateur qui va être modifié.
+            Utilisateur utilisateurAModifier = findUtilisateurByNom(utilisateur);
+            if (utilisateurAModifier != null) {
+                transaction = entityManager.getTransaction();
+
+                    utilisateurAModifier.setDateModif(new Date());
+                    utilisateurAModifier.setNom(utilisateur.getNewNom());
+
+                    String salt = BCrypt.gensalt();
+                    String passwordHash2 = BCrypt.hashpw( utilisateur.getNewPassword(), salt );
+                    utilisateurAModifier.setPassword(passwordHash2);
+                    utilisateurAModifier.setSalt(salt);
+
+                    transaction.begin();
+                    entityManager.merge(utilisateurAModifier);
+                    transaction.commit();
+                    System.out.println("<----------- Mise a jour Utilisateur avec succès. ------->");
+                    return utilisateurAModifier;
+            }
+            System.out.println("<----------- Utilisateur avec Nom non trouvé pour l'update. ------->");
+            return null;
+
+//. ---------------------------------------FIN-------------------------------------------------- 
+        } catch (Exception ex) {
+            transaction.rollback();
+            System.out.println("Il y a eu une erreur lors de l'update de l'utilisateur. \n");
+
+            ex.printStackTrace();
+
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+        return null;
+    }
+
+    /*
+:--------------------------------------------------------------------------------------------------------------------------
                                                 % Remplir seau
 :--------------------------------------------------------------------------------------------------------------------------
     */
