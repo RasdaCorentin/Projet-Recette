@@ -179,18 +179,29 @@ function createRecette(data) {
 
 /*
 . --------------------------------------------------------------------------------
-                                £ Méthode d'écoute du formulaire.
+                                £ Définitions des variables.
 . --------------------------------------------------------------------------------
 */
 
+//. --------------------Le formulaire.--------------------
 let formUpdate = document.getElementById("UpdateUtilisateur");
 
-//= Mise en place des variable pour la connection à la BDD
+//$ --------------------Mise en place des variables pour la connection à la BDD.--------------------
+
+//. --------------------Instanciation de XMLHttpRequest.--------------------
 var http = new XMLHttpRequest();
 
-//= Url api
-var url = 'http://localhost:8080/Projet-Recette/api/utilisateur/user/update';
+//. --------------------Définition de l'url de l'api.--------------------
+var urlUpdate;
+
+//. --------------------Définition de la méthode.--------------------
 var method = 'PUT';
+
+/*
+. --------------------------------------------------------------------------------
+                                £ Méthode d'écoute du formulaire.
+. --------------------------------------------------------------------------------
+*/
 
 //? Écoute du bouton submit.
 formUpdate.addEventListener("submit", function (event) {
@@ -214,6 +225,17 @@ formUpdate.addEventListener("submit", function (event) {
     //§ Si le champs est remplie :
     else {
         newNom = champNewNom.value;
+    }
+
+    //. --------------------Le champ e-mail.--------------------
+
+    //§ Si le champ pour le nouvel e-mail est laissé vide.
+    if (document.getElementById("newEmail").value=='') {
+        urlUpdate = 'http://localhost:8080/Projet-Recette/api/utilisateur/user/updateSansEmail';
+    }
+    //§ Si le champs pour le nouvel e-mail est remplis.
+    else if (document.getElementById("newEmail").value!='') {
+        urlUpdate = 'http://localhost:8080/Projet-Recette/api/utilisateur/user/update';
     }
 
     //. --------------------Les champs password.--------------------
@@ -260,6 +282,21 @@ formUpdate.addEventListener("submit", function (event) {
     ? "newPassword" => nouveau mot de passe souhaité par l'utilisateur, récupération de l'ancien si le champ est laissé vide.
     ? "email" => nouvel email souhaité par l'utilisateur. /!\ Aucune récupération de l'ancien. /!\
     */
+
+    /*
+    & Entourer la vérification de cookie et la prise manuel des identifiants par la vérification du champs email.
+    ! Il va falloir doubler les lignes 333 à 336.
+    */
+
+    //§ Si le champ pour le nouvel e-mail est laissé vide.
+    if (document.getElementById("newEmail").value=='') {
+        alert("vide");
+    }
+
+    //§ Si le champs pour le nouvel e-mail est remplis.
+    else if (document.getElementById("newEmail").value!='') {
+        alert("plein");
+    }
 
     //. --------------------Si le cookie existe.--------------------
 
@@ -340,7 +377,7 @@ function requestTestUpdateUtilisateur(dataUpdateUtilisateur, passwordApi) {
     }
 
     //$ --------------------Création du headers.--------------------
-    http.open(method, url);
+    http.open(method, urlUpdate);
     http.setRequestHeader('Content-Type', 'application/json');
     http.setRequestHeader("Authorization", "Basic " + btoa(authBasic));
 

@@ -419,7 +419,6 @@ public class UtilisateurController {
 :--------------------------------------------------------------------------------------------------------------------------
     */
 
-
     @Path("/user/update")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -472,6 +471,105 @@ public class UtilisateurController {
                     //$ ----------L'utilisateur souhaite conserver son nom.----------
                     if (nomUtilisateurBdd.equals(nomUtilisateurUpdate)) {
                         utilisateur = utilisateurDaoInterface.updateUtilisateur(utilisateur);
+                    }
+
+                    //! ----------Le nom est déjà utilisé par un autre utilisateur.----------
+                    else {
+                        Response response = Response
+                            .status(Response.Status.FORBIDDEN)
+                            .entity("Le nom " + nomUtilisateurBdd + " est déjà utilisé par un autre utilisateur.")
+                            .build();
+                        return response;
+                    }
+
+                }
+
+            //! ----------Erreur sur les identifiants.----------
+            } else {
+                Response response = Response
+                    .status(Response.Status.FORBIDDEN)
+                    .entity("Vos identifiants sont incorrect !")
+                    .build();
+                return response;
+            }
+
+            //. ----------Création de l'utilisateur.----------
+
+            Response response = Response
+                    .status(Response.Status.CREATED)
+                    .entity(utilisateur)
+                    .build();
+            return response;
+
+        }
+
+        //! ----------Le nom d'utilisateur n'existe pas.----------
+        Response response = Response
+            .status(Response.Status.NOT_FOUND)
+            .entity("Le nom " + utilisateur.getNom() + " n'est associé à aucun compte sur le site.")
+            .build();
+        return response;
+
+    }
+
+    /*
+:--------------------------------------------------------------------------------------------------------------------------
+                                                % Update Utilisateur sans nouvel e-mail
+:--------------------------------------------------------------------------------------------------------------------------
+    */
+
+    @Path("/user/updateSansEmail")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateUtilisateurSansEmail(String stringUserData) {
+
+        //µ Convertis String en un objet Json data.
+        JSONObject jSONObjectData = new JSONObject(stringUserData);
+        //µ Récupération du user.
+        String jsonUtilisateur = jSONObjectData.get("utilisateur").toString();
+        //µ Instancie dans la classe utilisateur les infos récupérer.
+        Utilisateur utilisateur = jsonb.fromJson(jsonUtilisateur, Utilisateur.class);
+        //µ Lancement de la méthode Update.
+        DaoFactory daoFactory = new DaoFactory();
+        UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
+
+        //§ Récupération de l'utilisateur qui va être modifié.
+        Utilisateur utilisateurAModifier = utilisateurDaoInterface.findUtilisateurByNom(utilisateur);
+
+        //. ----------Vérification du faite que l'utilisateur existe dans la base de donnée.----------
+
+        if (utilisateurAModifier != null) {
+
+            //§ Récupération du mot de passe entré par l'utilisateur pour la connexion.
+            String passwordTemp = utilisateur.getPassword();
+            String passwordHash = BCrypt.hashpw(passwordTemp, utilisateurAModifier.getSalt());
+
+            //. ----------Vérification des identifiants de l'utilisateur.----------
+
+            if ( passwordHash.compareTo(utilisateurAModifier.getPassword()) == 0 && utilisateurAModifier.getNom().equals(utilisateur.getNom()) ) {
+
+                //. ----------Vérification du nouveau nom souhaité par l'utilisateur.----------
+
+                //§ Je vérifie dans la base de donnée l'existence du nom que souhaite prendre l'utilisateur.
+                EntityManager entityManager = daoFactory.getEntityManager();
+                Query query = entityManager.createQuery( "SELECT user FROM Utilisateur user WHERE nom=:nom" );
+                query.setParameter( "nom", utilisateur.getNom() );
+
+                //$ ----------Le nom n'est pas encore utilisé.----------
+                if (query.getResultList().isEmpty()) {
+                    utilisateur = utilisateurDaoInterface.updateUtilisateurSansEmail(utilisateur);
+                }
+
+                //! ----------Le nom est déjà utilisé.----------
+                else {
+                    Utilisateur utilisateurBdd = (Utilisateur) query.getResultList().get(0);
+                    String nomUtilisateurBdd = utilisateurBdd.getNom();
+                    String nomUtilisateurUpdate = utilisateur.getNom();
+
+                    //$ ----------L'utilisateur souhaite conserver son nom.----------
+                    if (nomUtilisateurBdd.equals(nomUtilisateurUpdate)) {
+                        utilisateur = utilisateurDaoInterface.updateUtilisateurSansEmail(utilisateur);
                     }
 
                     //! ----------Le nom est déjà utilisé par un autre utilisateur.----------
