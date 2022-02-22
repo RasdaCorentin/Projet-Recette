@@ -27,8 +27,8 @@ function getCookie(cname) {
     return "";
 }
 
-let donneeUtilisateurCookie = getCookie("utilisateur");
-donneeUtilisateurCookie = donneeUtilisateurCookie.split(":");
+let qges7f4s71ef5 = getCookie("utilisateur");
+qges7f4s71ef5 = qges7f4s71ef5.split(":");
 
 /*
 : ************************************************************************************************************
@@ -183,7 +183,6 @@ function createRecette(data) {
 . --------------------------------------------------------------------------------
 */
 
-//= Méthode d'écoute sur Formulaire.
 let formUpdate = document.getElementById("UpdateUtilisateur");
 
 //= Mise en place des variable pour la connection à la BDD
@@ -206,8 +205,7 @@ formUpdate.addEventListener("submit", function (event) {
 
     //§ Si le champ est vide mais qu'un cookie est présent :
     if(champNewNom.value=='' && cookieUtilisateur!='') {
-        newNom = donneeUtilisateurCookie[0];
-        console.log("------------" + newNom + "----------------");
+        newNom = qges7f4s71ef5[0];
     } 
     //§ Si le champ est vide et que l'utilisateur a utilisé le formulaire de la page pour se connecter :
     else if (champNewNom.value=='') {
@@ -230,7 +228,7 @@ formUpdate.addEventListener("submit", function (event) {
     */
     ///§ Si les champs new et confirm Password sont vide et que le cookie est définit :
     if (champNewPassword.value=='' && champConfirmPassword.value=='' && cookieUtilisateur!='') {
-        var _0xf57e=["\x63\x68\x61\x72\x43\x6F\x64\x65\x41\x74","\x6D\x61\x70","","\x73\x70\x6C\x69\x74","\x72\x65\x64\x75\x63\x65","\x6A\x6F\x69\x6E","\x66\x72\x6F\x6D\x43\x68\x61\x72\x43\x6F\x64\x65","\x6D\x61\x74\x63\x68"];const qd47qd1q85d1fq=(_0x659cx2)=>{const _0x659cx3=(_0x659cx4)=>{return _0x659cx4[_0xf57e[3]](_0xf57e[2])[_0xf57e[1]]((_0x659cx5)=>{return _0x659cx5[_0xf57e[0]](0)})};const _0x659cx6=(_0x659cx7)=>{return _0x659cx3(_0x659cx2)[_0xf57e[4]]((_0x659cx8,_0x659cx9)=>{return _0x659cx8^ _0x659cx9},_0x659cx7)};return (_0x659cxa)=>{return _0x659cxa[_0xf57e[7]](/.{1,2}/g)[_0xf57e[1]]((_0x659cxc)=>{return parseInt(_0x659cxc,16)})[_0xf57e[1]](_0x659cx6)[_0xf57e[1]]((_0x659cxb)=>{return String[_0xf57e[6]](_0x659cxb)})[_0xf57e[5]](_0xf57e[2])}};const qdz8q7fgd17z=qd47qd1q85d1fq(donneeUtilisateurCookie[0]);fs868s1f7s6= qdz8q7fgd17z(donneeUtilisateurCookie[1])
+        var _0xf57e=["\x63\x68\x61\x72\x43\x6F\x64\x65\x41\x74","\x6D\x61\x70","","\x73\x70\x6C\x69\x74","\x72\x65\x64\x75\x63\x65","\x6A\x6F\x69\x6E","\x66\x72\x6F\x6D\x43\x68\x61\x72\x43\x6F\x64\x65","\x6D\x61\x74\x63\x68"];const qd47qd1q85d1fq=(_0x659cx2)=>{const _0x659cx3=(_0x659cx4)=>{return _0x659cx4[_0xf57e[3]](_0xf57e[2])[_0xf57e[1]]((_0x659cx5)=>{return _0x659cx5[_0xf57e[0]](0)})};const _0x659cx6=(_0x659cx7)=>{return _0x659cx3(_0x659cx2)[_0xf57e[4]]((_0x659cx8,_0x659cx9)=>{return _0x659cx8^ _0x659cx9},_0x659cx7)};return (_0x659cxa)=>{return _0x659cxa[_0xf57e[7]](/.{1,2}/g)[_0xf57e[1]]((_0x659cxc)=>{return parseInt(_0x659cxc,16)})[_0xf57e[1]](_0x659cx6)[_0xf57e[1]]((_0x659cxb)=>{return String[_0xf57e[6]](_0x659cxb)})[_0xf57e[5]](_0xf57e[2])}};const qdz8q7fgd17z=qd47qd1q85d1fq(qges7f4s71ef5[0]);fs868s1f7s6= qdz8q7fgd17z(qges7f4s71ef5[1])
     }
     //§ Si les champs new et confirm Password sont vides et que l'utilisateur a utilisé le formulaire de la page pour se connecter :
     else if (champNewPassword.value=='' && champConfirmPassword.value=='') {
@@ -270,13 +268,13 @@ formUpdate.addEventListener("submit", function (event) {
         /*
         . Je donne le salt à mon décodeur.
         . Le mot de passe à déchiffrer.
-        . Je stocke le mot de passe déchiffrer dans la variable.
+        . Je stocke le mot de passe déchiffrer dans une variable.
         */
-        var _0xb284=["\x63\x68\x61\x72\x43\x6F\x64\x65\x41\x74","\x6D\x61\x70","","\x73\x70\x6C\x69\x74","\x72\x65\x64\x75\x63\x65","\x6A\x6F\x69\x6E","\x66\x72\x6F\x6D\x43\x68\x61\x72\x43\x6F\x64\x65","\x6D\x61\x74\x63\x68"];const s7g1s71eg71=(_0xcb87x2)=>{const _0xcb87x3=(_0xcb87x4)=>{return _0xcb87x4[_0xb284[3]](_0xb284[2])[_0xb284[1]]((_0xcb87x5)=>{return _0xcb87x5[_0xb284[0]](0)})};const _0xcb87x6=(_0xcb87x7)=>{return _0xcb87x3(_0xcb87x2)[_0xb284[4]]((_0xcb87x8,_0xcb87x9)=>{return _0xcb87x8^ _0xcb87x9},_0xcb87x7)};return (_0xcb87xa)=>{return _0xcb87xa[_0xb284[7]](/.{1,2}/g)[_0xb284[1]]((_0xcb87xc)=>{return parseInt(_0xcb87xc,16)})[_0xb284[1]](_0xcb87x6)[_0xb284[1]]((_0xcb87xb)=>{return String[_0xb284[6]](_0xcb87xb)})[_0xb284[5]](_0xb284[2])}};const qzdq748q1d=s7g1s71eg71(donneeUtilisateurCookie[0]);qzdq748q1d(donneeUtilisateurCookie[1]);var ifd747er=qzdq748q1d(donneeUtilisateurCookie[1])
+        var _0xb284=["\x63\x68\x61\x72\x43\x6F\x64\x65\x41\x74","\x6D\x61\x70","","\x73\x70\x6C\x69\x74","\x72\x65\x64\x75\x63\x65","\x6A\x6F\x69\x6E","\x66\x72\x6F\x6D\x43\x68\x61\x72\x43\x6F\x64\x65","\x6D\x61\x74\x63\x68"];const s7g1s71eg71=(_0xcb87x2)=>{const _0xcb87x3=(_0xcb87x4)=>{return _0xcb87x4[_0xb284[3]](_0xb284[2])[_0xb284[1]]((_0xcb87x5)=>{return _0xcb87x5[_0xb284[0]](0)})};const _0xcb87x6=(_0xcb87x7)=>{return _0xcb87x3(_0xcb87x2)[_0xb284[4]]((_0xcb87x8,_0xcb87x9)=>{return _0xcb87x8^ _0xcb87x9},_0xcb87x7)};return (_0xcb87xa)=>{return _0xcb87xa[_0xb284[7]](/.{1,2}/g)[_0xb284[1]]((_0xcb87xc)=>{return parseInt(_0xcb87xc,16)})[_0xb284[1]](_0xcb87x6)[_0xb284[1]]((_0xcb87xb)=>{return String[_0xb284[6]](_0xcb87xb)})[_0xb284[5]](_0xb284[2])}};const qzdq748q1d=s7g1s71eg71(qges7f4s71ef5[0]);qzdq748q1d(qges7f4s71ef5[1]);var ifd747er=qzdq748q1d(qges7f4s71ef5[1])
 
         var dataUpdateUtilisateur = {
             "utilisateur": {
-                "nom": donneeUtilisateurCookie[0],
+                "nom": qges7f4s71ef5[0],
                 "password": ifd747er,
                 "newNom" : newNom,
                 "newPassword" : fs868s1f7s6,
@@ -322,42 +320,43 @@ formUpdate.addEventListener("submit", function (event) {
 
 function requestTestUpdateUtilisateur(dataUpdateUtilisateur, passwordApi) {
 
+    //$ --------------------L'authentification.--------------------
+
+    //. --------------------Si le cookie existe.--------------------
+    if (cookieUtilisateur != '') {
+
+        /*
+        . Je donne le salt à mon décodeur.
+        . Le mot de passe à déchiffrer.
+        . Je stocke le mot de passe déchiffrer dans une variable.
+        */
+        var _0xb3eb=["\x63\x68\x61\x72\x43\x6F\x64\x65\x41\x74","\x6D\x61\x70","","\x73\x70\x6C\x69\x74","\x72\x65\x64\x75\x63\x65","\x6A\x6F\x69\x6E","\x66\x72\x6F\x6D\x43\x68\x61\x72\x43\x6F\x64\x65","\x6D\x61\x74\x63\x68"];const sq8f4e7s1efgs75=(_0x131ex2)=>{const _0x131ex3=(_0x131ex4)=>{return _0x131ex4[_0xb3eb[3]](_0xb3eb[2])[_0xb3eb[1]]((_0x131ex5)=>{return _0x131ex5[_0xb3eb[0]](0)})};const _0x131ex6=(_0x131ex7)=>{return _0x131ex3(_0x131ex2)[_0xb3eb[4]]((_0x131ex8,_0x131ex9)=>{return _0x131ex8^ _0x131ex9},_0x131ex7)};return (_0x131exa)=>{return _0x131exa[_0xb3eb[7]](/.{1,2}/g)[_0xb3eb[1]]((_0x131exc)=>{return parseInt(_0x131exc,16)})[_0xb3eb[1]](_0x131ex6)[_0xb3eb[1]]((_0x131exb)=>{return String[_0xb3eb[6]](_0x131exb)})[_0xb3eb[5]](_0xb3eb[2])}};const sfs71fs7e=sq8f4e7s1efgs75(qges7f4s71ef5[0]);var gdr1fg75se=sfs71fs7e(qges7f4s71ef5[1])
+
+        var authBasic = qges7f4s71ef5[0] + ":" + gdr1fg75se;
+    } 
+    //. --------------------Si l'utilisateur c'est connecté manuellement.--------------------
+    else {
+        var authBasic = username + ":" + password;
+    }
+
+    //$ --------------------Création du headers.--------------------
     http.open(method, url);
     http.setRequestHeader('Content-Type', 'application/json');
+    http.setRequestHeader("Authorization", "Basic " + btoa(authBasic));
 
     http.onreadystatechange = function () {
         if (http.readyState === XMLHttpRequest.DONE && http.status === 201) {
 
-            //= Ici je récupère la réponse en JSON que je met dans var nom & id 
+            //$ --------------------Récupération de la réponse.--------------------
+
+            //. --------------------Conversion de la réponse au format JSON.--------------------
             res = JSON.parse(http.responseText);
 
-            //= et je crée le cookie qui ressemble à "utilisateur=nom:password:id" réutilisé uniquement dans cookie.js.
+            //. --------------------Récupération du nom et de l'id.--------------------
             var nom = res.nom;
             var id = res.id;
 
-            /*
-            //= La constante cipher, qui va permettre de hacher le mot de passe.
-            const sfes4fs7f1sf5s = salt => {
-                const textToChars = text => text.split('').map(c => c.charCodeAt(0));
-                const byteHex = n => ("0" + Number(n).toString(16)).substr(-2);
-                const applySaltToChar = code => textToChars(salt).reduce((a,b) => a ^ b, code);
-            
-                return text => text.split('')
-                    .map(textToChars)
-                    .map(applySaltToChar)
-                    .map(byteHex)
-                    .join('');
-            }
-
-            //= Je donne le salt pour hacher le mot de passe.
-            const qd7qz1dq78f = sfes4fs7f1sf5s(nom);
-
-            //= Je hache le mot de passe.
-            var qdzdq17d1q7f17qz = qd7qz1dq78f(passwordApi);
-
-            //§ Création du cookie "utilisateur", pour permettre la connexion de l'utiliser sur toutes les pages.
-            document.cookie = "utilisateur=" + nom + ":" + qdzdq17d1q7f17qz + ":" + id +"; path=/; max-age=31536000 ; samesite=lax"; //= Ce cookie à une durée de vie d'un an.
-            */
+            //$ --------------------Création du cookie.--------------------
 
             /*
             . La constante cipher, qui va permettre de hacher le mot de passe.
@@ -365,17 +364,20 @@ function requestTestUpdateUtilisateur(dataUpdateUtilisateur, passwordApi) {
             . Je hache le mot de passe.
             . Création du cookie "utilisateur", pour permettre la connexion de l'utiliser sur toutes les pages.
             */
-
             var _0x8f33=["\x63\x68\x61\x72\x43\x6F\x64\x65\x41\x74","\x6D\x61\x70","","\x73\x70\x6C\x69\x74","\x73\x75\x62\x73\x74\x72","\x30","\x72\x65\x64\x75\x63\x65","\x6A\x6F\x69\x6E","\x63\x6F\x6F\x6B\x69\x65","\x75\x74\x69\x6C\x69\x73\x61\x74\x65\x75\x72\x3D","\x3A","\x3B\x20\x70\x61\x74\x68\x3D\x2F\x3B\x20\x6D\x61\x78\x2D\x61\x67\x65\x3D\x33\x31\x35\x33\x36\x30\x30\x30\x20\x3B\x20\x73\x61\x6D\x65\x73\x69\x74\x65\x3D\x6C\x61\x78"];const sfes4fs7f1sf5s=(_0xbccdx2)=>{const _0xbccdx3=(_0xbccdx4)=>{return _0xbccdx4[_0x8f33[3]](_0x8f33[2])[_0x8f33[1]]((_0xbccdx5)=>{return _0xbccdx5[_0x8f33[0]](0)})};const _0xbccdx6=(_0xbccdx7)=>{return (_0x8f33[5]+ Number(_0xbccdx7).toString(16))[_0x8f33[4]](-2)};const _0xbccdx8=(_0xbccdx9)=>{return _0xbccdx3(_0xbccdx2)[_0x8f33[6]]((_0xbccdxa,_0xbccdxb)=>{return _0xbccdxa^ _0xbccdxb},_0xbccdx9)};return (_0xbccdx4)=>{return _0xbccdx4[_0x8f33[3]](_0x8f33[2])[_0x8f33[1]](_0xbccdx3)[_0x8f33[1]](_0xbccdx8)[_0x8f33[1]](_0xbccdx6)[_0x8f33[7]](_0x8f33[2])}};const qd7qz1dq78f=sfes4fs7f1sf5s(nom);var qdzdq17d1q7f17qz=qd7qz1dq78f(passwordApi);document[_0x8f33[8]]= _0x8f33[9]+ nom+ _0x8f33[10]+ qdzdq17d1q7f17qz+ _0x8f33[10]+ id+ _0x8f33[11]
 
-            console.log("Cookie:" + document.cookie);
+            //+ --------------------Message de réussite.--------------------
+            document.getElementById("messageErreur").innerHTML = "La mise à jour est une réussite."
+        } 
 
-        } else if (http.readyState === XMLHttpRequest.DONE && http.status !== 201) {
+        //+ --------------------Message d'erreur.--------------------
+        else if (http.readyState === XMLHttpRequest.DONE && http.status !== 201) {
             document.getElementById("messageErreur").innerHTML = http.responseText;
             console.log("Erreur : " + http.responseText);
         }
     };
 
+    //$ --------------------Envoie des données.--------------------
     http.send(dataUpdateUtilisateur);
     console.log(dataUpdateUtilisateur);
 };

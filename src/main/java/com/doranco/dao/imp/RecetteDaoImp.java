@@ -36,7 +36,7 @@ public class RecetteDaoImp implements RecetteDaoInterface {
 
     /*
 --------------------------------------------------------------------------------------------------------------------------
-                                                 Liste Recette avec DAO FACTORY 
+                                                % Liste Recette avec DAO FACTORY 
 --------------------------------------------------------------------------------------------------------------------------
      */
 //Utilise Jquery pour avoir une liste d'recette depuis la base de données
