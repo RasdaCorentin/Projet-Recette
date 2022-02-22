@@ -41,7 +41,7 @@ public class IngredientController {
 :--------------------------------------------------------------------------------------------------------------------------
     */
 
-    @Path("/liste")
+    @Path("/enregistrez/liste")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getListeIngredient() {  

@@ -47,7 +47,7 @@
                     </li>
 
                     <li class="nav-item hide" id="elementAMontrer">
-                        <a class="nav-link" href="../deconnexion.html">Se déconnecter</a>
+                        <a class="nav-link" href="/Projet-Recette/deconnexion.html">Se déconnecter</a>
                     </li>
 
                 </ul>
@@ -59,6 +59,110 @@
 
             </div>
         </nav>
+
+        <!--§ La modal pour créer une recette. -->
+        <button class="pulse" data-bs-toggle="modal" data-bs-target="#exampleModal1">Créer une recette</button>
+
+        <!-- Modal button -->
+        <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Formulaire de créeation de recette</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!--Ici Formulaire-->
+                        <form class="was-validated" id="creationRecette">
+                            <h5>Recette :</h5>
+                            <div class="mb-3 mt-3">
+                                <label for="libelleRecette" class="form-label">Libelle Recette :</label>
+                                <input type="text" class="form-control" id="libelleRecette" placeholder="Entrer le nom de la recette" name="libelleRecette" required>
+                                <div class="valid-feedback">Valid.</div>
+                                <div class="invalid-feedback">Please fill out this field.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="descriptionRecette" class="form-label">Description Recette :</label>
+                                <input type="text" class="form-control" id="descriptionRecette" placeholder="Entrer une description de la recette" name="descriptionRecette" required>
+                                <div class="valid-feedback">Valid.</div>
+                                <div class="invalid-feedback">Please fill out this field.</div>
+                            </div>
+                            <h5>Ingredient :</h5>
+                            <div class="mb-3 mt-3">
+                                <label for="libelleIngredient" class="form-label">Libelle Ingredient :</label>
+                                <input type="text" class="form-control" id="libelleIngredient" placeholder="Entrer le nom de l'ingredient" name="libelleIngredient" required>
+                                <div class="valid-feedback">Valid.</div>
+                                <div class="invalid-feedback">Please fill out this field.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="quantiteIngredient" class="form-label">Quantite Ingredient :</label>
+                                <input type="text" class="form-control" id="quantiteIngredient" placeholder="Ex : 1kg" name="quantiteIngredient" required>
+                                <div class="valid-feedback">Valid.</div>
+                                <div class="invalid-feedback">Please fill out this field.</div>
+                            </div>
+                            <button id="addIngredient" class="btn btn-secondary">Ajouter un ingredient</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>  
+                        <!--Fin formulaire-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin modal -->
+
+        <!--§ La modal pour mettre à jour son profil. -->
+        <button class="pulse" data-bs-toggle="modal" data-bs-target="#modalUpdate">Mettre à jour son profil</button>
+
+        <!-- Modal button -->
+        <div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="modalUpdateLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <h5 class="modal-title" id="modalUpdateLabel">Formulaire de mise à jour de profil</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                    </div>
+                    <div class="modal-body">
+
+                        <!--Ici Formulaire-->
+                        <form id="UpdateUtilisateur">
+                            <h5>Mettre à jour son profil :</h5>
+
+                            <div class="mb-3 mt-3">
+                                <label for="newNom" class="form-label">Votre nouveau nom :</label>
+                                <input type="text" class="form-control" id="newNom" placeholder="Votre nouveau nom" name="newNom">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="newEmail" class="form-label">Votre nouvelle adresse e-mail :</label>
+                                <input type="text" class="form-control" id="newEmail" placeholder="Votre nouvelle adresse e-mail" name="newEmail">
+                                <div class="valid-feedback">Validez.</div>
+                            </div>
+
+                            <div class="mb-3 mt-3">
+                                <label for="newPassword" class="form-label">Veuillez entrez un nouveau mot de passe :</label>
+                                <input type="text" class="form-control" id="newPassword" placeholder="Votre nouveau mot de passe" name="newPassword">
+                                <div class="valid-feedback">Validez.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="confirmPassword" class="form-label">Confirmez votre nouveau mot de passe :</label>
+                                <input type="text" class="form-control" id="confirmPassword" placeholder="Veuillez confirmez votre nouveau mot de passe" name="confirmPassword">
+                                <div class="valid-feedback">Valid.</div>
+                            </div>
+
+                            <p class="container mt-3" style="color: red;" id="messageErreur"></p>
+
+                            <button type="submit" class="btn btn-primary">Mettre à jour mon profil</button>
+
+                        </form>
+                        <!--Fin formulaire-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin modal -->
 
         <h3 class="text-center">Ma Liste Recette</h3>
         <table class ="table table-stripped">
@@ -75,9 +179,9 @@
 
         <div id="elementsACacher">
 
-            <p>Tu dois t'identifier pour avoir la liste de tes recettes</p>
+            <p>Tu dois t'identifier pour avoir la liste de tes recettes, ou pour pouvoir mettre à jour ton profil.</p>
 
-            <form class="was-validated" id="myForm">
+            <form class="was-validated" id="Identification">
 
                 <div class="mb-3 mt-3">
                     <label for="username" class="form-label">Username:</label>
@@ -98,8 +202,11 @@
             </form>
         </div>
 
+        <!--) Le message d'erreur. -->
+        <p class="container mt-3" style="color: red;" id="messageErreur"></p>
+
         <div w3-include="javascript/footer.html"></div>      
-        <script> includeHTML(); </script>
+        <script> includeHTML();</script>
 
     </body>
 </html>
