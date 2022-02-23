@@ -30,7 +30,9 @@ public interface RecetteDaoInterface {
     Recette findRecetteById(int id);
     
     // Update recette
-    Recette updateRecette(Recette recette, int id);
+    Recette updateRecette(Recette recette, Utilisateur utilisateur);
 
+    //Delete recette 
+    Recette deleteRecetteSSIng(Recette recette, Utilisateur utilisateur);
 }
 
