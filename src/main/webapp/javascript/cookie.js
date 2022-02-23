@@ -39,7 +39,7 @@ if (cookieUtilisateur != "") {
             break;
 
         default :
-            alert("Il y a une erreur au niveau du système de cookie.");
+            console.log("Il y a une erreur au niveau du système de cookie.");
             break;
 
     }
@@ -193,7 +193,7 @@ function connectWithCookieXMLConnection() {
             http.onreadystatechange = function () {
                 if (http.readyState === XMLHttpRequest.DONE && http.status === 202) {
                     var res = JSON.parse(http.responseText);
-                    alert("Le cookie a marché! Connection Réussi");
+                    console.log("Le cookie a marché! Connection Réussi");
                     console.log(res);
                 } else if (http.readyState === XMLHttpRequest.DONE && http.status !== 202) {
                     document.getElementById("messageErreur").innerHTML = http.responseText;
@@ -270,7 +270,7 @@ function connectWithCookieFetchMyPage() {
         console.log(response.statusText); //. OK
 
         if (response.status === 201) {
-            alert("Le cookie a marché! Connection Réussi");
+            console.log("Le cookie a marché! Connection Réussi");
             let data = await response.json();
             console.log(data);
             

@@ -79,11 +79,16 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
 //. -------------------------------------------------------------------------------------------
             String salt = BCrypt.gensalt();
             String passwordHash = BCrypt.hashpw(utilisateur.getPassword(), salt);
-            utilisateur.setDateCrea(new Date());
             utilisateur.setPassword(passwordHash);
             utilisateur.setSalt(salt);
+
+            utilisateur.setDateCrea(new Date());
             utilisateur.setStatuts(false);
             utilisateur.setSeau(100);
+
+            // String urlConnection = BCrypt.gensalt();
+            // utilisateur.setUrlConnect(urlConnection);
+
             transaction.begin();
             entityManager.persist(utilisateur);
             transaction.commit();
@@ -579,6 +584,7 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
 
                     nUtilisateur.setDateModif(new Date());
                     nUtilisateur.setStatuts(true);
+                    // nUtilisateur.setUrlConnect(null);
 
                     transaction.begin();
                     entityManager.merge(nUtilisateur);

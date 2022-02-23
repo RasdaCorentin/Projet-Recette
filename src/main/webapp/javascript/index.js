@@ -126,10 +126,10 @@ function search_recettes() {
  *******************************/
 for (i = 0; i < 26; i++) {
 
-  var li = document.createElement("li");
-  li.innerHTML = (String.fromCharCode(65+i)) + " ";
-  li.style.listStyle = "none";
-  li.style.display = "inline";
-  document.getElementById("letter-main").appendChild(li);
+    var li = document.createElement("li");
+    li.innerHTML = (String.fromCharCode(65+i)) + " ";
+    li.style.listStyle = "none";
+    li.style.display = "inline";
+    document.getElementById("letter-main").appendChild(li);
 
 }

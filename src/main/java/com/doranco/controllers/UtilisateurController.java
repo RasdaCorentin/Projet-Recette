@@ -149,48 +149,6 @@ public class UtilisateurController {
 
     /*
 :--------------------------------------------------------------------------------------------------------------------------
-                                                % Vanish Utilisateur 
-:--------------------------------------------------------------------------------------------------------------------------
-    */
-
-    @Path("/admin/vanish/{id}")
-    @PUT
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response vanishUtilisateur(Utilisateur utilisateur, @PathParam(value = "id") int id) {
-
-        DaoFactory daoFactory = new DaoFactory();
-        UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
-        Utilisateur utilisateurBdd = utilisateurDaoInterface.findUtilisateurById(id);
-        utilisateurDaoInterface.vanishUtilisateur(utilisateur, id);
-
-        //. ----------Vérification de l'id.----------
-
-        //$ ----------Si l'id est bien trouvé.----------
-        if (utilisateurBdd != null) {
-            Response response = Response
-
-                .status(Response.Status.CREATED)
-                .entity(utilisateurDaoInterface.getListeUtilisateurs())
-                .build();
-
-        daoFactory.closeEntityManagerFactory();
-        return response;
-        } 
-
-        //! ----------Si l'id n'est pas trouvé.----------
-        else {
-            Response response = Response
-                .status(Response.Status.NOT_FOUND)
-                .entity("Aucun utilisateur ne possédant cette id n'a pus être trouvé.")
-                .build();
-            return response;
-        }
-
-    }
-
-    /*
-:--------------------------------------------------------------------------------------------------------------------------
                                                 % Delete Utilisateur 
 :--------------------------------------------------------------------------------------------------------------------------
     */
@@ -613,10 +571,51 @@ public class UtilisateurController {
 
     /*
 :--------------------------------------------------------------------------------------------------------------------------
-                                                % Read Utilisateur by Name
+                                                % Vanish Utilisateur 
 :--------------------------------------------------------------------------------------------------------------------------
     */
 
+    @Path("/vanish/{id}")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response vanishUtilisateur(Utilisateur utilisateur, @PathParam(value = "id") int id) {
+
+        DaoFactory daoFactory = new DaoFactory();
+        UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
+        Utilisateur utilisateurBdd = utilisateurDaoInterface.findUtilisateurById(id);
+        utilisateurDaoInterface.vanishUtilisateur(utilisateur, id);
+
+        //. ----------Vérification de l'id.----------
+
+        //$ ----------Si l'id est bien trouvé.----------
+        if (utilisateurBdd != null) {
+            Response response = Response
+
+                .status(Response.Status.CREATED)
+                .entity(utilisateurDaoInterface.getListeUtilisateurs())
+                .build();
+
+        daoFactory.closeEntityManagerFactory();
+        return response;
+        } 
+
+        //! ----------Si l'id n'est pas trouvé.----------
+        else {
+            Response response = Response
+                .status(Response.Status.NOT_FOUND)
+                .entity("Aucun utilisateur ne possédant cette id n'a pus être trouvé.")
+                .build();
+            return response;
+        }
+
+    }
+
+    /*
+:--------------------------------------------------------------------------------------------------------------------------
+                                                % Read Utilisateur by Name
+:--------------------------------------------------------------------------------------------------------------------------
+    */
 
     @Path("/read")
     @POST
