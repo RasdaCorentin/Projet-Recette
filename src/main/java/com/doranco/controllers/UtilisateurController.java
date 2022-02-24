@@ -370,6 +370,74 @@ public class UtilisateurController {
     }
 
     /*
+:--------------------------------------------------------------------------------------------------------------------------
+                                                % Connecter un Utilisateur au site
+:--------------------------------------------------------------------------------------------------------------------------
+    */
+
+    @Path("/connexion")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response connecterUtilisateur(String stringUserData) {
+
+        //µ Convertis String en un objet Json data.
+        JSONObject jSONObjectData = new JSONObject(stringUserData);
+        //µ Récupération du user.
+        String jsonUtilisateur = jSONObjectData.get("utilisateur").toString();
+        //µ Instancie dans la classe utilisateur les infos récupérer.
+        Utilisateur utilisateur = jsonb.fromJson(jsonUtilisateur, Utilisateur.class);
+        //µ Lancement de la méthode Connect.
+        DaoFactory daoFactory = new DaoFactory();
+        UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
+        Utilisateur utilisateurAConnecter = utilisateurDaoInterface.findUtilisateurByNom(utilisateur);
+
+        //. ----------Vérification du faite que l'utilisateur existe dans la base de donnée.----------
+
+        if (utilisateurAConnecter != null) {
+
+            //§ Récupération du mot de passe entré par l'utilisateur pour la connexion.
+            String passwordTemp = utilisateur.getPassword();
+            String passwordHash = BCrypt.hashpw(passwordTemp, utilisateurAConnecter.getSalt());
+
+            //. ----------Vérification des identifiants de l'utilisateur.----------
+
+            if ( passwordHash.compareTo(utilisateurAConnecter.getPassword()) == 0 && utilisateurAConnecter.getNom().equals(utilisateur.getNom()) ) {
+
+                //? ----------L'utilisateur est connecté à son compte.----------
+                utilisateur = utilisateurDaoInterface.connectUtilisateur(utilisateur);
+
+                Response response = Response
+                        .status(Response.Status.ACCEPTED)
+                        .entity(utilisateur)
+                        .build();
+                return response;
+
+            }
+
+            //! ----------Erreur sur les identifiants.----------
+            else {
+
+                Response response = Response
+                    .status(Response.Status.FORBIDDEN)
+                    .entity("Vos identifiants sont incorrect !")
+                    .build();
+                return response;
+
+            }
+
+        }
+
+        //! ----------Le nom d'utilisateur n'existe pas.----------
+        Response response = Response
+            .status(Response.Status.NOT_FOUND)
+            .entity("Le nom " + utilisateur.getNom() + " n'est associé à aucun compte sur le site.")
+            .build();
+        return response;
+
+    }
+
+    /*
 .---------------------------------------------ADMIN / USER COMMAND--------------------------------------------------------
 
 :--------------------------------------------------------------------------------------------------------------------------

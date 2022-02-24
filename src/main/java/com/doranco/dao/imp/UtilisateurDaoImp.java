@@ -607,6 +607,47 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
         return null;
     }
 
+        /*
+:--------------------------------------------------------------------------------------------------------------------------
+                                                % Connecter un Utilisateur au site
+:--------------------------------------------------------------------------------------------------------------------------
+    */
+
+    @Override
+    public Utilisateur connecterUtilisateur(Utilisateur utilisateur) {
+
+        EntityManager entityManager = null;
+        EntityTransaction transaction = null;
+
+        try {
+            entityManager = daoFactory.getEntityManager();
+            transaction = entityManager.getTransaction();
+
+//. -------------------------------------------------------------------------------------------
+
+            Utilisateur nUtilisateur = findUtilisateurByNom(utilisateur);
+
+                    nUtilisateur.setDateModif(new Date());
+
+                    transaction.begin();
+                    entityManager.merge(nUtilisateur);
+                    transaction.commit();
+                    System.out.println("<----------- Vous avez été connecté avec succès. ------->");
+                    return nUtilisateur;
+
+//. ---------------------------------------FIN--------------------------------------------------
+        } catch (Exception ex) {
+            transaction.rollback();
+            System.out.println("Erreur lors de la connexion de l'utilisateur. \n");
+            ex.printStackTrace();
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+        return null;
+    }
+
     /*
 :--------------------------------------------------------------------------------------------------------------------------
                                                 % Read Utilisateur

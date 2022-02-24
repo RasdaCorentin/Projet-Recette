@@ -68,4 +68,7 @@ public interface UtilisateurDaoInterface {
 
     //, Lire un utilisateur.
     Utilisateur readUtilisateur(int id);
+
+    //, Permettre à un utilisateur de se connecter à son compte.
+    Utilisateur connecterUtilisateur(Utilisateur utilisateur);
 }
