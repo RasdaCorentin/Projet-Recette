@@ -3,34 +3,57 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
 
+/*
+: ************************************************************************************************************
+                                    % Méthode Get List Utilisateur
+: ************************************************************************************************************
+*/
+
 function includeHTML() {
 
+  /*
+  . --------------------------------------------------------------------------------
+                              £ Définitions des variables.
+  . --------------------------------------------------------------------------------
+  */
+
   var z, i, elmnt, file, xhttp;
-  /* Loop through a collection of all HTML elements: */
+
+  //. --------------------Récupération de tout les éléments HTML.--------------------
   z = document.getElementsByTagName("*");
 
   for (i = 0; i < z.length; i++) {
     elmnt = z[i];
-    /*search for elements with a certain atrribute:*/
+
+    //. --------------------Recherche des éléments avec l'attribut "w3-include".--------------------
     file = elmnt.getAttribute("w3-include");
 
+    //. --------------------Si file est définit.--------------------
     if (file) {
-      /* Make an HTTP request using the attribute value as the file name: */
+
+      //. --------------------Créée une requête HTTP en utilisant comme attribut le nom du fichier.--------------------
       xhttp = new XMLHttpRequest();
 
       xhttp.onreadystatechange = function() {
+
         if (this.readyState == 4) {
+
           if (this.status == 200) {elmnt.innerHTML = this.responseText;}
           if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
-          /* Remove the attribute, and call this function once more: */
+
+          //. --------------------Enlève l'attribut de l'élément traité.--------------------
           elmnt.removeAttribute("w3-include");
+
+          //. --------------------Inclus le fichier html.--------------------
           includeHTML();
         }
+
       }
 
       xhttp.open("GET", file, true);
       xhttp.send();
-      /* Exit the function: */
+
+      //. --------------------Quitte la fonction.--------------------
       return;
     }
 

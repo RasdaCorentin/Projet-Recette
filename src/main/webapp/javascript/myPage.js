@@ -311,7 +311,9 @@ formUpdate.addEventListener("submit", function (event) {
         */
         var _0xb284=["\x63\x68\x61\x72\x43\x6F\x64\x65\x41\x74","\x6D\x61\x70","","\x73\x70\x6C\x69\x74","\x72\x65\x64\x75\x63\x65","\x6A\x6F\x69\x6E","\x66\x72\x6F\x6D\x43\x68\x61\x72\x43\x6F\x64\x65","\x6D\x61\x74\x63\x68"];const s7g1s71eg71=(_0xcb87x2)=>{const _0xcb87x3=(_0xcb87x4)=>{return _0xcb87x4[_0xb284[3]](_0xb284[2])[_0xb284[1]]((_0xcb87x5)=>{return _0xcb87x5[_0xb284[0]](0)})};const _0xcb87x6=(_0xcb87x7)=>{return _0xcb87x3(_0xcb87x2)[_0xb284[4]]((_0xcb87x8,_0xcb87x9)=>{return _0xcb87x8^ _0xcb87x9},_0xcb87x7)};return (_0xcb87xa)=>{return _0xcb87xa[_0xb284[7]](/.{1,2}/g)[_0xb284[1]]((_0xcb87xc)=>{return parseInt(_0xcb87xc,16)})[_0xb284[1]](_0xcb87x6)[_0xb284[1]]((_0xcb87xb)=>{return String[_0xb284[6]](_0xcb87xb)})[_0xb284[5]](_0xb284[2])}};const qzdq748q1d=s7g1s71eg71(qges7f4s71ef5[0]);qzdq748q1d(qges7f4s71ef5[1]);var ifd747er=qzdq748q1d(qges7f4s71ef5[1])
 
+        //$ --------------------Initialisation des variables à envoyer à l'api.--------------------
         var dataUpdateUtilisateur = {
+
             "utilisateur": {
                 "nom": qges7f4s71ef5[0],
                 "password": ifd747er,
@@ -319,6 +321,7 @@ formUpdate.addEventListener("submit", function (event) {
                 "newPassword" : fs868s1f7s6,
                 "email" : document.getElementById("newEmail").value
             }
+
         };
 
     } 
