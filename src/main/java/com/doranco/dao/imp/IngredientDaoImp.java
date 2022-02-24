@@ -137,7 +137,7 @@ public class IngredientDaoImp implements IngredientDaoInterface {
 --------------------------------------------------------------------------------------------------------------------------
 */
    @Override
-    public Ingredient updateIngredient(Ingredient ingredient, int id) {
+    public Ingredient updateIngredient(Ingredient ingredient, Utilisateur utilisateur, int id) {
         
         EntityManager entityManager = null;
         EntityTransaction transaction = null;
@@ -148,14 +148,14 @@ public class IngredientDaoImp implements IngredientDaoInterface {
             if (ingredientAModifier != null) {
                 transaction = entityManager.getTransaction();
 
-
+                ingredientAModifier.setUtilisateur(utilisateur);
                 ingredientAModifier.setLibelle(ingredient.getLibelle());
                 ingredientAModifier.setQuantite(ingredient.getQuantite());
 
                 ingredientAModifier.setDateModif(new Date());
 
                 transaction.begin();
-                entityManager.persist(ingredientAModifier);
+                entityManager.merge(ingredientAModifier);
                 transaction.commit();
 
                 System.out.println("<----------- Mise à jour de l'ingrédient avec succès ------->");
@@ -186,7 +186,7 @@ public class IngredientDaoImp implements IngredientDaoInterface {
 --------------------------------------------------------------------------------------------------------------------------
 */
     @Override
-    public boolean deleteIngredient(int id) {
+    public Ingredient deleteIngredient(int id) {
         
         EntityManager entityManager = null;
         EntityTransaction transaction = null;
@@ -194,19 +194,22 @@ public class IngredientDaoImp implements IngredientDaoInterface {
             entityManager = daoFactory.getEntityManager();
 
             Ingredient ingredientAModifier = entityManager.find(Ingredient.class, id);
+            System.out.println(ingredientAModifier);
             if (ingredientAModifier != null) {
                 transaction = entityManager.getTransaction();
-
+                 ingredientAModifier.setUtilisateur(null);
+                 ingredientAModifier.setListRecettes(null);
+                 
                 transaction.begin();
                 entityManager.remove(ingredientAModifier);
                 transaction.commit();
 
                 System.out.println("<-----------Suppression avec succès ------->");
-                return true;
+                return null;
 
             }
             System.out.println("<----------- Ingrédient non trouvé avec l'id fournie ------->");
-            return false;
+            return null;
 
         } catch (Exception ex) {
             transaction.rollback();
@@ -219,7 +222,7 @@ public class IngredientDaoImp implements IngredientDaoInterface {
                 entityManager.close();
             }
         }
-        return false;
+        return null;
         
     }
 

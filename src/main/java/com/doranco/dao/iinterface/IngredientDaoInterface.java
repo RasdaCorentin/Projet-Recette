@@ -25,14 +25,14 @@ public interface IngredientDaoInterface {
     Ingredient createIngredient(Ingredient ingredient, Utilisateur utilisateur);
     
     //Update (constructeur avec id)
-    Ingredient updateIngredient(Ingredient ingredient, int id);
+    Ingredient updateIngredient(Ingredient ingredient, Utilisateur utilisateur, int id);
     
 
     //Lire un utilisateur à partir de son ID
     Ingredient findIngredientById(int id);
     
     //Supprime un Ingredient (COMMAND ADMIN)
-    boolean deleteIngredient(int id);
+    Ingredient deleteIngredient(int id);
     
     //, Lire un Utilisateur a partir de son Nom.
     Ingredient findIngredientByLibelle(Ingredient ingredient);

@@ -3,23 +3,38 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
 
-/********************************
- 
- Methode Fetch Index List Recette
- 
- *******************************/
+/*
+: ************************************************************************************************************
+                                    % Méthode Fetch Index List Recette
+: ************************************************************************************************************
+*/
 
-//Fonction fetch async/await pour l'affichage de la liste utilisateur
+/*
+. --------------------------------------------------------------------------------
+        £ Fonction fetch async/await pour l'affichage de la liste des recettes.
+. --------------------------------------------------------------------------------
+*/
+
 async function fetchRecette() {
-    let responseRecette = await fetch('http://localhost:8080/Projet-Recette/api/utilisateur/recette/enregistrez/liste');
-
-    console.log(responseRecette.status); // 200
-    console.log(responseRecette.statusText); // OK
-
+     let responseRecette = await fetch('http://localhost:8080/Projet-Recette/api/utilisateur/recette/enregistrez/liste');
     if (responseRecette.status === 201) {
-        //await attente d'une réponse serveur pour afficher la liste utilisateur
-        let dataRecette = await responseRecette.json();
+
+        /*
+        . --------------------------------------------------------------------------------
+                                    £ Définitions des variables.
+        . --------------------------------------------------------------------------------
+        */
+
         var tableRecette = document.getElementById("ListRecettes");
+
+        //§ await va attendre une réponse du serveur avant d'afficher la liste des recettes.
+        let dataRecette = await responseRecette.json();
+
+        /*
+        . --------------------------------------------------------------------------------
+                                    £ Afficher la liste des recettes sur la page.
+        . --------------------------------------------------------------------------------
+        */
 
         for (let iterRecette in dataRecette) {
             var textRecette = "<tr>";
@@ -48,30 +63,50 @@ async function fetchRecette() {
             textRecette += "</tr>";
             tableRecette.innerHTML += textRecette;
         }
+
     }
 }
-fetchRecette();
-/********************************
- 
- Methode Fetch Index List Ingredient
- 
- *******************************/
-async function fetchIngredient() {
-    let responseIng = await fetch('http://localhost:8080/Projet-Recette/api/utilisateur/ingredient/enregistrez/liste');
 
-    console.log(responseIng.status); // 200
-    console.log(responseIng.statusText); // OK
+/*
+: ************************************************************************************************************
+                                    % Méthode Fetch Index List Ingredient
+: ************************************************************************************************************
+*/
+
+/*
+. --------------------------------------------------------------------------------
+        £ Fonction fetch async/await pour l'affichage de la liste des recettes.
+. --------------------------------------------------------------------------------
+*/
+
+async function fetchIngredient() {
+
+let responseIng = await fetch('http://localhost:8080/Projet-Recette/api/utilisateur/ingredient/enregistrez/liste');
 
     if (responseIng.status === 201) {
-        //await attente d'une réponse serveur pour afficher la liste utilisateur
-        let dataIng = await responseIng.json();
+
+        /*
+        . --------------------------------------------------------------------------------
+                                    £ Définitions des variables.
+        . --------------------------------------------------------------------------------
+        */
+
         var tableIng = document.getElementById("ListIng");
+
+        //§ await va attendre une réponse du serveur avant d'afficher la liste des ingrédients.
+        let dataIng = await responseIng.json();
+
+        /*
+        . --------------------------------------------------------------------------------
+                                    £ Afficher la liste des ingrédients sur la page.
+        . --------------------------------------------------------------------------------
+        */
 
         for (let iterIng in dataIng) {
 
             var textIng = "<tr>";
-            
-            textIng += "<td><button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#modalIng"+ iterIng +"'>" + dataIng[iterIng].libelle + "</button></td>"+
+
+            textIng += "<td class='ingredients'><button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#modalIng"+ iterIng +"'>" + dataIng[iterIng].libelle + "</button></td>"+
         '<div class="modal fade" id="modalIng'+ iterIng +'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">' +
             '<div class="modal-dialog">' +
                 '<div class="modal-content">'+
@@ -93,23 +128,35 @@ async function fetchIngredient() {
                 '</div>'+
             '</div>'+
         '</div>';
-            
+
             textIng += "</tr>";
             tableIng.innerHTML += textIng;
+
         }
     }
 }
-fetchIngredient();
 
-/********************************
- 
- Methode Search Reactive pour Index List Recette
- 
- *******************************/
+/*
+: ************************************************************************************************************
+                                    % Méthode Search Reactive pour Index List Recette
+: ************************************************************************************************************
+*/
 
 function search_recettes() {
+
+    /*
+    . --------------------------------------------------------------------------------
+                                £ Définitions des variables.
+    . --------------------------------------------------------------------------------
+    */
+
+    //. --------------------La barre de recherche.--------------------
     let input = document.getElementById('searchbar').value;
+
+    //. --------------------Transforme le texte de la barre de recherche en lettres minuscules.--------------------
     input = input.toLowerCase();
+
+    //. --------------------Les recettes.--------------------
     let x = document.getElementsByClassName('recettes');
 
     for (i = 0; i < x.length; i++) {
@@ -120,17 +167,35 @@ function search_recettes() {
         }
     }
 }
-/********************************
- 
- Index Ingredient (WIP)
- 
- *******************************/
-for (i = 0; i < 26; i++) {
 
-  var li = document.createElement("li");
-  li.innerHTML = (String.fromCharCode(65+i)) + " ";
-  li.style.listStyle = "none";
-  li.style.display = "inline";
-  document.getElementById("letter-main").appendChild(li);
+/**
+ 
+ Methode Search Réactive pour Index Liste Ingrédients
+ 
+ ***/
 
+function search_ingredients(){
+    let input = document.getElementById('searchbar2').value;
+    input = input.toLowerCase();
+    let x = document.getElementsByClassName('ingredients');
+
+    for (i = 0; i < x.length; i++) {
+        if (!x[i].innerHTML.toLowerCase().includes(input)) {
+            x[i].style.display = "none";
+        } else {
+            x[i].style.display = "list-item";
+        }
+    }
 }
+
+/*
+: ************************************************************************************************************
+                                    % Appel des fonctions
+: ************************************************************************************************************
+*/
+
+//. --------------------Afficher la liste des recettes.--------------------
+fetchRecette();
+
+//. --------------------Afficher la liste des ingrédients.--------------------
+fetchIngredient();

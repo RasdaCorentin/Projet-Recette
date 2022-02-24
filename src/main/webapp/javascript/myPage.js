@@ -31,16 +31,40 @@ let cookieUser = getCookie("utilisateur");
 
 qges7f4s71ef5 = qges7f4s71ef5.split(":");
 /********************************
- 
+
  Methode Fetch myPage List Recette du User
- 
+
  *******************************/
 
 let formIdUser = document.getElementById("Identification");
 var authBasicUser = {};
 var username = {};
 var password = {};
-
+if (cookieUser != '') {
+    /*
+         . Je donne le salt à mon décodeur.
+         . Le mot de passe à déchiffrer.
+         . Je stocke le mot de passe déchiffrer dans une variable.
+    */
+        const decipher = salt => {
+                const textToChars = text => text.split('').map(c => c.charCodeAt(0));
+                const applySaltToChar = code => textToChars(salt).reduce((a,b) => a ^ b, code);
+                return encoded => encoded.match(/.{1,2}/g)
+                    .map(hex => parseInt(hex, 16))
+                    .map(applySaltToChar)
+                    .map(charCode => String.fromCharCode(charCode))
+                    .join('');
+            }
+            
+            //To decipher, you need to create a decipher and use it :
+            const myDecipher = decipher(qges7f4s71ef5[0])
+            
+            var MDPADECIPHER = myDecipher(qges7f4s71ef5[1])
+            
+            var authBasicUser = qges7f4s71ef5[0] + ":" + MDPADECIPHER;    
+                fetchRecetteUser(qges7f4s71ef5[2]);
+                fetchIngredientUser(qges7f4s71ef5[2]);
+}
 //Ecoute bouton submit
 formIdUser.addEventListener("submit", async function (event) {
     //J'enléve les paramétres par défaut du formulaire
@@ -148,7 +172,6 @@ async function fetchRecetteUser(id) {
 
     if (response.status === 201) {
         let dataRecette = await response.json();
-        console.log(dataRecette);
         var table = document.getElementById("ListRecettes")
         // Fonction d'affichage JSON => HTML
         for (let iterRecette in dataRecette) {
@@ -199,6 +222,10 @@ var urlCr = 'http://localhost:8080/Projet-Recette/api/utilisateur/recette/create
 
 //. --------------------Définition de la méthode.--------------------
 var methodCr = 'POST';
+//si connection avec cookie set username à username cookie
+if (cookieUser != '') {
+    var username = qges7f4s71ef5[0]
+}
 
 /*
  . --------------------------------------------------------------------------------
@@ -259,18 +286,24 @@ function createRecette(data) {
             const myDecipher = decipher(qges7f4s71ef5[0])
             
             var MDPADECIPHER = myDecipher(qges7f4s71ef5[1])
-            console.log(MDPADECIPHER);
-    }
-    
-    
+            
+            var authBasic = qges7f4s71ef5[0] + ":" + MDPADECIPHER;
+    httpCr.open(methodCr, urlCr, true);
+    httpCr.withCredentials = true;
+    httpCr.setRequestHeader("Content-Type", "application/json");
+    httpCr.setRequestHeader("Authorization", "Basic " + btoa(authBasic));
+    console.log(authBasic);
+    }else {
     httpCr.open(methodCr, urlCr, true);
     httpCr.withCredentials = true;
     httpCr.setRequestHeader("Content-Type", "application/json");
     httpCr.setRequestHeader("Authorization", "Basic " + btoa(authBasicUser));
+    }
+    
+    
+
     httpCr.onreadystatechange = function () {
         if (httpCr.readyState === XMLHttpRequest.DONE && httpCr.status === 201) {
-            //Ici je récupére la réponse en JSON que je met dans var nom & id 
-            res = JSON.parse(httpCr.responseText);
             //§ Renvoie l'utilisateur vers la page d'accueil.
             location.href = "myPage.html";
         } else if (httpCr.readyState === XMLHttpRequest.DONE && httpCr.status !== 201) {
@@ -599,6 +632,7 @@ function requestTestUpdateUtilisateur(dataUpdateUtilisateur, passwordApi) {
 
             //+ --------------------Message de réussite.--------------------
             document.getElementById("messageErreur").innerHTML = "La mise à jour est une réussite."
+            location.href = "myPage.html";
         }
 
         //+ --------------------Message d'erreur.--------------------
@@ -718,6 +752,53 @@ function modifRecette(id) {
     var idRecetteAModif = id;
     submitModifRecette(idRecetteAModif);
 }
+ function submitModifRecette(id) {
+
+    let formModifRecette = document.getElementById("UpdateRecette");
+    formModifRecette.addEventListener("submit", async function (event) {
+        //J'enléve les paramétres par défaut du formulaire
+        event.preventDefault();
+        urlUpdateR = 'http://localhost:8080/Projet-Recette/api/utilisateur/recette/update';
+        let dataUpdateRecette = {
+            "recette": {
+                "id": id,
+                "libelle": document.getElementById("UpdateRecette").libelleRecette.value,
+                "description": document.getElementById("UpdateRecette").descriptionRecette.value,
+                "listIngredients": [
+                    {
+                        "libelle": document.getElementById("UpdateRecette").libelleIngredient.value,
+                        "quantite": document.getElementById("UpdateRecette").quantiteIngredient.value
+                    }
+                ]
+            },
+            "utilisateur": {
+                "nom": username
+            }
+        };
+        
+    
+
+    let headers = new Headers();
+    headers.set("Content-type", "application/json");
+    headers.set('Authorization', 'Basic ' + btoa(authBasicUser));
+
+    let responseUpdateRecette = await fetch(urlUpdateR, {method: 'PUT',
+        headers: headers,
+        body: JSON.stringify(dataUpdateRecette)
+    });
+
+    console.log(responseUpdateRecette.status); // 200
+    console.log(responseUpdateRecette.statusText); // OK
+
+    if (responseUpdateRecette.status === 202) {
+        let responseRecette = responseUpdateRecette;
+        location.href = "myPage.html";
+
+    }
+    
+});
+}
+
 /*
  : ************************************************************************************************************
                                             Update Ingrédient
@@ -744,17 +825,8 @@ function modifRecette(id) {
 //. --------------------Le bouton.--------------------
 var accepterVanish = document.getElementById("accepterVanish");
 
-//$ --------------------Mise en place des variables pour la connection à la BDD.--------------------
-
-//. --------------------Instanciation de XMLHttpRequest.--------------------
-var http = new XMLHttpRequest();
-
 //. --------------------Définition de l'url de l'api.--------------------
-var urlVanish;
-
-//. --------------------Définition de la méthode.--------------------
-var method = 'PUT';
-
+var urlVanish = {};
 /*
 . --------------------------------------------------------------------------------
                                 £ Méthode d'écoute du bouton.
@@ -763,6 +835,7 @@ var method = 'PUT';
 
 //? Écoute du bouton accepter.
 accepterVanish.addEventListener("click", function() {
+
 
     //§ Si le cookie existe.
     if (cookieUser != "") {
@@ -802,67 +875,45 @@ accepterVanish.addEventListener("click", function() {
 
 function requestTestVanishUtilisateur(dataVanishUtilisateur) {
 
-    //$ --------------------L'authentification.--------------------
+//$ --------------------Mise en place des variables pour la connection à la BDD.--------------------
 
-    //. --------------------Si le cookie existe.--------------------
-    if (cookieUser != '') {
+//. --------------------Instanciation de XMLHttpRequest.--------------------
+var httpVanish = new XMLHttpRequest();
 
-        /*
-        . Je donne le salt à mon décodeur.
-        . Le mot de passe à déchiffrer.
-        . Je stocke le mot de passe déchiffrer dans une variable.
-        */
-        var _0xb3eb=["\x63\x68\x61\x72\x43\x6F\x64\x65\x41\x74","\x6D\x61\x70","","\x73\x70\x6C\x69\x74","\x72\x65\x64\x75\x63\x65","\x6A\x6F\x69\x6E","\x66\x72\x6F\x6D\x43\x68\x61\x72\x43\x6F\x64\x65","\x6D\x61\x74\x63\x68"];const sq8f4e7s1efgs75=(_0x131ex2)=>{const _0x131ex3=(_0x131ex4)=>{return _0x131ex4[_0xb3eb[3]](_0xb3eb[2])[_0xb3eb[1]]((_0x131ex5)=>{return _0x131ex5[_0xb3eb[0]](0)})};const _0x131ex6=(_0x131ex7)=>{return _0x131ex3(_0x131ex2)[_0xb3eb[4]]((_0x131ex8,_0x131ex9)=>{return _0x131ex8^ _0x131ex9},_0x131ex7)};return (_0x131exa)=>{return _0x131exa[_0xb3eb[7]](/.{1,2}/g)[_0xb3eb[1]]((_0x131exc)=>{return parseInt(_0x131exc,16)})[_0xb3eb[1]](_0x131ex6)[_0xb3eb[1]]((_0x131exb)=>{return String[_0xb3eb[6]](_0x131exb)})[_0xb3eb[5]](_0xb3eb[2])}};const sfs71fs7e=sq8f4e7s1efgs75(qges7f4s71ef5[0]);var gdr1fg75se=sfs71fs7e(qges7f4s71ef5[1])
-
-        var authBasic = qges7f4s71ef5[0] + ":" + gdr1fg75se;
-    }
-    //. --------------------Si l'utilisateur c'est connecté manuellement.--------------------
-    else {
-        var authBasic = username + ":" + password;
-    }
+//. --------------------Définition de la méthode.--------------------
+var methodVanish = 'PUT';
 
     //$ --------------------Création du headers.--------------------
-    http.open(method, urlVanish);
-    http.setRequestHeader('Content-Type', 'application/json');
-    http.setRequestHeader("Authorization", "Basic " + btoa(authBasic));
+    httpVanish.open(method, urlVanish);
+    httpVanish.setRequestHeader('Content-Type', 'application/json');
+    httpVanish.setRequestHeader("Authorization", "Basic " + btoa(authBasicUser));
+    
 
+    httpVanish.onreadystatechange = function () {
 
-    http.onreadystatechange = function () {
-        if (http.readyState === XMLHttpRequest.DONE && http.status === 201) {
-
-            //$ --------------------Récupération de la réponse.--------------------
-
-            //. --------------------Conversion de la réponse au format JSON.--------------------
-            res = JSON.parse(http.responseText);
-
-            //. --------------------Récupération de l'id.--------------------
-            var id = res.id;
-
-            //$ --------------------Création de l'url sans cookie.--------------------
-
-            //. --------------------Si le cookie est vide.--------------------
-
-            //+ --------------------Message de réussite.--------------------
+        if (httpVanish.readyState === XMLHttpRequest.DONE && httpVanish.status === 201) {
+            console.log("Réussite : " + httpVanish.responseText);
             document.getElementById("messageErreur").innerHTML = "La mise à jour est une réussite."
+            location.href = "index.html";
         }
 
         //+ --------------------Message d'erreur.--------------------
-        else if (http.readyState === XMLHttpRequest.DONE && http.status !== 201) {
-            document.getElementById("messageErreur").innerHTML = http.responseText;
+        else if (httpVanish.readyState === XMLHttpRequest.DONE && httpVanish.status !== 201) {
+            document.getElementById("messageErreur").innerHTML = httpVanish.responseText;
             console.log("Erreur : " + http.responseText);
+            location.href = "index.html";
         }
 
     };
 
     //$ --------------------Envoie des données.--------------------
-    http.send(dataVanishUtilisateur);
-    console.log(dataVanishUtilisateur);
+    httpVanish.send(dataVanishUtilisateur);
 
     //$ --------------------Destruction du cookie.--------------------
     //§ Je donne une date de péremption dépassée depuis longtemps à mon cookie afin qu'il expire.
     document.cookie = "utilisateur=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     //§ Puis je renvoie l'utilisateur sur la page d'accueil.
-    location.href = "index.html";
+    
 
 };
     /*
