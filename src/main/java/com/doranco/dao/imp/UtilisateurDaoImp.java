@@ -8,6 +8,7 @@ package com.doranco.dao.imp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -18,6 +19,14 @@ import com.doranco.dao.iinterface.UtilisateurDaoInterface;
 import com.doranco.entities.Utilisateur;
 
 import org.mindrot.jbcrypt.BCrypt;
+
+import jakarta.mail.Message;
+import jakarta.mail.MessagingException;
+import jakarta.mail.PasswordAuthentication;
+import jakarta.mail.Session;
+import jakarta.mail.Transport;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
 
 /*
  * @author 
@@ -36,7 +45,7 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
     */
 
     /**
-     * Utilisation de Jquery afin de récupérer une liste d'utilisateur depuis la base de donnée.
+        Utilisation de Jquery afin de récupérer une liste d'utilisateur depuis la base de donnée.
     */
     @Override
     public List<Utilisateur> getListeUtilisateurs() {
@@ -58,6 +67,48 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
             System.out.println("Erreur lors de la recherche de la liste des Utilisateurs. \n" + ex);
         } 
         return listeUtilisateurs;
+    }
+
+    /*
+:--------------------------------------------------------------------------------------------------------------------------
+                                                % Envoyer un e-mail à l'utilisateur
+:--------------------------------------------------------------------------------------------------------------------------
+    */
+
+    public void send(String from,String pwd,String to,String sub,String msg){
+
+        //Propriétés
+        Properties p = new Properties();
+        p.put("mail.smtp.host", "smtp.gmail.com");
+        p.put("mail.smtp.socketFactory.port", "465");
+        p.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        p.put("mail.smtp.auth", "true");
+        p.put("mail.smtp.port", "465");
+
+        //Session
+        // Session s = Session.getDefaultInstance(p,
+        Session s = Session.getInstance(p,
+        new jakarta.mail.Authenticator() {
+        protected PasswordAuthentication getPasswordAuthentication() {
+            return new PasswordAuthentication(from, pwd);
+        }
+        });
+
+        //composer le message
+        try {
+            MimeMessage m = new MimeMessage(s);
+            m.addRecipient(Message.RecipientType.TO,new InternetAddress(to));
+            m.setSubject(sub);
+            m.setText(msg);
+
+            //envoyer le message
+            Transport.send(m);
+            System.out.println("--------------------Message envoyé avec succès.--------------------");
+
+        } catch (MessagingException e) {
+            System.out.println("--------------------Erreur lors de l'envoie du message.--------------------");
+            e.printStackTrace();
+        }
     }
 
     /*
@@ -88,6 +139,16 @@ public class UtilisateurDaoImp implements UtilisateurDaoInterface {
 
             // String urlConnection = BCrypt.gensalt();
             // utilisateur.setUrlConnect(urlConnection);
+
+            //§ Envoie d'un e-mail.
+            //from, password, to, subject, message
+            send(
+                "billy21547@gmail.com",
+                "billy123456789@",
+                utilisateur.getEmail(),
+                "Bienvenu sur le projet recette !",
+                "N'hésite pas à te connecter afin de pouvoir commencer à créer tes propres recettes sur le meilleur site de création de recette !."
+            );
 
             transaction.begin();
             entityManager.persist(utilisateur);

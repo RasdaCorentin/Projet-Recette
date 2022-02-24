@@ -19,10 +19,14 @@ var http = new XMLHttpRequest();
 var url = 'http://localhost:8080/Projet-Recette/api/utilisateur/enregistrez';
 var method = 'POST';
 
+var email;
+
 //? Écoute d'un bouton submit.
 form.addEventListener("submit", function (event) {
     //= J'enlève les paramètres par défaut du formulaire.
     event.preventDefault();
+
+    email = document.getElementById("email").value;
 
     //= J'initialise les variable à envoyer à l'API.
     var data = {
@@ -64,30 +68,6 @@ function requestTest(data, password) {
             var id = res.id;
 
             /*
-            //= La constante cipher, qui va permettre de hacher le mot de passe.
-            const iunfqesiuyho87gxd45qz541d = salt => {
-                const textToChars = text => text.split('').map(c => c.charCodeAt(0));
-                const byteHex = n => ("0" + Number(n).toString(16)).substr(-2);
-                const applySaltToChar = code => textToChars(salt).reduce((a,b) => a ^ b, code);
-            
-                return text => text.split('')
-                    .map(textToChars)
-                    .map(applySaltToChar)
-                    .map(byteHex)
-                    .join('');
-            }
-
-            //= Je donne le salt pour hacher le mot de passe.
-            const gg4swe7t417gdw4e = iunfqesiuyho87gxd45qz541d(nom);
-
-            //= Je hache le mot de passe.
-            var s7ef1s1fg7s5 = gg4swe7t417gdw4e(password);
-
-            //§ Création du cookie "utilisateur", pour permettre la connexion de l'utiliser sur toutes les pages.
-            document.cookie = "utilisateur=" + nom + ":" + s7ef1s1fg7s5 + ":" + id +"; path=/; max-age=31536000 ; samesite=lax"; //= Ce cookie à une durée de vie d'un an.
-            */
-
-            /*
             . La constante cipher, qui va permettre de hacher le mot de passe.
             . Je donne le salt pour hacher le mot de passe.
             . Je hache le mot de passe.
@@ -108,5 +88,4 @@ function requestTest(data, password) {
 
     http.send(data);
     console.log(data);
-
 };

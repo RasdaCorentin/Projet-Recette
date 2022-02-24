@@ -58,6 +58,9 @@ public interface UtilisateurDaoInterface {
     //, Utiliser un jeton.
     Utilisateur useJeton(Utilisateur utilisateur);
 
+    //, Envoyer un e-mail à l'utilisateur.
+    void send(String from,String pwd,String to,String sub,String msg);
+
 //.---------------------------------------------ADMIN / USER-------------------------------------------------
 
     //, Modifier un utilisateur.
