@@ -149,48 +149,6 @@ public class UtilisateurController {
 
     /*
 :--------------------------------------------------------------------------------------------------------------------------
-                                                % Vanish Utilisateur 
-:--------------------------------------------------------------------------------------------------------------------------
-    */
-
-    @Path("/admin/vanish/{id}")
-    @PUT
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response vanishUtilisateur(Utilisateur utilisateur, @PathParam(value = "id") int id) {
-
-        DaoFactory daoFactory = new DaoFactory();
-        UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
-        Utilisateur utilisateurBdd = utilisateurDaoInterface.findUtilisateurById(id);
-        utilisateurDaoInterface.vanishUtilisateur(utilisateur, id);
-
-        //. ----------Vérification de l'id.----------
-
-        //$ ----------Si l'id est bien trouvé.----------
-        if (utilisateurBdd != null) {
-            Response response = Response
-
-                .status(Response.Status.CREATED)
-                .entity(utilisateurDaoInterface.getListeUtilisateurs())
-                .build();
-
-        daoFactory.closeEntityManagerFactory();
-        return response;
-        } 
-
-        //! ----------Si l'id n'est pas trouvé.----------
-        else {
-            Response response = Response
-                .status(Response.Status.NOT_FOUND)
-                .entity("Aucun utilisateur ne possédant cette id n'a pus être trouvé.")
-                .build();
-            return response;
-        }
-
-    }
-
-    /*
-:--------------------------------------------------------------------------------------------------------------------------
                                                 % Delete Utilisateur 
 :--------------------------------------------------------------------------------------------------------------------------
     */
@@ -386,6 +344,74 @@ public class UtilisateurController {
                     return response;
                 }
 
+
+            }
+
+            //! ----------Erreur sur les identifiants.----------
+            else {
+
+                Response response = Response
+                    .status(Response.Status.FORBIDDEN)
+                    .entity("Vos identifiants sont incorrect !")
+                    .build();
+                return response;
+
+            }
+
+        }
+
+        //! ----------Le nom d'utilisateur n'existe pas.----------
+        Response response = Response
+            .status(Response.Status.NOT_FOUND)
+            .entity("Le nom " + utilisateur.getNom() + " n'est associé à aucun compte sur le site.")
+            .build();
+        return response;
+
+    }
+
+    /*
+:--------------------------------------------------------------------------------------------------------------------------
+                                                % Connecter un Utilisateur au site
+:--------------------------------------------------------------------------------------------------------------------------
+    */
+
+    @Path("/connexion")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response connecterUtilisateur(String stringUserData) {
+
+        //µ Convertis String en un objet Json data.
+        JSONObject jSONObjectData = new JSONObject(stringUserData);
+        //µ Récupération du user.
+        String jsonUtilisateur = jSONObjectData.get("utilisateur").toString();
+        //µ Instancie dans la classe utilisateur les infos récupérer.
+        Utilisateur utilisateur = jsonb.fromJson(jsonUtilisateur, Utilisateur.class);
+        //µ Lancement de la méthode Connect.
+        DaoFactory daoFactory = new DaoFactory();
+        UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
+        Utilisateur utilisateurAConnecter = utilisateurDaoInterface.findUtilisateurByNom(utilisateur);
+
+        //. ----------Vérification du faite que l'utilisateur existe dans la base de donnée.----------
+
+        if (utilisateurAConnecter != null) {
+
+            //§ Récupération du mot de passe entré par l'utilisateur pour la connexion.
+            String passwordTemp = utilisateur.getPassword();
+            String passwordHash = BCrypt.hashpw(passwordTemp, utilisateurAConnecter.getSalt());
+
+            //. ----------Vérification des identifiants de l'utilisateur.----------
+
+            if ( passwordHash.compareTo(utilisateurAConnecter.getPassword()) == 0 && utilisateurAConnecter.getNom().equals(utilisateur.getNom()) ) {
+
+                //? ----------L'utilisateur est connecté à son compte.----------
+                utilisateur = utilisateurDaoInterface.connectUtilisateur(utilisateur);
+
+                Response response = Response
+                        .status(Response.Status.ACCEPTED)
+                        .entity(utilisateur)
+                        .build();
+                return response;
 
             }
 
@@ -613,10 +639,51 @@ public class UtilisateurController {
 
     /*
 :--------------------------------------------------------------------------------------------------------------------------
-                                                % Read Utilisateur by Name
+                                                % Vanish Utilisateur 
 :--------------------------------------------------------------------------------------------------------------------------
     */
 
+    @Path("/vanish/{id}")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response vanishUtilisateur(Utilisateur utilisateur, @PathParam(value = "id") int id) {
+
+        DaoFactory daoFactory = new DaoFactory();
+        UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
+        Utilisateur utilisateurBdd = utilisateurDaoInterface.findUtilisateurById(id);
+        utilisateurDaoInterface.vanishUtilisateur(utilisateur, id);
+
+        //. ----------Vérification de l'id.----------
+
+        //$ ----------Si l'id est bien trouvé.----------
+        if (utilisateurBdd != null) {
+            Response response = Response
+
+                .status(Response.Status.CREATED)
+                .entity(utilisateurDaoInterface.getListeUtilisateurs())
+                .build();
+
+        daoFactory.closeEntityManagerFactory();
+        return response;
+        } 
+
+        //! ----------Si l'id n'est pas trouvé.----------
+        else {
+            Response response = Response
+                .status(Response.Status.NOT_FOUND)
+                .entity("Aucun utilisateur ne possédant cette id n'a pus être trouvé.")
+                .build();
+            return response;
+        }
+
+    }
+
+    /*
+:--------------------------------------------------------------------------------------------------------------------------
+                                                % Read Utilisateur by Name
+:--------------------------------------------------------------------------------------------------------------------------
+    */
 
     @Path("/read")
     @POST

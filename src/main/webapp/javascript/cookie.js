@@ -22,7 +22,7 @@ if (cookieUtilisateur != "") {
             break;
 
         //* La page de connexion.
-        case "http://localhost:8080/Projet-Recette/connexion.html" :
+        case "http://localhost:8080/Projet-Recette/connect.html" :
             var urlCookie = 'http://localhost:8080/Projet-Recette/api/utilisateur/enregistrez/connect';
             break;
 
@@ -39,7 +39,7 @@ if (cookieUtilisateur != "") {
             break;
 
         default :
-            alert("Il y a une erreur au niveau du système de cookie.");
+            console.log("Rien à voir, circulez...");
             break;
 
     }
@@ -61,7 +61,6 @@ function getCookie(cname) {
             c = c.substring(1);
         }
         if (c.indexOf(name) == 0) {
-            console.log(c.substring(name.length, c.length));
             //retourne ("utilisateur:nom:password:id")
             return c.substring(name.length, c.length);
         }
@@ -183,6 +182,7 @@ function connectWithCookieXMLConnection() {
                 "password": hysgfey8
             }
         };
+        
         console.log(data);
         data = JSON.stringify(data);
         requestTest(data);
@@ -193,11 +193,13 @@ function connectWithCookieXMLConnection() {
             http.onreadystatechange = function () {
                 if (http.readyState === XMLHttpRequest.DONE && http.status === 202) {
                     var res = JSON.parse(http.responseText);
-                    alert("Le cookie a marché! Connection Réussi");
+                    console.log("Le cookie a marché! Connection Réussi");
                     console.log(res);
+                    location.href = "index.html";
                 } else if (http.readyState === XMLHttpRequest.DONE && http.status !== 202) {
                     document.getElementById("messageErreur").innerHTML = http.responseText;
                     console.log("Erreur : " + http.responseText);
+                    location.href = "index.html";
                 }
             };
             http.send(data);
@@ -270,7 +272,7 @@ function connectWithCookieFetchMyPage() {
         console.log(response.statusText); //. OK
 
         if (response.status === 201) {
-            alert("Le cookie a marché! Connection Réussi");
+            console.log("Le cookie a marché! Connection Réussi");
             let data = await response.json();
             console.log(data);
             

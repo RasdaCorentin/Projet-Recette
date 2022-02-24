@@ -7,6 +7,7 @@ package com.doranco.controllers;
 import com.doranco.dao.DaoFactory;
 import com.doranco.dao.iinterface.IngredientDaoInterface;
 import com.doranco.entities.Ingredient;
+import com.doranco.entities.Utilisateur;
 
 import org.json.JSONObject;
 
@@ -65,13 +66,24 @@ public class IngredientController {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createIngredient(Ingredient ingredient) {
+    public Response createIngredient(String stringUserData) {
 
-        ingredient = ingredientDaoInterface.createIngredient(ingredient);
+        //µ Convertis String en un objet Json data
+        JSONObject jSONObjectData = new JSONObject(stringUserData);
+        //µ Récupération du recette
+        String jsonRecette = jSONObjectData.get("ingredient").toString();
+        //µ Récupération du user
+        String jsonUtilisateur = jSONObjectData.get("utilisateur").toString();
+        //µ Instancie dans la classe recette les infos récup
+        Ingredient ingredient = jsonb.fromJson(jsonRecette, Ingredient.class);
+        //µ Instancie dans la classe utilisateur les infos récup
+        Utilisateur utilisateur = jsonb.fromJson(jsonUtilisateur, Utilisateur.class);
+        
+        ingredient = ingredientDaoInterface.createIngredient(ingredient, utilisateur);
 
         Response response = Response
             .status(Response.Status.CREATED)
-            .entity(ingredient.toString())
+            .entity(ingredient)
             .build();
 
         daoFactory.closeEntityManagerFactory();
@@ -189,7 +201,11 @@ public class IngredientController {
         }
 
     }
-
+        /*
+:--------------------------------------------------------------------------------------------------------------------------
+                                                % Find Ingredient By Libelle
+:--------------------------------------------------------------------------------------------------------------------------
+    */
     @Path("/read")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -226,6 +242,27 @@ public class IngredientController {
             return response;
         }
 
+    }
+        /*
+:--------------------------------------------------------------------------------------------------------------------------
+                                                % Liste Ingredient By Id User
+:--------------------------------------------------------------------------------------------------------------------------
+    */
+
+    @Path("/liste/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getListeRecettesByIdUser(@PathParam(value = "id") int id) {
+       
+
+        Response response = Response
+                .status(Response.Status.CREATED)
+                .entity(ingredientDaoInterface.getListeIngredients())
+                .build();
+
+        daoFactory.closeEntityManagerFactory();
+
+        return response;
     }
 
 }

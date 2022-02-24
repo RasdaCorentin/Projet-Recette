@@ -9,22 +9,43 @@
 : ************************************************************************************************************
 */
 
-//= Méthode d'écoute sur Formulaire
+/*
+. --------------------------------------------------------------------------------
+                                £ Définitions des variables.
+. --------------------------------------------------------------------------------
+*/
+
+//. --------------------Le formulaire.--------------------
 var form = document.getElementById("myForm");
 
-//= Mise en place des variable pour la connection à la BDD
+//$ --------------------Mise en place des variables pour la connection à la BDD.--------------------
+
+//. --------------------Instanciation de XMLHttpRequest.--------------------
 var http = new XMLHttpRequest();
 
-//= Url api
+//. --------------------Définition de l'url de l'api.--------------------
 var url = 'http://localhost:8080/Projet-Recette/api/utilisateur/enregistrez';
+
+//. --------------------Définition de la méthode.--------------------
 var method = 'POST';
 
-//? Écoute d'un bouton submit.
+/*
+. --------------------------------------------------------------------------------
+                                £ Méthode d'écoute du formulaire.
+. --------------------------------------------------------------------------------
+*/
+
+//? Écoute du bouton submit.
 form.addEventListener("submit", function (event) {
     //= J'enlève les paramètres par défaut du formulaire.
     event.preventDefault();
 
-    //= J'initialise les variable à envoyer à l'API.
+    //$ --------------------Récupération des variables.--------------------
+
+    var password = document.getElementById("password").value;
+
+    //$ --------------------Initialisation des variables à envoyer à l'api.--------------------
+
     var data = {
         "utilisateur": {
             "nom": document.getElementById("nom").value,
@@ -33,22 +54,20 @@ form.addEventListener("submit", function (event) {
         }
     };
 
-    /*
-    : ************************************************************************************************************
-                                    % Je prend une seconde fois le mot de passe pour le mettre dans le cookie.
-    : ************************************************************************************************************
-    */
-
-    var password = document.getElementById("password").value;
+    //$ --------------------Lancement de la fonction requestTestUpdateUtilisateur.--------------------
 
     //= Je change data en JSON & lance fonction requestTest.
     //= (je passe le mot de passe ici car j'en ai besoin pour construire le cookie)
     data = JSON.stringify(data);
     requestTest(data, password);
-
 });
 
-//? Envois + Réponse de l'API en JSON.
+/*
+. --------------------------------------------------------------------------------
+                                £ Envoi + Réponse de l'API en JSON.
+. --------------------------------------------------------------------------------
+*/
+
 function requestTest(data, password) {
 
     http.open(method, url);
@@ -64,30 +83,6 @@ function requestTest(data, password) {
             var id = res.id;
 
             /*
-            //= La constante cipher, qui va permettre de hacher le mot de passe.
-            const iunfqesiuyho87gxd45qz541d = salt => {
-                const textToChars = text => text.split('').map(c => c.charCodeAt(0));
-                const byteHex = n => ("0" + Number(n).toString(16)).substr(-2);
-                const applySaltToChar = code => textToChars(salt).reduce((a,b) => a ^ b, code);
-            
-                return text => text.split('')
-                    .map(textToChars)
-                    .map(applySaltToChar)
-                    .map(byteHex)
-                    .join('');
-            }
-
-            //= Je donne le salt pour hacher le mot de passe.
-            const gg4swe7t417gdw4e = iunfqesiuyho87gxd45qz541d(nom);
-
-            //= Je hache le mot de passe.
-            var s7ef1s1fg7s5 = gg4swe7t417gdw4e(password);
-
-            //§ Création du cookie "utilisateur", pour permettre la connexion de l'utiliser sur toutes les pages.
-            document.cookie = "utilisateur=" + nom + ":" + s7ef1s1fg7s5 + ":" + id +"; path=/; max-age=31536000 ; samesite=lax"; //= Ce cookie à une durée de vie d'un an.
-            */
-
-            /*
             . La constante cipher, qui va permettre de hacher le mot de passe.
             . Je donne le salt pour hacher le mot de passe.
             . Je hache le mot de passe.
@@ -97,8 +92,9 @@ function requestTest(data, password) {
 
             console.log("Cookie:" + document.cookie);
 
-            //§ Renvoie l'utilisateur vers la page d'accueil.
-            location.href = "index.html"
+            //§ Renvoie l'utilisateur vers la page connect afin qu'il puisse activer son compte.
+            //! /!\ À supprimer après l'ajout des envoies d'email.
+            location.href = "connect.html";
 
         } else if (http.readyState === XMLHttpRequest.DONE && http.status !== 201) {
             document.getElementById("messageErreur").innerHTML = http.responseText;

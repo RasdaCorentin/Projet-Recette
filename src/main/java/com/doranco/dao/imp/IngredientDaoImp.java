@@ -7,7 +7,7 @@ package com.doranco.dao.imp;
 import com.doranco.dao.DaoFactory;
 import com.doranco.dao.iinterface.IngredientDaoInterface;
 import com.doranco.entities.Ingredient;
-import com.doranco.entities.Recette;
+import com.doranco.entities.Utilisateur;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -72,7 +72,7 @@ public class IngredientDaoImp implements IngredientDaoInterface {
 --------------------------------------------------------------------------------------------------------------------------
 */
     @Override
-    public Ingredient createIngredient(Ingredient ingredient) {
+    public Ingredient createIngredient(Ingredient ingredient, Utilisateur utilisateur) {
         
         EntityManager entityManager = null;
         EntityTransaction transaction = null;
@@ -83,7 +83,7 @@ public class IngredientDaoImp implements IngredientDaoInterface {
 
             
 // ------------------------------------------Methode-------------------------------------------------- 
-            
+            ingredient.setUtilisateur(utilisateur);
             ingredient.setDateCrea(new Date());
             ingredient.setDateModif(new Date());
             
@@ -235,6 +235,39 @@ public class IngredientDaoImp implements IngredientDaoInterface {
         }
         ingredient = (Ingredient) query.getResultList().get(0);
         return ingredient;
+    }
+
+    @Override
+    public List<Ingredient> getListeIngredientByIdUser(int id) {
+
+        EntityManager entityManager = null;
+        List<Ingredient> listeIngredients = new ArrayList<>();
+
+        try {
+// ------------------------------------------Methode-------------------------------------------------- 
+
+            entityManager = daoFactory.getEntityManager();
+
+            Query query = entityManager.createQuery("SELECT e FROM Ingredient e where utilisateur_idUtilisateur=:id", Ingredient.class);
+            query.setParameter("id", id);
+            if (query.getResultList().isEmpty()) {
+            System.out.println("Cet id utilisateur n'existe pas");
+            return null;
+        }
+            listeIngredients = query.getResultList();
+
+// ---------------------------------------FIN Methode--------------------------------------------------            
+        } catch (Exception ex) {
+
+            System.out.println("Erreur lister Recettes \n" + ex);
+//            ex.printStackTrace();
+
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+        return listeIngredients;
     }
  }
 

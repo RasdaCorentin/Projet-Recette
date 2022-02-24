@@ -47,6 +47,7 @@ public class Utilisateur implements Serializable{
 
     private String password;
 
+    private String urlConnect;
     private int seau;
     private String salt;
     private String email;
@@ -66,13 +67,6 @@ public class Utilisateur implements Serializable{
     /*
     Booléen de vérification de rôle & de statuts
     */
-
-    /**
-     * @param statuts the statuts to set
-     */
-    public void setStatuts(boolean statuts) {
-        this.statuts = statuts;
-    }
 
     public boolean isAdmin(){
 
@@ -140,13 +134,16 @@ public class Utilisateur implements Serializable{
      * @param nom
      * @param password
      * @param email
+     * @param seau
+     * @param urlConnect
      */
-    public Utilisateur(int id, String nom, String password, String email, int seau) {
+    public Utilisateur(int id, String nom, String password, String email, int seau, String urlConnect) {
         this.id = id;
         this.nom = nom;
         this.password = password;
         this.email = email;
         this.seau = seau;
+        this.urlConnect = urlConnect;
     }
 
     /*
@@ -330,6 +327,21 @@ public class Utilisateur implements Serializable{
      */
     public void setSeau(int seau) {
         this.seau = seau;
+    }
+
+    /**
+     * @param statuts the statuts to set
+     */
+    public void setStatuts(boolean statuts) {
+        this.statuts = statuts;
+    }
+
+    public String getUrlConnect() {
+        return urlConnect;
+    }
+
+    public void setUrlConnect(String urlConnect) {
+        this.urlConnect = urlConnect;
     }
 
     /*

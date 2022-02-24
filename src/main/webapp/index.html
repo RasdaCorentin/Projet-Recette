@@ -50,16 +50,11 @@
 
                 </ul>
 
-                <form class="d-flex">
-                    <input class="form-control me-2" type="text" placeholder="Chercher">
-                    <button class="btn btn-success" type="button">Trouver</button>
-                </form>
-
             </div>
         </nav>
 
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
+            <div class="carousel-inner" style="height: 250px">
                 <div class="carousel-item active">
 
                     <img class="img-fluid d-block w-100" 
@@ -114,6 +109,32 @@
                 <div class="col-10" style="background: blue; height: auto">
                     <h3 class="text-center">Index ingrédients</h3>
                     <div id="letter-main" class="text-center"></div>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">A </button>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">B </button>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">C </button>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">D </button>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">E </button>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">F </button>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">G </button>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">H </button>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">I </button>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">J </button>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">K </button>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">L </button>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">M </button>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">N </button>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">O </button>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">P </button>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">Q </button>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">R </button>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">S </button>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">T </button>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">U </button>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">V </button>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">W </button>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">X </button>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">Y </button>
+                    <button class="letter" onclick="search_ingredients()" style="list-style: none; display: inline;">Z </button>
                     <h3 class="text-center">Liste ingrédients</h3>
                     <table class ="table table-stripped">
                         <tbody id="ListIng" >
@@ -127,7 +148,7 @@
 
         <div w3-include="javascript/footer.html"></div>
         <script> includeHTML();</script>
-        
+
         <script>
             //. --------------------Les variables pour les hide and show.--------------------
             let cookieUtilisateur = getCookie("utilisateur");

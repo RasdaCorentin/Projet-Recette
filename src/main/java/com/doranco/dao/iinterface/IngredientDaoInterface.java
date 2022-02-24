@@ -6,6 +6,7 @@ package com.doranco.dao.iinterface;
 
 import com.doranco.entities.Ingredient;
 import com.doranco.entities.Recette;
+import com.doranco.entities.Utilisateur;
 import java.util.List;
 
 /**
@@ -14,11 +15,14 @@ import java.util.List;
  */
 public interface IngredientDaoInterface {
     
-    //Lister tout les Ingredient
+    //Lister tout les Ingredients
     List<Ingredient> getListeIngredients();
     
+    //, Lister tout les Ingredients du user
+    List<Ingredient> getListeIngredientByIdUser(int id);
+    
     //Creer un Ingredient
-    Ingredient createIngredient(Ingredient ingredient);
+    Ingredient createIngredient(Ingredient ingredient, Utilisateur utilisateur);
     
     //Update (constructeur avec id)
     Ingredient updateIngredient(Ingredient ingredient, int id);

@@ -92,16 +92,12 @@ public class RecetteDaoImp implements RecetteDaoInterface {
                 //Start transaction
                 transaction.begin();
 
-// Important !!!
-                
+
                 List<Ingredient> listeIngredient = new ArrayList<>(recette.getListIngredients());
                 IngredientDaoInterface ingredientDaoInterface = daoFactory.getIngredientDaoInterface();
                 for (int index = 0; index < listeIngredient.size(); index++) {
                     Ingredient ingredient = listeIngredient.get(index);
-                    //Je vérifie si l'ingrédient existe
-//                       ingredient.addRecette(recette);
-                        ingredient = ingredientDaoInterface.createIngredient(ingredient);
-                        System.out.println(ingredient);
+                        ingredient = ingredientDaoInterface.createIngredient(ingredient, utilisateur);
                         
                 }
 
@@ -188,7 +184,7 @@ public class RecetteDaoImp implements RecetteDaoInterface {
                 IngredientDaoInterface ingredientDaoInterface = daoFactory.getIngredientDaoInterface();
                 for (int index = 0; index < listeIngredient.size(); index++) {
                     Ingredient ingredient = listeIngredient.get(index);
-                    ingredient = ingredientDaoInterface.createIngredient(ingredient);
+                    ingredient = ingredientDaoInterface.createIngredient(ingredient, utilisateur);
                 }
                 entityManager.merge(recetteAModifier);
                 transaction.commit();
@@ -214,10 +210,10 @@ public class RecetteDaoImp implements RecetteDaoInterface {
     }
       /*
 --------------------------------------------------------------------------------------------------------------------------
-                                                 Liste Recette avec DAO FACTORY 
+                                                 Liste Recette by User avec DAO FACTORY 
 --------------------------------------------------------------------------------------------------------------------------
      */
-//Utilise Jquery pour avoir une liste d'recette depuis la base de données
+
     @Override
     public List<Recette> getListeRecettesByIdUser(int id) {
 
@@ -256,7 +252,7 @@ public class RecetteDaoImp implements RecetteDaoInterface {
 --------------------------------------------------------------------------------------------------------------------------
      */
     @Override
-    public Recette deleteRecetteSSIng(Recette recette, Utilisateur utilisateur) {
+    public Recette deleteRecetteSSIng(Recette recette) {
        
         EntityManager entityManager = null;
         EntityTransaction transaction = null;

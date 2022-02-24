@@ -51,13 +51,42 @@
 
                 </ul>
 
-                <form class="d-flex">
-                    <input class="form-control me-2" type="text" placeholder="Chercher">
-                    <button class="btn btn-success" type="button">Trouver</button>
-                </form>
-
             </div>
         </nav>
+        
+                <!--§ La modal pour "supprimer" son compte. -->
+        <button class="pulse" data-bs-toggle="modal" data-bs-target="#modalVanish">Supprimer mon compte</button>
+
+        <!-- Modal button -->
+        <div class="modal fade" id="modalVanish" tabindex="-1" aria-labelledby="modalVanishLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <h5 class="modal-title" id="modalVanishLabel">Supprimer mon compte</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                    </div>
+                    <div class="modal-body">
+                        <!--) L'avertissement. -->
+                        <p>Attention !</p>
+                        <p>Votre compte ne va pas être supprimer, en appuyant sur accepter votre mot de passe sera changé et définitivement inaccessible (même aux administrateurs du site) et rendus inactif.</p>
+                        <p>Vous n'aurez donc plus accès à votre compte, vos recettes resteront par contre elles en ligne et seront toujours crédité au nom de votre compte.</p>
+                        <p>Si vous acceptez ces conditions vous pouvez appuyer sur accepter, ou appuyer sur refuser pour rester dans notre matrix de cuisine.</p>
+                        <!--) Le message d'erreur. -->
+                        <p class="container mt-3" style="color: red;" id="messageErreur"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" style="background-color: red;" class="btn btn-secondary" data-bs-dismiss="modal">Refuser</button>
+                        <button type="button" id="accepterVanish" class="btn btn-primary">Accepter</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- Fin modal -->
+        
+        
         <!--§ La modal pour créer une recette. -->
         <button class="pulse" data-bs-toggle="modal" data-bs-target="#exampleModal1">Créer une recette</button>
 
@@ -75,25 +104,25 @@
                             <h5>Recette :</h5>
                             <div class="mb-3 mt-3">
                                 <label for="libelleRecette" class="form-label">Libellé Recette :</label>
-                                <input type="text" class="form-control" id="libelleRecette" placeholder="Entrer le nom de la recette" name="libelleRecette" required>
+                                <input type="text" class="form-control" id="libelleRecette" placeholder="Nom de la recette" name="libelleRecette" required>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                             <div class="mb-3">
                                 <label for="descriptionRecette" class="form-label">Description Recette :</label>
-                                <input type="text" class="form-control" id="descriptionRecette" placeholder="Entrer une description de la recette" name="descriptionRecette" required>
+                                <input type="text" class="form-control" id="descriptionRecette" placeholder="Description de la recette" name="descriptionRecette" required>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                             <h5>Ingrédient :</h5>
                             <div class="mb-3 mt-3">
                                 <label for="libelleIngredient" class="form-label">Libellé Ingrédient :</label>
-                                <input type="text" class="form-control" id="libelleIngredient" placeholder="Entrer le nom de l'ingredient" name="libelleIngredient" required>
+                                <input type="text" class="form-control" id="libelleIngredient" placeholder="Nom de l'ingredient" name="libelleIngredient" required>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                             <div class="mb-3">
-                                <label for="quantiteIngredient" class="form-label">Quantité Ingrédient :</label>
+                                <label for="quantiteIngredient" class="form-label">Description Ingrédient :</label>
                                 <input type="text" class="form-control" id="quantiteIngredient" placeholder="Ex : 1kg" name="quantiteIngredient" required>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
@@ -153,7 +182,6 @@
                             <p class="container mt-3" style="color: red;" id="messageErreur"></p>
 
                             <button type="submit" class="btn btn-primary">Mettre à jour mon profil</button>
-
                         </form>
                         <!--Fin formulaire-->
                     </div>
@@ -171,6 +199,19 @@
             </tr>
 
             <tbody id="ListRecettes">
+
+            </tbody>
+        </table>
+        
+        <h3 class="text-center">Ma Liste Ingredient</h3>
+        <table class ="table table-stripped">
+
+            <tr>
+                <th>Libelle</th>
+                <th>Description</th>
+            </tr>
+
+            <tbody id="ListIng">
 
             </tbody>
         </table>
@@ -202,7 +243,7 @@
 
         <!--) Le message d'erreur. -->
         <p class="container mt-3" style="color: red;" id="messageErreur"></p>
-
+<p id="GFG_DOWN"></p>
         <div w3-include="javascript/footer.html"></div>      
         <script> includeHTML();</script>
 <script src="javascript/myPage.js" async></script>
