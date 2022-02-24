@@ -16,10 +16,7 @@
 */
 
 async function fetchRecette() {
-<<<<<<< HEAD
-=======
      let responseRecette = await fetch('http://localhost:8080/Projet-Recette/api/utilisateur/recette/enregistrez/liste');
->>>>>>> main
     if (responseRecette.status === 201) {
 
         /*
@@ -30,11 +27,6 @@ async function fetchRecette() {
 
         var tableRecette = document.getElementById("ListRecettes");
 
-<<<<<<< HEAD
-        let responseRecette = await fetch('http://localhost:8080/Projet-Recette/api/utilisateur/recette/enregistrez/liste');
-
-=======
->>>>>>> main
         //§ await va attendre une réponse du serveur avant d'afficher la liste des recettes.
         let dataRecette = await responseRecette.json();
 
@@ -74,22 +66,6 @@ async function fetchRecette() {
 
     }
 }
-<<<<<<< HEAD
-
-/*
-: ************************************************************************************************************
-                                    % Méthode Fetch Index List Ingredient
-: ************************************************************************************************************
-*/
-
-/*
-. --------------------------------------------------------------------------------
-        £ Fonction fetch async/await pour l'affichage de la liste des recettes.
-. --------------------------------------------------------------------------------
-*/
-
-async function fetchIngredient() {
-=======
 
 /*
 : ************************************************************************************************************
@@ -106,7 +82,6 @@ async function fetchIngredient() {
 async function fetchIngredient() {
 
 let responseIng = await fetch('http://localhost:8080/Projet-Recette/api/utilisateur/ingredient/enregistrez/liste');
->>>>>>> main
 
     if (responseIng.status === 201) {
 
@@ -118,11 +93,6 @@ let responseIng = await fetch('http://localhost:8080/Projet-Recette/api/utilisat
 
         var tableIng = document.getElementById("ListIng");
 
-<<<<<<< HEAD
-        let responseIng = await fetch('http://localhost:8080/Projet-Recette/api/utilisateur/ingredient/enregistrez/liste');
-
-=======
->>>>>>> main
         //§ await va attendre une réponse du serveur avant d'afficher la liste des ingrédients.
         let dataIng = await responseIng.json();
 
@@ -136,11 +106,7 @@ let responseIng = await fetch('http://localhost:8080/Projet-Recette/api/utilisat
 
             var textIng = "<tr>";
 
-<<<<<<< HEAD
-            textIng += "<td><button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#modalIng"+ iterIng +"'>" + dataIng[iterIng].libelle + "</button></td>"+
-=======
             textIng += "<td class='ingredients'><button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#modalIng"+ iterIng +"'>" + dataIng[iterIng].libelle + "</button></td>"+
->>>>>>> main
         '<div class="modal fade" id="modalIng'+ iterIng +'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">' +
             '<div class="modal-dialog">' +
                 '<div class="modal-content">'+
@@ -202,23 +168,6 @@ function search_recettes() {
     }
 }
 
-<<<<<<< HEAD
-/*
-: ************************************************************************************************************
-                                    % Index Ingredient (WIP)
-: ************************************************************************************************************
-*/
-
-//. --------------------Affiche l'alphabet sur la page HTML.--------------------
-for (i = 0; i < 26; i++) {
-
-    var li = document.createElement("li");
-    li.innerHTML = (String.fromCharCode(65+i)) + " ";
-    li.style.listStyle = "none";
-    li.style.display = "inline";
-    document.getElementById("letter-main").appendChild(li);
-
-=======
 /**
  
  Methode Search Réactive pour Index Liste Ingrédients
@@ -237,7 +186,6 @@ function search_ingredients(){
             x[i].style.display = "list-item";
         }
     }
->>>>>>> main
 }
 
 /*

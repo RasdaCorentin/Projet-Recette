@@ -78,16 +78,16 @@
 
                     <!--: La première image du carousel. -->
                     <img class="img-fluid d-block w-100" 
-                        src="https://cdn.pixabay.com/photo/2017/06/06/22/46/mediterranean-cuisine-2378758_960_720.jpg" 
-                        alt="cuisine méditerranéenne">
+                         src="https://cdn.pixabay.com/photo/2017/06/06/22/46/mediterranean-cuisine-2378758_960_720.jpg" 
+                         alt="cuisine méditerranéenne">
 
                 </div>
                 <div class="carousel-item">
 
                     <!--: La seconde image du carousel. -->
                     <img class="img-fluid d-block w-100"
-                        src="https://cdn.pixabay.com/photo/2017/06/29/19/57/sushi-2455981_960_720.jpg" 
-                        alt="plateau sushi">
+                         src="https://cdn.pixabay.com/photo/2017/06/29/19/57/sushi-2455981_960_720.jpg" 
+                         alt="plateau sushi">
 
                 </div>
             </div>
@@ -120,16 +120,7 @@
 
                     <!--: Le tableau qui contient les recettes. -->
                     <table class ="table table-stripped">
-<<<<<<< HEAD
-
-                        <!--£ Les en-têtes du tableau. -->
-                        <tr>
-                            <th>Libellé</th>
-                        </tr>
-
-=======
                         
->>>>>>> main
                         <!--£ Le corps du tableau. -->
                         <tbody id="ListRecettes"></tbody>
 
@@ -141,23 +132,12 @@
 
             <!--$ Affichage de la liste des ingrédients disponibles sur le site. -->
             <div class="row justify-content-evenly">
-<<<<<<< HEAD
-                <div class="col-10" style="background: blue; height: auto">
-
-                    <h3 class="text-center">Index ingrédients</h3>
-
-                    <div id="letter-main" class="text-center"></div>
-
-                    <h3 class="text-center">Liste ingrédients</h3>
-
-=======
                 <div class="col-10" style="background: blue; height: 350px; overflow: auto;">
 
                     <h3 class="text-center">Liste ingrédients</h3>
                     <form class="d-flex">
                         <input id="searchbar2" onkeyup="search_ingredients()" class="form-control me-2" type="text" placeholder="Chercher">
                     </form>
->>>>>>> main
                     <table class ="table table-stripped">
 
                         <!--£ Le corps du tableau. -->
@@ -176,9 +156,6 @@
         <script> includeHTML();</script>
 
         <!--$ Le script pour cacher les liens de connexion si l'utilisateur est déjà connecter avec un cookie. -->
-<<<<<<< HEAD
-        <script>var cookieUtilisateur=getCookie("utilisateur"),cacherConnexion=document.getElementById("cacherConnexion"),cacherInscription=document.getElementById("cacherInscription"),elementAMontrer=document.getElementById("elementAMontrer");function getCookie(b){b+="=";for(var d=decodeURIComponent(document.cookie).split(";"),c=0;c<d.length;c++){for(var a=d[c];" "==a.charAt(0);)a=a.substring(1);if(0==a.indexOf(b))return console.log(a.substring(b.length,a.length)),a.substring(b.length,a.length)}return""}""!=cookieUtilisateur&&(cacherConnexion.classList.add("hide"),cacherInscription.classList.add("hide"),elementAMontrer.classList.remove("hide"));</script>
-=======
         <script>var cookieUtilisateur = getCookie("utilisateur"), cacherConnexion = document.getElementById("cacherConnexion"), cacherInscription = document.getElementById("cacherInscription"), elementAMontrer = document.getElementById("elementAMontrer");function getCookie(b) {
                 b += "=";
                 for (var d = decodeURIComponent(document.cookie).split(";"), c = 0; c < d.length; c++) {
@@ -190,7 +167,6 @@
                 return""
             }
             "" != cookieUtilisateur && (cacherConnexion.classList.add("hide"), cacherInscription.classList.add("hide"), elementAMontrer.classList.remove("hide"));</script>
->>>>>>> main
 
     </body>
 </html>
