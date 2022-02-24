@@ -37,7 +37,7 @@ public class RecetteController {
 
     /*
 :--------------------------------------------------------------------------------------------------------------------------
-                                                % Liste Recette
+                                                % Liste Recette By Id User
 :--------------------------------------------------------------------------------------------------------------------------
     */
 
@@ -198,15 +198,11 @@ public class RecetteController {
         JSONObject jSONObjectData = new JSONObject(stringUserData);
         //µ Récupération du recette
         String jsonRecette = jSONObjectData.get("recette").toString();
-        //µ Récupération du user
-        String jsonUtilisateur = jSONObjectData.get("utilisateur").toString();
         //µ Instancie dans la classe recette les infos récup
         recette = jsonb.fromJson(jsonRecette, Recette.class);
-        //µ Instancie dans la classe utilisateur les infos récup
-        Utilisateur utilisateur = jsonb.fromJson(jsonUtilisateur, Utilisateur.class);
 
         recetteDaoInterface = daoFactory.getRecetteDaoInterface();
-        recette = recetteDaoInterface.deleteRecetteSSIng(recette, utilisateur);
+        recette = recetteDaoInterface.deleteRecetteSSIng(recette);
 
         //. ----------Vérification de l'id.----------
 

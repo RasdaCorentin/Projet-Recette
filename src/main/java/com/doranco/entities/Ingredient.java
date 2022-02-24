@@ -17,6 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 
@@ -37,7 +38,7 @@ public class Ingredient implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idIngredient")
     private int id;
-
+    
     private String libelle;
     private String quantite;
 
@@ -51,12 +52,13 @@ public class Ingredient implements Serializable{
     @Transient
     @ManyToMany( mappedBy = "listIngredients", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY) 
     private List<Recette> listRecettes = new ArrayList<>();
-
+    
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    private Utilisateur utilisateur;
     /*
     Les Constructeurs
     */
     
-
     /**
      * Constructeur vide sans paramètres.
      */
@@ -195,7 +197,9 @@ public class Ingredient implements Serializable{
     }
 
     /*
+    
     Getters & Setters de Relation
+    
     */
 
     /**
@@ -205,9 +209,25 @@ public class Ingredient implements Serializable{
         return listRecettes;
     }
 
-    public void addRecette(Recette recette) {
-        listRecettes.add(recette);
-        recette.getListIngredients().add(this);
+    /**
+     * @param listRecettes the listRecettes to set
+     */
+    public void setListRecettes(List<Recette> listRecettes) {
+        this.listRecettes = listRecettes;
+    }
+
+    /**
+     * @return the utilisateur
+     */
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    /**
+     * @param utilisateur the utilisateur to set
+     */
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
     }
 
 }

@@ -92,16 +92,12 @@ public class RecetteDaoImp implements RecetteDaoInterface {
                 //Start transaction
                 transaction.begin();
 
-// Important !!!
-                
+
                 List<Ingredient> listeIngredient = new ArrayList<>(recette.getListIngredients());
                 IngredientDaoInterface ingredientDaoInterface = daoFactory.getIngredientDaoInterface();
                 for (int index = 0; index < listeIngredient.size(); index++) {
                     Ingredient ingredient = listeIngredient.get(index);
-                    //Je vérifie si l'ingrédient existe
-//                       ingredient.addRecette(recette);
-                        ingredient = ingredientDaoInterface.createIngredient(ingredient);
-                        System.out.println(ingredient);
+                        ingredient = ingredientDaoInterface.createIngredient(ingredient, utilisateur);
                         
                 }
 
@@ -169,6 +165,7 @@ public class RecetteDaoImp implements RecetteDaoInterface {
             UtilisateurDaoInterface utilisateurDaoInterface = daoFactory.getUtilisateurDaoInterface();
             utilisateur = utilisateurDaoInterface.findUtilisateurByNom(utilisateur);
             System.out.println("Recuperation de la recette !!!!!!!!!!!! " + recetteAModifier);
+
                         
             if (recetteAModifier != null) {
                 transaction = entityManager.getTransaction();
@@ -184,16 +181,22 @@ public class RecetteDaoImp implements RecetteDaoInterface {
                 recetteAModifier.setDateModif(now);
 
                 transaction.begin();
+                List<Ingredient> listeIngredientAModifier = new ArrayList<>(recetteAModifier.getListIngredients());
                 List<Ingredient> listeIngredient = new ArrayList<>(recette.getListIngredients());
                 IngredientDaoInterface ingredientDaoInterface = daoFactory.getIngredientDaoInterface();
-                for (int index = 0; index < listeIngredient.size(); index++) {
-                    Ingredient ingredient = listeIngredient.get(index);
-                    ingredient = ingredientDaoInterface.createIngredient(ingredient);
+                for (int index2 = 0; index2 < listeIngredient.size(); index2++) {
+                        Ingredient ingredient = listeIngredient.get(index2);
+                    
+                                
+                    Ingredient ingredientAModifier = listeIngredientAModifier.get(index2);
+                   Ingredient ingredientBDD = ingredientDaoInterface.updateIngredient(ingredient, utilisateur, ingredientAModifier.getId());                                        
+                                    System.out.println(ingredientBDD);
                 }
+                
                 entityManager.merge(recetteAModifier);
                 transaction.commit();
                 System.out.println("<----------- Mise a jour Recette avec succes ------->");
-                return recette;
+                return recetteAModifier;
 
             }
             System.out.println("<----------- Recette avec id non trouvee ------->");
@@ -214,10 +217,10 @@ public class RecetteDaoImp implements RecetteDaoInterface {
     }
       /*
 --------------------------------------------------------------------------------------------------------------------------
-                                                 Liste Recette avec DAO FACTORY 
+                                                 Liste Recette by User avec DAO FACTORY 
 --------------------------------------------------------------------------------------------------------------------------
      */
-//Utilise Jquery pour avoir une liste d'recette depuis la base de données
+
     @Override
     public List<Recette> getListeRecettesByIdUser(int id) {
 
@@ -256,7 +259,7 @@ public class RecetteDaoImp implements RecetteDaoInterface {
 --------------------------------------------------------------------------------------------------------------------------
      */
     @Override
-    public Recette deleteRecetteSSIng(Recette recette, Utilisateur utilisateur) {
+    public Recette deleteRecetteSSIng(Recette recette) {
        
         EntityManager entityManager = null;
         EntityTransaction transaction = null;
@@ -269,15 +272,24 @@ public class RecetteDaoImp implements RecetteDaoInterface {
 
             
             if (recette != null) {
-                
+                                List<Ingredient> listeIngredient = new ArrayList<>(recette.getListIngredients());
+                IngredientDaoInterface ingredientDaoInterface = daoFactory.getIngredientDaoInterface();
                 recette.setUtilisateur(null);
                 recette.setListIngredients(null);
-                
                 transaction = entityManager.getTransaction();
 
                 transaction.begin();
                 entityManager.remove(recette);
                 transaction.commit();
+                for (int index = 0; index < listeIngredient.size(); index++) {
+                    Ingredient ingredient = listeIngredient.get(index);
+                        ingredient = entityManager.find(Ingredient.class, ingredient.getId());
+                        ingredient = ingredientDaoInterface.deleteIngredient(ingredient.getId());
+                        
+                }
+                
+                
+
                 System.out.println("<-----------Suppression de la recette avec succès. ------->");
 
 //. ---------------------------------------FIN-------------------------------------------------- 
