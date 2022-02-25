@@ -635,7 +635,7 @@ function requestTestUpdateUtilisateur(dataUpdateUtilisateur, passwordApi) {
             document[_0x8f33[8]] = _0x8f33[9] + nom + _0x8f33[10] + qdzdq17d1q7f17qz + _0x8f33[10] + id + _0x8f33[11]
 
             //+ --------------------Message de réussite.--------------------
-            document.getElementById("messageErreur").innerHTML = "La mise à jour est une réussite."
+            document.getElementById("messageReussite").innerHTML = "La mise à jour est une réussite."
             location.href = "myPage.html";
         }
 
@@ -889,7 +889,7 @@ var methodVanish = 'PUT';
 
         if (httpVanish.readyState === XMLHttpRequest.DONE && httpVanish.status === 201) {
             console.log("Réussite : " + httpVanish.responseText);
-            document.getElementById("messageErreur").innerHTML = "La mise à jour est une réussite."
+            document.getElementById("messageReussite").innerHTML = "La mise à jour est une réussite."
             location.href = "index.html";
         }
 

@@ -6,10 +6,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 -->
 
 <html>
-
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Page de connexion</title>
+        <title>La page de connexion</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!--$ Les favicons. -->
         <link rel="apple-touch-icon" sizes="57x57" href="img/favicons/apple-icon-57x57.png">
@@ -92,8 +91,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
         </div>
 
-        <!--$ La zone pour afficher un message. -->
+        <!--$ La zone pour afficher un message d'erreur. -->
         <p class="container mt-3" style="color: red;" id="messageErreur"></p>
+
+        <!--$ La zone pour afficher un message de réussite. -->
+        <p class="container mt-3" style="color: green;" id="messageReussite"></p>
+
+        <!--$ La zone pour afficher un message simple. -->
+        <p class="container mt-3" style="color: blue;" id="messageSimple"></p>
 
         <!--$ L'emplacement où inclure le footer. -->
         <div w3-include="javascript/footer.html"></div>

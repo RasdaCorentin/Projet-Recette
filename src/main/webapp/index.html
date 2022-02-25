@@ -2,7 +2,7 @@
 <html>
 
     <head>
-        <title>Recipe Web Service - Start Page</title>
+        <title>Accueil</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--$ Les favicons. -->
         <link rel="apple-touch-icon" sizes="57x57" href="img/favicons/apple-icon-57x57.png">
@@ -174,17 +174,7 @@
         <script> includeHTML();</script>
 
         <!--$ Le script pour cacher les liens de connexion si l'utilisateur est déjà connecter avec un cookie. -->
-        <script>var cookieUtilisateur = getCookie("utilisateur"), cacherConnexion = document.getElementById("cacherConnexion"), cacherInscription = document.getElementById("cacherInscription"), elementAMontrer = document.getElementById("elementAMontrer");function getCookie(b) {
-                b += "=";
-                for (var d = decodeURIComponent(document.cookie).split(";"), c = 0; c < d.length; c++) {
-                    for (var a = d[c]; " " == a.charAt(0); )
-                        a = a.substring(1);
-                    if (0 == a.indexOf(b))
-                        return console.log(a.substring(b.length, a.length)), a.substring(b.length, a.length)
-                }
-                return""
-            }
-            "" != cookieUtilisateur && (cacherConnexion.classList.add("hide"), cacherInscription.classList.add("hide"), elementAMontrer.classList.remove("hide"));</script>
+        <script>var cookieUtilisateur = getCookie("utilisateur"), cacherConnexion = document.getElementById("cacherConnexion"), cacherInscription = document.getElementById("cacherInscription"), elementAMontrer = document.getElementById("elementAMontrer");function getCookie(b) { b += "="; for (var d = decodeURIComponent(document.cookie).split(";"), c = 0; c < d.length; c++) { for (var a = d[c]; " " == a.charAt(0); ) a = a.substring(1); if (0 == a.indexOf(b)) return console.log(a.substring(b.length, a.length)), a.substring(b.length, a.length) } return"" } "" != cookieUtilisateur && (cacherConnexion.classList.add("hide"), cacherInscription.classList.add("hide"), elementAMontrer.classList.remove("hide"));</script>
 
     </body>
 </html>
