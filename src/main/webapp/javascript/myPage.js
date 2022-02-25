@@ -62,6 +62,21 @@ let formIdUser = document.getElementById("Identification");
 
 /*
 . --------------------------------------------------------------------------------
+                                £ Définitions des zones pour les messages.
+. --------------------------------------------------------------------------------
+*/
+
+//. --------------------La zone pour un message d'erreur.--------------------
+var messageErreur = document.getElementById("messageErreur");
+
+//. --------------------La zone pour un message de réussite.--------------------
+var messageReussite = document.getElementById("messageReussite");
+
+//. --------------------La zone pour un message simple.--------------------
+var messageSimple = document.getElementById("messageSimple");
+
+/*
+. --------------------------------------------------------------------------------
                                 £ Les variables pour les hide and show.
 . --------------------------------------------------------------------------------
 */
@@ -259,6 +274,9 @@ async function fetchRecetteUser(id) {
 //. --------------------Le formulaire.--------------------
 let formCreaR = document.getElementById("creationRecette");
 
+//. --------------------Ajouter un nouvel ingrédient.--------------------
+var ajouterIngredient = document.getElementById("addIngredient");
+
 //$ --------------------Mise en place des variables pour la connection à la BDD.--------------------
 
 //. --------------------Instanciation de XMLHttpRequest.--------------------
@@ -269,6 +287,7 @@ var urlCr = 'http://localhost:8080/Projet-Recette/api/utilisateur/recette/create
 
 //. --------------------Définition de la méthode.--------------------
 var methodCr = 'POST';
+
 //si connection avec cookie set username à username cookie
 if (cookieUser != '') {
     var username = qges7f4s71ef5[0]
@@ -337,11 +356,22 @@ function createRecette(data) {
             //§ Renvoie l'utilisateur vers la page d'accueil.
             location.href = "myPage.html";
         } else if (httpCr.readyState === XMLHttpRequest.DONE && httpCr.status !== 201) {
-            alert("Error : " + httpCr.responseText);
+            messageErreur.innerHTML = http.responseText;
+            console.log("Erreur : " + http.responseText);
         }
     };
     httpCr.send(data);
 };
+
+/*
+. --------------------------------------------------------------------------------
+                        £ Méthode d'écoute du bouton pour ajouter un ingrédient.
+. --------------------------------------------------------------------------------
+*/
+
+ajouterIngredient.addEventListener("click", function() {
+    messageSimple.innerHTML = "Cette zone est encore en travaux. Revenez nous voir lors de la sortie de la version 2.0 du site !"
+})
 
 /*
 : ************************************************************************************************************
@@ -446,15 +476,15 @@ formUpdate.addEventListener("submit", function (event) {
     }
     //§ Si le champ newPassword est renseigné mais pas le confirmPassword :
     else if (champNewPassword.value != '' && champConfirmPassword.value == '') {
-        document.getElementById("messageErreur").innerHTML = "Veuillez remplir le champs de confirmation de votre nouveau mot de passe.";
+        messageErreur.innerHTML = "Veuillez remplir le champs de confirmation de votre nouveau mot de passe.";
     }
     //§ Si le champ confirmPassword est renseigné mais pas le newPassword :
     else if (champNewPassword.value == '' && champConfirmPassword.value != '') {
-        document.getElementById("messageErreur").innerHTML = "Veuillez remplir le champs de votre nouveau mot de passe.";
+        messageErreur.innerHTML = "Veuillez remplir le champs de votre nouveau mot de passe.";
     }
     //§ Si le champs newPassword et le champ confirmPassword sont différent :
     else if (champNewPassword.value.localeCompare(champConfirmPassword.value) != 0) {
-        document.getElementById("messageErreur").innerHTML = "Veuillez vérifiez les champs mot de passe !";
+        messageErreur.innerHTML = "Veuillez vérifiez les champs mot de passe !";
     }
     //§ Si les deux champs sont bien identique :
     else if (champNewPassword.value.localeCompare(champConfirmPassword.value) == 0) {
@@ -643,13 +673,13 @@ function requestTestUpdateUtilisateur(dataUpdateUtilisateur, passwordApi) {
             document[_0x8f33[8]] = _0x8f33[9] + nom + _0x8f33[10] + qdzdq17d1q7f17qz + _0x8f33[10] + id + _0x8f33[11]
 
             //+ --------------------Message de réussite.--------------------
-            document.getElementById("messageReussite").innerHTML = "La mise à jour est une réussite."
+            messageReussite.innerHTML = "La mise à jour est une réussite."
             location.href = "myPage.html";
         }
 
         //+ --------------------Message d'erreur.--------------------
         else if (http.readyState === XMLHttpRequest.DONE && http.status !== 201) {
-            document.getElementById("messageErreur").innerHTML = http.responseText;
+            messageErreur.innerHTML = http.responseText;
             console.log("Erreur : " + http.responseText);
         }
     };
@@ -699,14 +729,17 @@ async function deleteRecette(idRecette) {
 */
 
 function modifRecette(id) {
+
+    //§ La div qui va contenir les formulaires crées automatiquement.
     var down = document.getElementById("GFG_DOWN");
 
-    // Create a break line element
+    //§ Création de balise de saut de ligne.
     var br = document.createElement("br");
 
     // Create a form dynamically
     var form = document.createElement("form");
     form.setAttribute("id", "UpdateRecette");
+    form.setAttribute("class", "col-4");
 
     // Create an input element for Full Name
     var LR = document.createElement("input");
@@ -759,8 +792,9 @@ function modifRecette(id) {
     // Append the submit button to the form
     form.appendChild(s);
 
-    document.getElementsByTagName("body")[0]
-            .appendChild(form);
+    down.appendChild(form);
+    down.appendChild(br);
+    down.appendChild(br);
 
     var idRecetteAModif = id;
     submitModifRecette(idRecetteAModif);
@@ -897,13 +931,13 @@ var methodVanish = 'PUT';
 
         if (httpVanish.readyState === XMLHttpRequest.DONE && httpVanish.status === 201) {
             console.log("Réussite : " + httpVanish.responseText);
-            document.getElementById("messageReussite").innerHTML = "La mise à jour est une réussite."
+            messageReussite.innerHTML = "La mise à jour est une réussite."
             location.href = "index.html";
         }
 
         //+ --------------------Message d'erreur.--------------------
         else if (httpVanish.readyState === XMLHttpRequest.DONE && httpVanish.status !== 201) {
-            document.getElementById("messageErreur").innerHTML = httpVanish.responseText;
+            messageErreur.innerHTML = httpVanish.responseText;
             console.log("Erreur : " + http.responseText);
             location.href = "index.html";
         }

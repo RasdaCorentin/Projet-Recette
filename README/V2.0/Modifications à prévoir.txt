@@ -1,0 +1,33 @@
+De manière générale :
+
+- Refaire l'esthétique du site.
+- Changer les couleurs du site ( choisir une palette de couleur ).
+- Se faire un vrai logo ( l'acteur de l'agent Smith n'apprécierait sans doute pas que l'on utilise son image comme ça ).
+
+Sur la navbar :
+
+- La fonction recherche ne fonctionne pas.
+
+Sur le footer :
+
+- Ajouter de vrai lien de réseaux sociaux ( et donc en créer pour la compagnie smithing ).
+- Ajouter une véritable page de contact afin de contacter les administrateurs du site en cas de problème/question.
+- Faire de véritable mentions légales ( on n'est légal sans ça pour la V1.0 ? ).
+
+Pour la connexion des nouveaux utilisateurs :
+
+- Voir le fichier "ReadMe-Connect-V2.0".
+
+Sur la page d'accueil :
+
+- Les images ne sont pas intégrés dans les fichiers du projet ( les télécharger et les ajouter dans le dossier img ).
+- Ajouter plus d'images au carousel ( il fait un peu triste avec seulement 2 images ).
+
+Sur myPage :
+
+- Ajouter l'update ingrédient.
+- Ajouter le bouton pour ajouter des champs d'ingrédients à la modal de la création de recette.
+
+Sur la page Admin :
+
+- Ajouter les fonctions : désactiver, bannir et supprimer le compte d'un utilisateur. Une troisième colonne dans le tableau pour y mettre des logos ( ou images ) cliquables ?

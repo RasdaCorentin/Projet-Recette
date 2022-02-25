@@ -148,8 +148,14 @@
                                 <div class="invalid-feedback">Veuillez remplir ce champs afin de créer votre ingrédient.</div>
                             </div>
 
-                            <!--$ La zone pour afficher un message. -->
+                            <!--$ La zone pour afficher un message d'erreur. -->
                             <p class="container mt-3" style="color: red;" id="messageErreur"></p>
+
+                            <!--$ La zone pour afficher un message de réussite. -->
+                            <p class="container mt-3" style="color: green;" id="messageReussite"></p>
+
+                            <!--$ La zone pour afficher un message simple. -->
+                            <p class="container mt-3" style="color: blue;" id="messageSimple"></p>
 
                             <!--: Le bouton pour demander à ajouter plus d'ingrédients. -->
                             <button id="addIngredient" class="btn btn-secondary">Ajouter un ingrédient</button>
@@ -211,8 +217,14 @@
                                 <input type="text" class="form-control" id="confirmPassword" placeholder="Veuillez confirmez votre nouveau mot de passe" name="confirmPassword">
                             </div>
 
-                            <!--$ La zone pour afficher un message. -->
+                            <!--$ La zone pour afficher un message d'erreur. -->
                             <p class="container mt-3" style="color: red;" id="messageErreur"></p>
+
+                            <!--$ La zone pour afficher un message de réussite. -->
+                            <p class="container mt-3" style="color: green;" id="messageReussite"></p>
+
+                            <!--$ La zone pour afficher un message simple. -->
+                            <p class="container mt-3" style="color: blue;" id="messageSimple"></p>
 
                             <!--: Le bouton pour mettre à jour le profil de l'utilisateur. -->
                             <button type="submit" class="btn btn-primary">Mettre à jour mon profil.</button>
@@ -247,8 +259,14 @@
                         <p>Vous n'aurez donc plus accès à votre compte, vos recettes resteront par contre elles en ligne et seront toujours crédité au nom de votre compte.</p>
                         <p>Si vous acceptez ces conditions vous pouvez appuyer sur accepter, ou appuyer sur refuser pour rester dans notre matrix de cuisine.</p>
 
-                        <!--$ La zone pour afficher un message. -->
-                        <p class="container mt-3" style="color: red;" id="messageErreur"></p>
+                            <!--$ La zone pour afficher un message d'erreur. -->
+                            <p class="container mt-3" style="color: red;" id="messageErreur"></p>
+
+                            <!--$ La zone pour afficher un message de réussite. -->
+                            <p class="container mt-3" style="color: green;" id="messageReussite"></p>
+
+                            <!--$ La zone pour afficher un message simple. -->
+                            <p class="container mt-3" style="color: blue;" id="messageSimple"></p>
 
                     </div>
 
@@ -307,7 +325,11 @@
         <button class="pulse btn btn-secondary hide" id="boutonModalUpdate" data-bs-toggle="modal" data-bs-target="#modalUpdate">Mettre à jour son profil</button>
         <!--$ La modal pour "supprimer" son compte. -->
         <button class="pulse btn btn-danger hide" id="boutonModalVanish" data-bs-toggle="modal" data-bs-target="#modalVanish">Supprimer mon compte</button>
-        
+
+        <br /> <br />
+
+        <!--$ Le champs pour modifier ces recettes. -->
+        <div id="GFG_DOWN" class="container-fluid"></div>
 
         <!--$ Le formulaire pour se connecter sans passer par le système de cookie. -->
         <!--. Cette zone est caché si l'utilisateur utilise le cookie "utilisateur". -->
@@ -323,7 +345,7 @@
                 <div class="mb-3 mt-3">
                     <label for="username" class="form-label">Nom : </label>
                     <input type="text" class="form-control" id="nom" placeholder="Tapez votre nom" name="nom" required>
-                    <div class="valid-feedback">Valid.</div>
+                    <div class="valid-feedback">Valide.</div>
                     <div class="invalid-feedback">Veuillez remplir ce champs afin de vous connectez.</div>
                 </div>
 
@@ -331,7 +353,7 @@
                 <div class="mb-3">
                     <label for="password" class="form-label">Mot de passe : </label>
                     <input type="password" class="form-control" id="password" placeholder="Tapez votre mot de passe" name="password" required>
-                    <div class="valid-feedback">Valid.</div>
+                    <div class="valid-feedback">Valide.</div>
                     <div class="invalid-feedback">Veuillez remplir ce champs afin de vous connectez.</div>
                 </div>
 
@@ -349,9 +371,6 @@
 
         <!--$ La zone pour afficher un message simple. -->
         <p class="container mt-3" style="color: blue;" id="messageSimple"></p>
-
-        <!--$ Le champs pour modifier ces recettes. -->
-        <p id="GFG_DOWN"></p>
 
         <!--$ L'emplacement où inclure le footer. -->
         <div w3-include="javascript/footer.html"></div>
