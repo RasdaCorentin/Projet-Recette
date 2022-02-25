@@ -72,6 +72,11 @@ var cacherInscription = document.getElementById("cacherInscription");
 var elementAMontrer = document.getElementById("elementAMontrer");
 var elementsIdentificationACacher = document.getElementById("Identification");
 
+//$ --------------------Les boutons de la page.--------------------
+var boutonCreationRecette = document.getElementById("boutonModalCreationRecette");
+var boutonUpdateUtilisateur = document.getElementById("boutonModalUpdate");
+var boutonSupprimerUtilisateur = document.getElementById("boutonModalVanish");
+
 /*
 : ************************************************************************************************************
                                     % Méthode Fetch myPage List Recette du User
@@ -133,6 +138,9 @@ formIdUser.addEventListener("submit", async function (event) {
         let data = await responseIdUser.json();
         idUser = data.id;
         elementsACacher.classList.add('hide');
+        boutonCreationRecette.classList.remove('hide');
+        boutonUpdateUtilisateur.classList.remove('hide');
+        boutonSupprimerUtilisateur.classList.remove('hide');
     }
     fetchRecetteUser(idUser);
     fetchIngredientUser(idUser);
@@ -925,4 +933,9 @@ if (cookieUser != "") {
     cacherConnexion.classList.add('hide'); //: Permet de cacher le lien vers la page de connexion si l'utilisateur est déjà connecté.
     cacherInscription.classList.add('hide'); //: Permet de cacher le lien vers la page d'inscription si l'utilisateur est déjà connecté.
     elementAMontrer.classList.remove('hide'); //: Permet de montré le lien vers la page de déconnexion si l'utilisateur est connecté.
+
+    //£ --------------------Les boutons.--------------------
+    boutonCreationRecette.classList.remove('hide'); //: Permet de montrer le bouton de création de recette si l'utilisateur est déjà connecté.
+    boutonUpdateUtilisateur.classList.remove('hide'); //: Permet de montrer le bouton de mise à jour du profil si l'utilisateur est déjà connecté.
+    boutonSupprimerUtilisateur.classList.remove('hide'); //: Permet de montrer le bouton de suppression de compte si l'utilisateur est déjà connecté.
 }

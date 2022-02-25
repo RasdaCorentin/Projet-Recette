@@ -90,9 +90,6 @@
             </div>
         </nav>
 
-        <!--$ La modal pour créer une recette. -->
-        <button class="pulse" data-bs-toggle="modal" data-bs-target="#exampleModal1">Créer une recette</button>
-
         <!--: Le bouton pour appeler la modal. -->
         <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable">
@@ -166,10 +163,8 @@
             </div>
         </div>
         <!--$ Fin de la modal de création de recette. -->
-
-        <!--$ La modal pour mettre à jour son profil. -->
-        <button class="pulse" data-bs-toggle="modal" data-bs-target="#modalUpdate">Mettre à jour son profil</button>
-
+        
+        
         <!--: Le bouton pour appeler la modal. -->
         <div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="modalUpdateLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable">
@@ -230,8 +225,7 @@
         </div>
         <!--$ Fin de la modal de mise à jour de profil. -->
 
-        <!--$ La modal pour "supprimer" son compte. -->
-        <button class="pulse" data-bs-toggle="modal" data-bs-target="#modalVanish">Supprimer mon compte</button>
+        
 
         <!--: Le bouton pour appeler la modal. -->
         <div class="modal fade" id="modalVanish" tabindex="-1" aria-labelledby="modalVanishLabel" aria-hidden="true">
@@ -309,6 +303,14 @@
             <tbody id="ListIng"></tbody>
 
         </table>
+        
+        <!--$ La modal pour créer une recette. -->
+        <button class="pulse btn btn-primary hide" id="boutonModalCreationRecette" data-bs-toggle="modal" data-bs-target="#exampleModal1">Créer une recette</button>
+        <!--$ La modal pour mettre à jour son profil. -->
+        <button class="pulse btn btn-secondary hide" id="boutonModalUpdate" data-bs-toggle="modal" data-bs-target="#modalUpdate">Mettre à jour son profil</button>
+        <!--$ La modal pour "supprimer" son compte. -->
+        <button class="pulse btn btn-danger hide" id="boutonModalVanish" data-bs-toggle="modal" data-bs-target="#modalVanish">Supprimer mon compte</button>
+        
 
         <!--$ Le formulaire pour se connecter sans passer par le système de cookie. -->
         <!--. Cette zone est caché si l'utilisateur utilise le cookie "utilisateur". -->
