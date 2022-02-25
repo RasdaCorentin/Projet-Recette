@@ -174,12 +174,12 @@ function connectWithCookieXMLAdminPage() {
 : ************************************************************************************************************
 */
 
-function tableAdmin(data) {
+function tableAdmin(dataListUserCookie) {
 
     //. --------------------Création du tableau et de son contenus grâce à une boucle.--------------------
-    for (i = 0; i < data.length; i++) {
+    for (i = 0; i < dataListUserCookie.length; i++) {
         var text = "<tr>";
-        text += "<td>" + data[i].nom + "</td>" + "<td>" + data[i].email + "</td>";
+        text += "<td>" + dataListUserCookie[i].nom + "</td>" + "<td>" + dataListUserCookie[i].email + "</td>";
         text += "</tr>";
         table.innerHTML += text;
     }
