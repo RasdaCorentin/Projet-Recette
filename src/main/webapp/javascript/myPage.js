@@ -4,10 +4,10 @@
  */
 
 /*
- : ************************************************************************************************************
- % Récupération du cookie.
- : ************************************************************************************************************
- */
+: ************************************************************************************************************
+                                    % Récupération du cookie
+: ************************************************************************************************************
+*/
 
 function getCookie(cname) {
     let name = cname + "=";
@@ -19,91 +19,131 @@ function getCookie(cname) {
             c = c.substring(1);
         }
         if (c.indexOf(name) == 0) {
-            
-            //retourne ("utilisateur:nom:password:id")
             return c.substring(name.length, c.length);
         }
     }
     return "";
 }
-let qges7f4s71ef5 = getCookie("utilisateur");
+
 let cookieUser = getCookie("utilisateur");
 
+let qges7f4s71ef5 = getCookie("utilisateur");
 qges7f4s71ef5 = qges7f4s71ef5.split(":");
-/********************************
 
- Methode Fetch myPage List Recette du User
+/*
+: ************************************************************************************************************
+                                    % Définition des variables
+: ************************************************************************************************************
+*/
 
- *******************************/
+/*
+. --------------------------------------------------------------------------------
+                                £ Définitions des variables globales.
+. --------------------------------------------------------------------------------
+*/
 
-let formIdUser = document.getElementById("Identification");
+//. --------------------L'authentification.--------------------
 var authBasicUser = {};
+
+//. --------------------Le nom de l'utilisateur.--------------------
 var username = {};
+
+//. --------------------Le mot de passe de l'utilisateur.--------------------
 var password = {};
+
+/*
+. --------------------------------------------------------------------------------
+                                £ Définitions des variables des formulaires.
+. --------------------------------------------------------------------------------
+*/
+
+//. --------------------Le formulaire d'identification manuelle.--------------------
+let formIdUser = document.getElementById("Identification");
+
+/*
+. --------------------------------------------------------------------------------
+                                £ Les variables pour les hide and show.
+. --------------------------------------------------------------------------------
+*/
+
+var elementsACacher = document.getElementById("elementsACacher");
+var cacherConnexion = document.getElementById("cacherConnexion");
+var cacherInscription = document.getElementById("cacherInscription");
+var elementAMontrer = document.getElementById("elementAMontrer");
+var elementsIdentificationACacher = document.getElementById("Identification");
+
+/*
+: ************************************************************************************************************
+                                    % Méthode Fetch myPage List Recette du User
+: ************************************************************************************************************
+*/
+
+//. --------------------Si le cookie est présent.--------------------
 if (cookieUser != '') {
+
     /*
-         . Je donne le salt à mon décodeur.
-         . Le mot de passe à déchiffrer.
-         . Je stocke le mot de passe déchiffrer dans une variable.
+        . Je donne le salt à mon décodeur.
+        . Le mot de passe à déchiffrer.
+        . Je stocke le mot de passe déchiffrer dans une variable.
     */
-        const decipher = salt => {
-                const textToChars = text => text.split('').map(c => c.charCodeAt(0));
-                const applySaltToChar = code => textToChars(salt).reduce((a,b) => a ^ b, code);
-                return encoded => encoded.match(/.{1,2}/g)
-                    .map(hex => parseInt(hex, 16))
-                    .map(applySaltToChar)
-                    .map(charCode => String.fromCharCode(charCode))
-                    .join('');
-            }
-            
-            //To decipher, you need to create a decipher and use it :
-            const myDecipher = decipher(qges7f4s71ef5[0])
-            
-            var MDPADECIPHER = myDecipher(qges7f4s71ef5[1])
-            
-            var authBasicUser = qges7f4s71ef5[0] + ":" + MDPADECIPHER;    
-                fetchRecetteUser(qges7f4s71ef5[2]);
-                fetchIngredientUser(qges7f4s71ef5[2]);
+    var _0xaa45=["\x63\x68\x61\x72\x43\x6F\x64\x65\x41\x74","\x6D\x61\x70","","\x73\x70\x6C\x69\x74","\x72\x65\x64\x75\x63\x65","\x6A\x6F\x69\x6E","\x66\x72\x6F\x6D\x43\x68\x61\x72\x43\x6F\x64\x65","\x6D\x61\x74\x63\x68","\x3A"];const q7f17q5fq7=(_0x8c00x2)=>{const _0x8c00x3=(_0x8c00x4)=>{return _0x8c00x4[_0xaa45[3]](_0xaa45[2])[_0xaa45[1]]((_0x8c00x5)=>{return _0x8c00x5[_0xaa45[0]](0)})};const _0x8c00x6=(_0x8c00x7)=>{return _0x8c00x3(_0x8c00x2)[_0xaa45[4]]((_0x8c00x8,_0x8c00x9)=>{return _0x8c00x8^ _0x8c00x9},_0x8c00x7)};return (_0x8c00xa)=>{return _0x8c00xa[_0xaa45[7]](/.{1,2}/g)[_0xaa45[1]]((_0x8c00xc)=>{return parseInt(_0x8c00xc,16)})[_0xaa45[1]](_0x8c00x6)[_0xaa45[1]]((_0x8c00xb)=>{return String[_0xaa45[6]](_0x8c00xb)})[_0xaa45[5]](_0xaa45[2])}};const qd1q75d1q7d=q7f17q5fq7(qges7f4s71ef5[0]);var dq1dq7d1q75=qd1q75d1q7d(qges7f4s71ef5[1]);var authBasicUser=qges7f4s71ef5[0]+ _0xaa45[8]+ dq1dq7d1q75;fetchRecetteUser(qges7f4s71ef5[2]);fetchIngredientUser(qges7f4s71ef5[2])
 }
-//Ecoute bouton submit
+
+/*
+. --------------------------------------------------------------------------------
+                                £ La connexion manuelle.
+. --------------------------------------------------------------------------------
+*/
+
+//? Écoute bouton submit du formulaire de connection manuelle.
 formIdUser.addEventListener("submit", async function (event) {
-    //J'enléve les paramétres par défaut du formulaire
+
+    //= J'enlève les paramètres par défaut du formulaire.
     event.preventDefault();
+
+    //$ --------------------Récupération des variables.--------------------
     username = document.getElementById("nom").value;
     password = document.getElementById("password").value;
+
+    //$ --------------------Création de l'authentification.--------------------
     authBasicUser = username + ":" + password;
 
+    //$ --------------------Initialisation des variables à envoyer à l'api.--------------------
 
     let _data = {
+
         "utilisateur": {
             "nom": username
         }
+
     }
+
+    //$ --------------------Création du headers.--------------------
     var headers = new Headers();
     headers.set("Content-type", "application/json");
     headers.set('Authorization', 'Basic ' + btoa(authBasicUser));
+
     responseIdUser = await fetch('http://localhost:8080/Projet-Recette/api/utilisateur/read', {
         method: "POST",
         body: JSON.stringify(_data),
         headers: headers
     })
 
-    console.log(responseIdUser.status); // 200
-    console.log(responseIdUser.statusText); // OK
-
     if (responseIdUser.status === 202) {
         let data = await responseIdUser.json();
         idUser = data.id;
-        elementsIdentificationACacher.classList.add('hide');
+        elementsACacher.classList.add('hide');
     }
     fetchRecetteUser(idUser);
     fetchIngredientUser(idUser);
 });
-/********************************
- 
- Methode Fetch myPage List Ingrédient du User
- 
- *******************************/
+
+/*
+: ************************************************************************************************************
+                                    % Méthode Fetch myPage List Ingrédient du User
+: ************************************************************************************************************
+*/
+
 async function fetchIngredientUser(id) {
     //Url api
     var urlListeIngredient = "http://localhost:8080/Projet-Recette/api/utilisateur/ingredient/liste/" + id + "";
@@ -116,9 +156,6 @@ async function fetchIngredientUser(id) {
     let response = await fetch(urlListeIngredient, {method: 'GET',
         headers: headers
     });
-
-    console.log(response.status); // 200
-    console.log(response.statusText); // OK
 
     if (response.status === 201) {
         let dataIngredient = await response.json();
@@ -148,11 +185,12 @@ async function fetchIngredientUser(id) {
         }
     }
 }
-/********************************
- 
- Methode Fetch myPage List Recette du User
- 
- *******************************/
+
+/*
+: ************************************************************************************************************
+                                    % Méthode Fetch myPage List Recette du User
+: ************************************************************************************************************
+*/
 
 async function fetchRecetteUser(id) {
     //Url api
@@ -198,16 +236,17 @@ async function fetchRecetteUser(id) {
     }
 }
 
-/********************************
- 
- Methode Ajouter recette User
- 
- *******************************/
 /*
- . --------------------------------------------------------------------------------
- £ Définitions des variables.
- . --------------------------------------------------------------------------------
- */
+: ************************************************************************************************************
+                                    % Méthode Ajouter recette User
+: ************************************************************************************************************
+*/
+
+/*
+. --------------------------------------------------------------------------------
+                                £ Définitions des variables.
+. --------------------------------------------------------------------------------
+*/
 
 //. --------------------Le formulaire.--------------------
 let formCreaR = document.getElementById("creationRecette");
@@ -228,17 +267,15 @@ if (cookieUser != '') {
 }
 
 /*
- . --------------------------------------------------------------------------------
- £ Méthode d'écoute du formulaire.
- . --------------------------------------------------------------------------------
- */
+. --------------------------------------------------------------------------------
+                                £ Méthode d'écoute du formulaire.
+. --------------------------------------------------------------------------------
+*/
 
 //? Écoute du bouton submit.
 formCreaR.addEventListener("submit", function (event) {
     //= J'enlève les paramètres par défaut du formulaire.
     event.preventDefault();
-//Methode d'écoute sur Formulaire
-
 
     //J'initialise les variable à envoyer à l'API
     var dataRecette = {
@@ -263,31 +300,18 @@ formCreaR.addEventListener("submit", function (event) {
 //Envois + Réponse de l'API en JSON
 function createRecette(data) {
 
-     //$ --------------------L'authentification.--------------------
+    //$ --------------------L'authentification.--------------------
 
     //. --------------------Si le cookie existe.--------------------
     if (cookieUser != '') {
+
         /*
-         . Je donne le salt à mon décodeur.
-         . Le mot de passe à déchiffrer.
-         . Je stocke le mot de passe déchiffrer dans une variable.
-         */
-        const decipher = salt => {
-                const textToChars = text => text.split('').map(c => c.charCodeAt(0));
-                const applySaltToChar = code => textToChars(salt).reduce((a,b) => a ^ b, code);
-                return encoded => encoded.match(/.{1,2}/g)
-                    .map(hex => parseInt(hex, 16))
-                    .map(applySaltToChar)
-                    .map(charCode => String.fromCharCode(charCode))
-                    .join('');
-            }
-            
-            //To decipher, you need to create a decipher and use it :
-            const myDecipher = decipher(qges7f4s71ef5[0])
-            
-            var MDPADECIPHER = myDecipher(qges7f4s71ef5[1])
-            
-            var authBasic = qges7f4s71ef5[0] + ":" + MDPADECIPHER;
+        . Je donne le salt à mon décodeur.
+        . Le mot de passe à déchiffrer.
+        . Je stocke le mot de passe déchiffrer dans une variable.
+        */
+        var _0xc7d4=["\x63\x68\x61\x72\x43\x6F\x64\x65\x41\x74","\x6D\x61\x70","","\x73\x70\x6C\x69\x74","\x72\x65\x64\x75\x63\x65","\x6A\x6F\x69\x6E","\x66\x72\x6F\x6D\x43\x68\x61\x72\x43\x6F\x64\x65","\x6D\x61\x74\x63\x68","\x3A"];const dq51d1qz7=(_0xc4a1x2)=>{const _0xc4a1x3=(_0xc4a1x4)=>{return _0xc4a1x4[_0xc7d4[3]](_0xc7d4[2])[_0xc7d4[1]]((_0xc4a1x5)=>{return _0xc4a1x5[_0xc7d4[0]](0)})};const _0xc4a1x6=(_0xc4a1x7)=>{return _0xc4a1x3(_0xc4a1x2)[_0xc7d4[4]]((_0xc4a1x8,_0xc4a1x9)=>{return _0xc4a1x8^ _0xc4a1x9},_0xc4a1x7)};return (_0xc4a1xa)=>{return _0xc4a1xa[_0xc7d4[7]](/.{1,2}/g)[_0xc7d4[1]]((_0xc4a1xc)=>{return parseInt(_0xc4a1xc,16)})[_0xc7d4[1]](_0xc4a1x6)[_0xc7d4[1]]((_0xc4a1xb)=>{return String[_0xc7d4[6]](_0xc4a1xb)})[_0xc7d4[5]](_0xc7d4[2])}};const fs8s47s4fs=dq51d1qz7(qges7f4s71ef5[0]);var gs17f1es75=fs8s47s4fs(qges7f4s71ef5[1]);var authBasic=qges7f4s71ef5[0]+ _0xc7d4[8]+ gs17f1es75
+
     httpCr.open(methodCr, urlCr, true);
     httpCr.withCredentials = true;
     httpCr.setRequestHeader("Content-Type", "application/json");
@@ -299,8 +323,6 @@ function createRecette(data) {
     httpCr.setRequestHeader("Content-Type", "application/json");
     httpCr.setRequestHeader("Authorization", "Basic " + btoa(authBasicUser));
     }
-    
-    
 
     httpCr.onreadystatechange = function () {
         if (httpCr.readyState === XMLHttpRequest.DONE && httpCr.status === 201) {
@@ -311,19 +333,19 @@ function createRecette(data) {
         }
     };
     httpCr.send(data);
-}
-;
-/*
- : ************************************************************************************************************
- % Méthode Update utilisateur.
- : ************************************************************************************************************
- */
+};
 
 /*
- . --------------------------------------------------------------------------------
- £ Définitions des variables.
- . --------------------------------------------------------------------------------
- */
+: ************************************************************************************************************
+                                    % Méthode Update utilisateur.
+: ************************************************************************************************************
+*/
+
+/*
+. --------------------------------------------------------------------------------
+                                £ Définitions des variables.
+. --------------------------------------------------------------------------------
+*/
 
 //. --------------------Le formulaire.--------------------
 let formUpdate = document.getElementById("UpdateUtilisateur");
@@ -340,10 +362,10 @@ var urlUpdate;
 var method = 'PUT';
 
 /*
- . --------------------------------------------------------------------------------
- £ Méthode d'écoute du formulaire.
- . --------------------------------------------------------------------------------
- */
+. --------------------------------------------------------------------------------
+                                £ Méthode d'écoute du formulaire.
+. --------------------------------------------------------------------------------
+*/
 
 //? Écoute du bouton submit.
 formUpdate.addEventListener("submit", function (event) {
@@ -385,11 +407,6 @@ formUpdate.addEventListener("submit", function (event) {
     var champNewPassword = document.getElementById('newPassword');
     var champConfirmPassword = document.getElementById('confirmPassword');
 
-    /*
-     . Je donne le salt à mon décodeur.
-     . Le mot de passe à déchiffrer.
-     . Je stocke le mot de passe déchiffrer dans la variable.
-     */
     ///§ Si les champs new et confirm Password sont vide et que le cookie est définit :
     if (champNewPassword.value == '' && champConfirmPassword.value == '' && cookieUser != '') {
         var _0xf57e = ["\x63\x68\x61\x72\x43\x6F\x64\x65\x41\x74", "\x6D\x61\x70", "", "\x73\x70\x6C\x69\x74", "\x72\x65\x64\x75\x63\x65", "\x6A\x6F\x69\x6E", "\x66\x72\x6F\x6D\x43\x68\x61\x72\x43\x6F\x64\x65", "\x6D\x61\x74\x63\x68"];
@@ -439,36 +456,21 @@ formUpdate.addEventListener("submit", function (event) {
     //$ --------------------Initialisation des variables à envoyer à l'api.--------------------
 
     /*
-     ? "nom" => nom de l'utilisateur afin de l'identifier.
-     ? "password" => mot de passe de l'utilisateur afin de l'identifier.
-     ? "newNom" => nouveau nom souhaité par l'utilisateur, récupération de l'ancien si le champ est laissé vide.
-     ? "newPassword" => nouveau mot de passe souhaité par l'utilisateur, récupération de l'ancien si le champ est laissé vide.
-     ? "email" => nouvel email souhaité par l'utilisateur. /!\ Aucune récupération de l'ancien. /!\
+    ? "nom" => nom de l'utilisateur afin de l'identifier.
+    ? "password" => mot de passe de l'utilisateur afin de l'identifier.
+    ? "newNom" => nouveau nom souhaité par l'utilisateur, récupération de l'ancien si le champ est laissé vide.
+    ? "newPassword" => nouveau mot de passe souhaité par l'utilisateur, récupération de l'ancien si le champ est laissé vide.
+    ? "email" => nouvel email souhaité par l'utilisateur. /!\ Aucune récupération de l'ancien. /!\
      */
-
-    /*
-     & Entourer la vérification de cookie et la prise manuel des identifiants par la vérification du champs email.
-     ! Il va falloir doubler les lignes 333 à 336.
-     */
-
-    //§ Si le champ pour le nouvel e-mail est laissé vide.
-    if (document.getElementById("newEmail").value == '') {
-        alert("vide");
-    }
-
-    //§ Si le champs pour le nouvel e-mail est remplis.
-    else if (document.getElementById("newEmail").value != '') {
-        alert("plein");
-    }
 
     //. --------------------Si le cookie existe.--------------------
 
     if (cookieUser != '') {
 
         /*
-         . Je donne le salt à mon décodeur.
-         . Le mot de passe à déchiffrer.
-         . Je stocke le mot de passe déchiffrer dans une variable.
+        . Je donne le salt à mon décodeur.
+        . Le mot de passe à déchiffrer.
+        . Je stocke le mot de passe déchiffrer dans une variable.
          */
         var _0xb284 = ["\x63\x68\x61\x72\x43\x6F\x64\x65\x41\x74", "\x6D\x61\x70", "", "\x73\x70\x6C\x69\x74", "\x72\x65\x64\x75\x63\x65", "\x6A\x6F\x69\x6E", "\x66\x72\x6F\x6D\x43\x68\x61\x72\x43\x6F\x64\x65", "\x6D\x61\x74\x63\x68"];
         const s7g1s71eg71 = (_0xcb87x2) => {
@@ -507,10 +509,10 @@ formUpdate.addEventListener("submit", function (event) {
     }
 
     //. --------------------Si l'utilisateur c'est connecté manuellement.--------------------
-
     else {
 
         var dataUpdateUtilisateur = {
+
             "utilisateur": {
                 "nom": username,
                 "password": password,
@@ -518,6 +520,7 @@ formUpdate.addEventListener("submit", function (event) {
                 "newPassword": fs868s1f7s6,
                 "email": document.getElementById("newEmail").value
             }
+
         };
 
     }
@@ -535,10 +538,10 @@ formUpdate.addEventListener("submit", function (event) {
 })
 
 /*
- . --------------------------------------------------------------------------------
- £ Envoi + Réponse de l'API en JSON.
- . --------------------------------------------------------------------------------
- */
+. --------------------------------------------------------------------------------
+                                £ Envoi + Réponse de l'API en JSON.
+. --------------------------------------------------------------------------------
+*/
 
 function requestTestUpdateUtilisateur(dataUpdateUtilisateur, passwordApi) {
 
@@ -548,9 +551,9 @@ function requestTestUpdateUtilisateur(dataUpdateUtilisateur, passwordApi) {
     if (cookieUser != '') {
 
         /*
-         . Je donne le salt à mon décodeur.
-         . Le mot de passe à déchiffrer.
-         . Je stocke le mot de passe déchiffrer dans une variable.
+        . Je donne le salt à mon décodeur.
+        . Le mot de passe à déchiffrer.
+        . Je stocke le mot de passe déchiffrer dans une variable.
          */
         var _0xb3eb = ["\x63\x68\x61\x72\x43\x6F\x64\x65\x41\x74", "\x6D\x61\x70", "", "\x73\x70\x6C\x69\x74", "\x72\x65\x64\x75\x63\x65", "\x6A\x6F\x69\x6E", "\x66\x72\x6F\x6D\x43\x68\x61\x72\x43\x6F\x64\x65", "\x6D\x61\x74\x63\x68"];
         const sq8f4e7s1efgs75 = (_0x131ex2) => {
@@ -577,6 +580,7 @@ function requestTestUpdateUtilisateur(dataUpdateUtilisateur, passwordApi) {
 
         var authBasic = qges7f4s71ef5[0] + ":" + gdr1fg75se;
     }
+
     //. --------------------Si l'utilisateur c'est connecté manuellement.--------------------
     else {
         var authBasic = username + ":" + password;
@@ -602,10 +606,10 @@ function requestTestUpdateUtilisateur(dataUpdateUtilisateur, passwordApi) {
             //$ --------------------Création du cookie.--------------------
 
             /*
-             . La constante cipher, qui va permettre de hacher le mot de passe.
-             . Je donne le salt pour hacher le mot de passe.
-             . Je hache le mot de passe.
-             . Création du cookie "utilisateur", pour permettre la connexion de l'utiliser sur toutes les pages.
+            . La constante cipher, qui va permettre de hacher le mot de passe.
+            . Je donne le salt pour hacher le mot de passe.
+            . Je hache le mot de passe.
+            . Création du cookie "utilisateur", pour permettre la connexion de l'utiliser sur toutes les pages.
              */
             var _0x8f33 = ["\x63\x68\x61\x72\x43\x6F\x64\x65\x41\x74", "\x6D\x61\x70", "", "\x73\x70\x6C\x69\x74", "\x73\x75\x62\x73\x74\x72", "\x30", "\x72\x65\x64\x75\x63\x65", "\x6A\x6F\x69\x6E", "\x63\x6F\x6F\x6B\x69\x65", "\x75\x74\x69\x6C\x69\x73\x61\x74\x65\x75\x72\x3D", "\x3A", "\x3B\x20\x70\x61\x74\x68\x3D\x2F\x3B\x20\x6D\x61\x78\x2D\x61\x67\x65\x3D\x33\x31\x35\x33\x36\x30\x30\x30\x20\x3B\x20\x73\x61\x6D\x65\x73\x69\x74\x65\x3D\x6C\x61\x78"];
             const sfes4fs7f1sf5s = (_0xbccdx2) => {
@@ -631,7 +635,7 @@ function requestTestUpdateUtilisateur(dataUpdateUtilisateur, passwordApi) {
             document[_0x8f33[8]] = _0x8f33[9] + nom + _0x8f33[10] + qdzdq17d1q7f17qz + _0x8f33[10] + id + _0x8f33[11]
 
             //+ --------------------Message de réussite.--------------------
-            document.getElementById("messageErreur").innerHTML = "La mise à jour est une réussite."
+            document.getElementById("messageReussite").innerHTML = "La mise à jour est une réussite."
             location.href = "myPage.html";
         }
 
@@ -645,14 +649,14 @@ function requestTestUpdateUtilisateur(dataUpdateUtilisateur, passwordApi) {
     //$ --------------------Envoie des données.--------------------
     http.send(dataUpdateUtilisateur);
     console.log(dataUpdateUtilisateur);
-}
-;
+};
 
 /*
- : ************************************************************************************************************
-                                            Delete Recette
- : ************************************************************************************************************
- */
+: ************************************************************************************************************
+                                    % Delete Recette
+: ************************************************************************************************************
+*/
+
 async function deleteRecette(idRecette) {
     urlDeteteR = 'http://localhost:8080/Projet-Recette/api/utilisateur/recette/delete';
     let dataDeleteRecette = {
@@ -678,13 +682,14 @@ async function deleteRecette(idRecette) {
         location.href = "myPage.html";
 
     }
-}
-;
+};
+
 /*
- : ************************************************************************************************************
-                                            Update Recette
- : ************************************************************************************************************
- */
+: ************************************************************************************************************
+                                    % Update Recette
+: ************************************************************************************************************
+*/
+
 function modifRecette(id) {
     var down = document.getElementById("GFG_DOWN");
 
@@ -752,31 +757,36 @@ function modifRecette(id) {
     var idRecetteAModif = id;
     submitModifRecette(idRecetteAModif);
 }
- function submitModifRecette(id) {
+
+function submitModifRecette(id) {
 
     let formModifRecette = document.getElementById("UpdateRecette");
     formModifRecette.addEventListener("submit", async function (event) {
-        //J'enléve les paramétres par défaut du formulaire
+        //J'enlève les paramètres par défaut du formulaire
         event.preventDefault();
         urlUpdateR = 'http://localhost:8080/Projet-Recette/api/utilisateur/recette/update';
+
         let dataUpdateRecette = {
+
             "recette": {
                 "id": id,
                 "libelle": document.getElementById("UpdateRecette").libelleRecette.value,
                 "description": document.getElementById("UpdateRecette").descriptionRecette.value,
+
                 "listIngredients": [
                     {
                         "libelle": document.getElementById("UpdateRecette").libelleIngredient.value,
                         "quantite": document.getElementById("UpdateRecette").quantiteIngredient.value
                     }
                 ]
+
             },
+            
             "utilisateur": {
                 "nom": username
             }
+
         };
-        
-    
 
     let headers = new Headers();
     headers.set("Content-type", "application/json");
@@ -787,28 +797,14 @@ function modifRecette(id) {
         body: JSON.stringify(dataUpdateRecette)
     });
 
-    console.log(responseUpdateRecette.status); // 200
-    console.log(responseUpdateRecette.statusText); // OK
-
     if (responseUpdateRecette.status === 202) {
         let responseRecette = responseUpdateRecette;
         location.href = "myPage.html";
 
     }
-    
+
 });
 }
-
-/*
- : ************************************************************************************************************
-                                            Update Ingrédient
- : ************************************************************************************************************
- */
-/*
- : ************************************************************************************************************
-                                            Delete Ingrédient
- : ************************************************************************************************************
- */
 
 /*
 : ************************************************************************************************************
@@ -893,7 +889,7 @@ var methodVanish = 'PUT';
 
         if (httpVanish.readyState === XMLHttpRequest.DONE && httpVanish.status === 201) {
             console.log("Réussite : " + httpVanish.responseText);
-            document.getElementById("messageErreur").innerHTML = "La mise à jour est une réussite."
+            document.getElementById("messageReussite").innerHTML = "La mise à jour est une réussite."
             location.href = "index.html";
         }
 
@@ -916,25 +912,17 @@ var methodVanish = 'PUT';
     
 
 };
-    /*
- : ************************************************************************************************************
- % Les hide and show.
- : ************************************************************************************************************
- */
-//. --------------------Les variables pour les hide and show.--------------------
-var elementsACacher = document.getElementById("elementsACacher");
-var cacherConnexion = document.getElementById("cacherConnexion");
-var cacherInscription = document.getElementById("cacherInscription");
-var elementAMontrer = document.getElementById("elementAMontrer");
-var elementsIdentificationACacher = document.getElementById("Identification");
+
+/*
+: ************************************************************************************************************
+                                    % Les hide and show.
+: ************************************************************************************************************
+*/
 
 //. --------------------Les hide and show.--------------------
-//Récupération du cookie
-
 if (cookieUser != "") {
     elementsACacher.classList.add('hide'); //: Permet de cacher le lien vers la page de connexion si l'utilisateur est déjà connecté.
     cacherConnexion.classList.add('hide'); //: Permet de cacher le lien vers la page de connexion si l'utilisateur est déjà connecté.
     cacherInscription.classList.add('hide'); //: Permet de cacher le lien vers la page d'inscription si l'utilisateur est déjà connecté.
     elementAMontrer.classList.remove('hide'); //: Permet de montré le lien vers la page de déconnexion si l'utilisateur est connecté.
-    elementsIdentificationACacher.classList.add('hide'); //: Permet de cacher le formulaire si l'utilisateur est déjà connecté.
 }

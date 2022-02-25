@@ -16,7 +16,7 @@
 */
 
 async function fetchRecette() {
-     let responseRecette = await fetch('http://localhost:8080/Projet-Recette/api/utilisateur/recette/enregistrez/liste');
+    let responseRecette = await fetch('http://localhost:8080/Projet-Recette/api/utilisateur/recette/enregistrez/liste');
     if (responseRecette.status === 201) {
 
         /*

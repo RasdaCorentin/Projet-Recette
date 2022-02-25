@@ -6,36 +6,47 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 -->
 <html>
 
+    <!--$ La barre de navigation. -->
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <div class="container-fluid">
             <ul class="navbar-nav">
 
+                <!--: La page d'accueil. -->
                 <li class="nav-item">
-                    <a class="nav-link active" href="/Projet-Recette/index.html">Accueil</a>
+                    <a class="nav-link active" href="index.html">Accueil</a>
                 </li>
 
+                <!--: La page admin avec la liste des utilisateurs. -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/Projet-Recette/adminpage.html">Admin</a>
+                    <a class="nav-link" href="adminpage.html">Admin</a>
                 </li>
 
+                <!--: La page de l'utilisateur. -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/Projet-Recette/myPage.html">Ma Page</a>
+                    <a class="nav-link" href="myPage.html">Ma Page</a>
                 </li>
 
+                <!--: La page qui permet de se connecter, et de se créer un cookie. -->
+                <!--. Cette zone est caché si l'utilisateur utilise le cookie "utilisateur". -->
                 <li class="nav-item" id="cacherConnexion">
-                    <a class="nav-link" href="/Projet-Recette/connexion.html">Se connecter</a>
+                    <a class="nav-link" href="connexion.html">Se connecter</a>
                 </li>
 
+                <!--: La page qui permet de s'inscrire. -->
+                <!--. Cette zone est caché si l'utilisateur utilise le cookie "utilisateur". -->
                 <li class="nav-item" id="cacherInscription">
-                    <a class="nav-link" href="/Projet-Recette/inscription.html">S'inscrire</a>
+                    <a class="nav-link" href="inscription.html">S'inscrire</a>
                 </li>
 
+                <!--: La page qui permet de se déconnecter. -->
+                <!--. Cette zone est caché si l'utilisateur n'utilise pas le cookie "utilisateur". -->
                 <li class="nav-item hide" id="elementAMontrer">
-                    <a class="nav-link" href="../deconnexion.html">Se déconnecter</a>
+                    <a class="nav-link" href="deconnexion.html">Se déconnecter</a>
                 </li>
 
             </ul>
 
+            <!--: La zone pour rechercher une informations sur la page. -->
             <form class="d-flex">
                 <input class="form-control me-2" type="text" placeholder="Chercher">
                 <button class="btn btn-success" type="button">Trouver</button>

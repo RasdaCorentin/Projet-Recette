@@ -2,22 +2,43 @@
 <html>
 
     <head>
-
-        <title>Ma Page Recette</title>
+        <title>Ma page personnel</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Latest compiled and minified CSS -->
+        <!--$ Les favicons. -->
+        <link rel="apple-touch-icon" sizes="57x57" href="img/favicons/apple-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="img/favicons/apple-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="img/favicons/apple-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="img/favicons/apple-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="img/favicons/apple-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="img/favicons/apple-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="img/favicons/apple-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="img/favicons/apple-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="img/favicons/apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="192x192"  href="img/favicons/android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="img/favicons/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="img/favicons/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="img/favicons/favicon-16x16.png">
+        <link rel="manifest" href="img/favicons/manifest.json">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-TileImage" content="img/favicons/ms-icon-144x144.png">
+        <meta name="theme-color" content="#ffffff">
+        <!--$ Les fichiers css. -->
+        <!--§ Le css de bootstrap. -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!--§ Les icônes de font-awesome. -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!--§ Notre fichier css. -->
         <link rel="stylesheet" href="css/style.css">
-
-        <!-- Latest compiled JavaScript -->
+        <!--$ Les fichiers JavaScript.  -->
+        <!--§ Le js de bootstrap. -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="javascript/cookie.js"></script>
+        <!--§ Le fichier js de myPage. -->
+        <script src ="javascript/myPage.js" async></script>
+        <!--§ Le fichier js pour appeler le footer. -->
         <script src="javascript/script_lien.js"></script>
-
     </head>
 
-    <!-- Appel fonction de cookie.js. -->
     <body>
 
         <!--$ La barre de navigation. -->
@@ -25,227 +46,319 @@
             <div class="container-fluid">
                 <ul class="navbar-nav">
 
+                    <!--: La page d'accueil. -->
                     <li class="nav-item">
-                        <a class="nav-link active" href="/Projet-Recette/index.html">Accueil</a>
+                        <a class="nav-link active" href="index.html">Accueil</a>
                     </li>
 
+                    <!--: La page admin avec la liste des utilisateurs. -->
                     <li class="nav-item">
-                        <a class="nav-link" href="/Projet-Recette/adminpage.html">Admin</a>
+                        <a class="nav-link" href="adminpage.html">Admin</a>
                     </li>
 
+                    <!--: La page de l'utilisateur. -->
                     <li class="nav-item">
-                        <a class="nav-link" href="/Projet-Recette/myPage.html">Ma Page</a>
+                        <a class="nav-link" href="myPage.html">Ma Page</a>
                     </li>
 
+                    <!--: La page qui permet de se connecter, et de se créer un cookie. -->
+                    <!--. Cette zone est caché si l'utilisateur utilise le cookie "utilisateur". -->
                     <li class="nav-item" id="cacherConnexion">
-                        <a class="nav-link" href="/Projet-Recette/connexion.html">Se connecter</a>
+                        <a class="nav-link" href="connexion.html">Se connecter</a>
                     </li>
 
+                    <!--: La page qui permet de s'inscrire. -->
+                    <!--. Cette zone est caché si l'utilisateur utilise le cookie "utilisateur". -->
                     <li class="nav-item" id="cacherInscription">
-                        <a class="nav-link" href="/Projet-Recette/inscription.html">S'inscrire</a>
+                        <a class="nav-link" href="inscription.html">S'inscrire</a>
                     </li>
 
+                    <!--: La page qui permet de se déconnecter. -->
+                    <!--. Cette zone est caché si l'utilisateur n'utilise pas le cookie "utilisateur". -->
                     <li class="nav-item hide" id="elementAMontrer">
-                        <a class="nav-link" href="/Projet-Recette/deconnexion.html">Se déconnecter</a>
+                        <a class="nav-link" href="deconnexion.html">Se déconnecter</a>
                     </li>
 
                 </ul>
 
+                <!--: La zone pour rechercher une informations sur la page. -->
+                <form class="d-flex">
+                    <input class="form-control me-2" type="text" placeholder="Chercher">
+                    <button class="btn btn-success" type="button">Trouver</button>
+                </form>
+
             </div>
         </nav>
-        
-                <!--§ La modal pour "supprimer" son compte. -->
-        <button class="pulse" data-bs-toggle="modal" data-bs-target="#modalVanish">Supprimer mon compte</button>
 
-        <!-- Modal button -->
-        <div class="modal fade" id="modalVanish" tabindex="-1" aria-labelledby="modalVanishLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable">
-                <div class="modal-content">
-                    <div class="modal-header">
-
-                        <h5 class="modal-title" id="modalVanishLabel">Supprimer mon compte</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
-                    </div>
-                    <div class="modal-body">
-                        <!--) L'avertissement. -->
-                        <p>Attention !</p>
-                        <p>Votre compte ne va pas être supprimer, en appuyant sur accepter votre mot de passe sera changé et définitivement inaccessible (même aux administrateurs du site) et rendus inactif.</p>
-                        <p>Vous n'aurez donc plus accès à votre compte, vos recettes resteront par contre elles en ligne et seront toujours crédité au nom de votre compte.</p>
-                        <p>Si vous acceptez ces conditions vous pouvez appuyer sur accepter, ou appuyer sur refuser pour rester dans notre matrix de cuisine.</p>
-                        <!--) Le message d'erreur. -->
-                        <p class="container mt-3" style="color: red;" id="messageErreur"></p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" style="background-color: red;" class="btn btn-secondary" data-bs-dismiss="modal">Refuser</button>
-                        <button type="button" id="accepterVanish" class="btn btn-primary">Accepter</button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <!-- Fin modal -->
-        
-        
-        <!--§ La modal pour créer une recette. -->
+        <!--$ La modal pour créer une recette. -->
         <button class="pulse" data-bs-toggle="modal" data-bs-target="#exampleModal1">Créer une recette</button>
 
-        <!-- Modal button -->
+        <!--: Le bouton pour appeler la modal. -->
         <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
+
+                        <!--: Le titre de la modal. -->
                         <h5 class="modal-title" id="exampleModalLabel">Formulaire de création de recette</h5>
+
+                        <!--: Le bouton pour fermer la modal. -->
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
                     </div>
+
+                    <!--: Le corps de la modal. -->
                     <div class="modal-body">
-                        <!--Ici Formulaire-->
+
+                        <!--: Le formulaire de création de recette. -->
                         <form class="was-validated" id="creationRecette">
+
+                            <!--+ La recette. -->
                             <h5>Recette :</h5>
+
+                            <!--£ Le libellé de la recette. -->
                             <div class="mb-3 mt-3">
-                                <label for="libelleRecette" class="form-label">Libellé Recette :</label>
+                                <label for="libelleRecette" class="form-label">Libellé de la recette : </label>
                                 <input type="text" class="form-control" id="libelleRecette" placeholder="Nom de la recette" name="libelleRecette" required>
-                                <div class="valid-feedback">Valid.</div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
+                                <div class="valid-feedback">Valide.</div>
+                                <div class="invalid-feedback">Veuillez remplir ce champs afin de créer votre recette.</div>
                             </div>
+
+                            <!--£ La description de la recette. -->
                             <div class="mb-3">
-                                <label for="descriptionRecette" class="form-label">Description Recette :</label>
+                                <label for="descriptionRecette" class="form-label">Description de la recette : </label>
                                 <input type="text" class="form-control" id="descriptionRecette" placeholder="Description de la recette" name="descriptionRecette" required>
                                 <div class="valid-feedback">Valid.</div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
+                                <div class="invalid-feedback">Veuillez remplir ce champs afin de créer votre recette.</div>
                             </div>
+
+                            <!--+ L'ingrédient. -->
                             <h5>Ingrédient :</h5>
+
+                            <!--£ Le libellé de l'ingrédient. -->
                             <div class="mb-3 mt-3">
-                                <label for="libelleIngredient" class="form-label">Libellé Ingrédient :</label>
+                                <label for="libelleIngredient" class="form-label">Libellé de l'ingrédient : </label>
                                 <input type="text" class="form-control" id="libelleIngredient" placeholder="Nom de l'ingredient" name="libelleIngredient" required>
-                                <div class="valid-feedback">Valid.</div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
+                                <div class="valid-feedback">Valide.</div>
+                                <div class="invalid-feedback">Veuillez remplir ce champs afin de créer votre ingrédient.</div>
                             </div>
+
+                            <!--£ La description de l'ingrédient. -->
                             <div class="mb-3">
-                                <label for="quantiteIngredient" class="form-label">Description Ingrédient :</label>
+                                <label for="quantiteIngredient" class="form-label">Description Ingrédient : </label>
                                 <input type="text" class="form-control" id="quantiteIngredient" placeholder="Ex : 1kg" name="quantiteIngredient" required>
-                                <div class="valid-feedback">Valid.</div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
+                                <div class="valid-feedback">Valide.</div>
+                                <div class="invalid-feedback">Veuillez remplir ce champs afin de créer votre ingrédient.</div>
                             </div>
+
+                            <!--$ La zone pour afficher un message. -->
+                            <p class="container mt-3" style="color: red;" id="messageErreur"></p>
+
+                            <!--: Le bouton pour demander à ajouter plus d'ingrédients. -->
                             <button id="addIngredient" class="btn btn-secondary">Ajouter un ingrédient</button>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+
+                            <!--: Le bouton pour créer la recette et ses ingrédients. -->
+                            <button type="submit" class="btn btn-primary">Créer ma recette.</button>
+
                         </form>  
-                        <!--Fin formulaire-->
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Fin modal -->
+        <!--$ Fin de la modal de création de recette. -->
 
-        <!--§ La modal pour mettre à jour son profil. -->
+        <!--$ La modal pour mettre à jour son profil. -->
         <button class="pulse" data-bs-toggle="modal" data-bs-target="#modalUpdate">Mettre à jour son profil</button>
 
-        <!-- Modal button -->
+        <!--: Le bouton pour appeler la modal. -->
         <div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="modalUpdateLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
 
+                        <!--: Le titre de la modal. -->
                         <h5 class="modal-title" id="modalUpdateLabel">Formulaire de mise à jour de profil</h5>
+
+                        <!--: Le bouton pour fermer la modal. -->
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
                     </div>
+
+                    <!--: Le corps de la modal. -->
                     <div class="modal-body">
 
-                        <!--Ici Formulaire-->
+                        <!--: Le formulaire de mise à jour de compte d'utilisateur. -->
                         <form id="UpdateUtilisateur">
+
+                            <!--+ Mettre à jour son profil. -->
                             <h5>Mettre à jour son profil :</h5>
 
+                            <!--: Le champs pour le nouveau nom. -->
                             <div class="mb-3 mt-3">
-                                <label for="newNom" class="form-label">Votre nouveau nom :</label>
+                                <label for="newNom" class="form-label">Votre nouveau nom : </label>
                                 <input type="text" class="form-control" id="newNom" placeholder="Votre nouveau nom" name="newNom">
                             </div>
 
+                            <!--: Le champs pour la nouvelle adresse e-mail. -->
                             <div class="mb-3">
-                                <label for="newEmail" class="form-label">Votre nouvelle adresse e-mail :</label>
+                                <label for="newEmail" class="form-label">Votre nouvelle adresse e-mail : </label>
                                 <input type="text" class="form-control" id="newEmail" placeholder="Votre nouvelle adresse e-mail" name="newEmail">
-                                <div class="valid-feedback">Validez.</div>
                             </div>
 
+                            <!--: Le champs pour le nouveau mot de passe. -->
                             <div class="mb-3 mt-3">
-                                <label for="newPassword" class="form-label">Veuillez entrez un nouveau mot de passe :</label>
+                                <label for="newPassword" class="form-label">Veuillez entrez un nouveau mot de passe : </label>
                                 <input type="text" class="form-control" id="newPassword" placeholder="Votre nouveau mot de passe" name="newPassword">
-                                <div class="valid-feedback">Validez.</div>
                             </div>
 
+                            <!--: La confirmation du nouveau mot de passe. -->
                             <div class="mb-3">
-                                <label for="confirmPassword" class="form-label">Confirmez votre nouveau mot de passe :</label>
+                                <label for="confirmPassword" class="form-label">Confirmez votre nouveau mot de passe : </label>
                                 <input type="text" class="form-control" id="confirmPassword" placeholder="Veuillez confirmez votre nouveau mot de passe" name="confirmPassword">
-                                <div class="valid-feedback">Valid.</div>
                             </div>
 
+                            <!--$ La zone pour afficher un message. -->
                             <p class="container mt-3" style="color: red;" id="messageErreur"></p>
 
-                            <button type="submit" class="btn btn-primary">Mettre à jour mon profil</button>
+                            <!--: Le bouton pour mettre à jour le profil de l'utilisateur. -->
+                            <button type="submit" class="btn btn-primary">Mettre à jour mon profil.</button>
+
                         </form>
-                        <!--Fin formulaire-->
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Fin modal -->
+        <!--$ Fin de la modal de mise à jour de profil. -->
 
-        <h3 class="text-center">Ma Liste Recette</h3>
+        <!--$ La modal pour "supprimer" son compte. -->
+        <button class="pulse" data-bs-toggle="modal" data-bs-target="#modalVanish">Supprimer mon compte</button>
+
+        <!--: Le bouton pour appeler la modal. -->
+        <div class="modal fade" id="modalVanish" tabindex="-1" aria-labelledby="modalVanishLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <!--: Le titre de la modal. -->
+                        <h5 class="modal-title" id="modalVanishLabel">Supprimer mon compte</h5>
+
+                        <!--: Le bouton pour fermer la modal. -->
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                    </div>
+
+                    <!--: Le corps de la modal. -->
+                    <div class="modal-body">
+
+                        <!--: Le pavé d'avertissement. -->
+                        <p>Attention !</p>
+                        <p>Votre compte ne va pas être supprimer, en appuyant sur accepter votre mot de passe sera changé et définitivement inaccessible (même aux administrateurs du site) et rendus inactif.</p>
+                        <p>Vous n'aurez donc plus accès à votre compte, vos recettes resteront par contre elles en ligne et seront toujours crédité au nom de votre compte.</p>
+                        <p>Si vous acceptez ces conditions vous pouvez appuyer sur accepter, ou appuyer sur refuser pour rester dans notre matrix de cuisine.</p>
+
+                        <!--$ La zone pour afficher un message. -->
+                        <p class="container mt-3" style="color: red;" id="messageErreur"></p>
+
+                    </div>
+
+                    <!--: Le footer de la modal. -->
+                    <div class="modal-footer">
+
+                        <!--: Le bouton refuser de "supprimer" son compte. -->
+                        <button type="button" style="background-color: red;" class="btn btn-secondary" data-bs-dismiss="modal">Refuser</button>
+
+                        <!--: Le bouton accepter de "supprimer" son compte. -->
+                        <button type="button" id="accepterVanish" class="btn btn-primary">Accepter</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--$ Fin de la modal de "suppression" de compte utilisateur. -->
+
+        <!--$ La liste des recettes crées par l'utilisateur. -->
+        <h3 class="text-center">La liste de mes recettes : </h3>
+
+        <!--: Le tableau qui contient la liste des recettes de l'utilisateur. -->
         <table class ="table table-stripped">
 
+            <!--£ Les en-têtes du tableau. -->
             <tr>
                 <th>Libelle</th>
                 <th>Description</th>
             </tr>
 
-            <tbody id="ListRecettes">
+            <!--£ Le corps du tableau, où seront afficher les recettes de l'utilisateur. -->
+            <tbody id="ListRecettes"></tbody>
 
-            </tbody>
         </table>
-        
-        <h3 class="text-center">Ma Liste Ingredient</h3>
+
+        <!--$ La liste des ingrédients crées par l'utilisateur. -->
+        <h3 class="text-center">La liste de mes ingrédients : </h3>
+
+        <!--: Le tableau qui contient la liste des ingrédients de l'utilisateur. -->
         <table class ="table table-stripped">
 
+            <!--£ Les en-têtes du tableau. -->
             <tr>
                 <th>Libelle</th>
                 <th>Description</th>
             </tr>
 
-            <tbody id="ListIng">
+            <!--£ Le corps du tableau, où seront afficher les ingrédients de l'utilisateur. -->
+            <tbody id="ListIng"></tbody>
 
-            </tbody>
         </table>
 
+        <!--$ Le formulaire pour se connecter sans passer par le système de cookie. -->
+        <!--. Cette zone est caché si l'utilisateur utilise le cookie "utilisateur". -->
         <div id="elementsACacher">
 
+            <!--: Un message d'avertissement. -->
             <p>Tu dois t'identifier pour avoir la liste de tes recettes, ou pour pouvoir mettre à jour ton profil.</p>
 
+            <!--: Le formulaire pour se connecter manuellement. -->
             <form class="was-validated" id="Identification">
 
+                <!--£ Le nom. -->
                 <div class="mb-3 mt-3">
-                    <label for="username" class="form-label">Username:</label>
-                    <input type="text" class="form-control" id="nom" placeholder="Enter username" name="nom" required>
+                    <label for="username" class="form-label">Nom : </label>
+                    <input type="text" class="form-control" id="nom" placeholder="Tapez votre nom" name="nom" required>
                     <div class="valid-feedback">Valid.</div>
-                    <div class="invalid-feedback">Please fill out this field.</div>
+                    <div class="invalid-feedback">Veuillez remplir ce champs afin de vous connectez.</div>
                 </div>
 
+                <!--£ Le mot de passe. -->
                 <div class="mb-3">
-                    <label for="password" class="form-label">Password:</label>
-                    <input type="password" class="form-control" id="password" placeholder="Enter password" name="password" required>
+                    <label for="password" class="form-label">Mot de passe : </label>
+                    <input type="password" class="form-control" id="password" placeholder="Tapez votre mot de passe" name="password" required>
                     <div class="valid-feedback">Valid.</div>
-                    <div class="invalid-feedback">Please fill out this field.</div>
+                    <div class="invalid-feedback">Veuillez remplir ce champs afin de vous connectez.</div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <!--£ Valider le formulaire. -->
+                <button type="submit" class="btn btn-primary">Envoyez</button>
 
             </form>
         </div>
 
-        <!--) Le message d'erreur. -->
+        <!--$ La zone pour afficher un message d'erreur. -->
         <p class="container mt-3" style="color: red;" id="messageErreur"></p>
-<p id="GFG_DOWN"></p>
-        <div w3-include="javascript/footer.html"></div>      
-        <script> includeHTML();</script>
-<script src="javascript/myPage.js" async></script>
+
+        <!--$ La zone pour afficher un message de réussite. -->
+        <p class="container mt-3" style="color: green;" id="messageReussite"></p>
+
+        <!--$ La zone pour afficher un message simple. -->
+        <p class="container mt-3" style="color: blue;" id="messageSimple"></p>
+
+        <!--$ Le champs pour modifier ces recettes. -->
+        <p id="GFG_DOWN"></p>
+
+        <!--$ L'emplacement où inclure le footer. -->
+        <div w3-include="javascript/footer.html"></div>
+
+        <!--$ Appel du script pour inclure le footer. -->
+        <script> includeHTML(); </script>
+
     </body>
 </html>
