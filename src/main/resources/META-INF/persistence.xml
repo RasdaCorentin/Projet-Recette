@@ -18,6 +18,7 @@
       <property name="hibernate.show_sql" value="true"/>
       <property name="hibernate.dialect"
         value="org.hibernate.dialect.MySQL8Dialect"/>
+      <property name="javax.persistence.schema-generation.database.action" value="update"/>
     </properties>
   </persistence-unit>
 </persistence>
