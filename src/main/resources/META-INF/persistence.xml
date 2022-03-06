@@ -15,6 +15,9 @@
       <property name="javax.persistence.jdbc.user" value="user"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="t.X0Hq!)M-cGbCVU"/>
+<property name="dialect">
+org.hibernate.dialect.H2Dialect
+</property>
       <property name="hibernate.show_sql" value="true"/>
       
       <property name="javax.persistence.schema-generation.database.action" value="update"/>
