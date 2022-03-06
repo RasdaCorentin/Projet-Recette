@@ -10,10 +10,10 @@
         <class>com.doranco.entities.Ingredient</class>
         
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql23027.node23026-smithing-recette.rag-cloud.hosteur.com.smithing-recette.rag-cloud.hosteur.com:3306/jelasticDb"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql23031.node23031-smithing-recette.rag-cloud.hosteur.com.app.clicketcloud.com:3306/jelasticDb"/>
       <property name="javax.persistence.jdbc.user" value="user"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="GHDblk76985"/>
+      <property name="javax.persistence.jdbc.password" value="t.X0Hq!)M-cGbCVU"/>
       
       <property name="hibernate.show_sql" value="true"/>
       
