@@ -10,6 +10,7 @@
         <class>com.doranco.entities.Ingredient</class>
         
     <properties>
+      <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql23031.node23031-smithing-recette.rag-cloud.hosteur.com.app.clicketcloud.com:3306/jelasticDb"/>
       <property name="javax.persistence.jdbc.user" value="user"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
