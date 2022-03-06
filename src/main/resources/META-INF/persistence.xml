@@ -10,14 +10,14 @@
         <class>com.doranco.entities.Ingredient</class>
         
     <properties>
-      <property name="hibernate.dialect"
-        value="org.hibernate.dialect.MySQL8Dialect"/>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://node23031-smithing-recette.rag-cloud.hosteur.com.jelastic.com/jelasticDb"/>
+
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql23031.smithing-recette.rag-cloud.hosteur.com.jelastic.com:3306/jelasticDb"/>
       <property name="javax.persistence.jdbc.user" value="user"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="t.X0Hq!)M-cGbCVU"/>
       <property name="hibernate.show_sql" value="true"/>
-
+      <property name="hibernate.dialect"
+        value="org.hibernate.dialect.MySQL8Dialect"/>
     </properties>
   </persistence-unit>
 </persistence>
