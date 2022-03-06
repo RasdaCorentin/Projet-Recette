@@ -17,7 +17,7 @@
       <property name="javax.persistence.jdbc.password" value="t.X0Hq!)M-cGbCVU"/>
       <property name="hibernate.show_sql" value="true"/>
       <property name="hibernate.dialect"
-        value="org.hibernate.dialect.MySQLInnoDBDialect" />
+        value="org.hibernate.dialect.MySQL8Dialect"/>
     </properties>
   </persistence-unit>
 </persistence>
