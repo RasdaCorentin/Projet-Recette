@@ -5,19 +5,15 @@
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     
     <!-- Entity classes -->
-        <class>com.doranco.entities.Utilisateur</class>
-        <class>com.doranco.entities.Recette</class>
-        <class>com.doranco.entities.Ingredient</class>
         
     <properties>
 
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql23036.node23036-smithing-recette.rag-cloud.hosteur.com.app.rag-control.hosteur.com:3306/jelasticDb?createDatabaseIfNotExist=true"/>
-      <property name="javax.persistence.jdbc.user" value="user@localhost"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql.node23036-smithing-recette.rag-cloud.hosteur.com.app.rag-control.hosteur.com:3306/jelasticDb?createDatabaseIfNotExist=true"/>
+      <property name="javax.persistence.jdbc.user" value="user"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="kCV8KhlISnh6)z4)"/>
       <property name="hibernate.show_sql" value="true"/>
-      <property name="hibernate.dialect"
-        value="org.hibernate.dialect.MySQL8Dialect"/>
+      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
       <property name="javax.persistence.schema-generation.database.action" value="update"/>
     </properties>
   </persistence-unit>
