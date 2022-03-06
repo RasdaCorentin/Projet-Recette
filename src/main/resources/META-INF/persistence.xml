@@ -11,14 +11,13 @@
         
     <properties>
 
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql23031.node23031-smithing-recette.rag-cloud.hosteur.com.app.clicketcloud.com:3306/jelasticDb?createDatabaseIfNotExist=true"/>
-      <property name="javax.persistence.jdbc.user" value="user"/>
-      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="t.X0Hq!)M-cGbCVU"/>
-      <property name="org.hibernate.dialect.Dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
-      <property name="hibernate.show_sql" value="true"/>
+        <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql23031.node23031-smithing-recette.rag-cloud.hosteur.com.app.clicketcloud.com:3306/jelasticDb?createDatabaseIfNotExist=true"></property> 
+      <property name="javax.persistence.jdbc.user" value="user"</property>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"</property>
+      <property name="javax.persistence.jdbc.password" value="t.X0Hq!)M-cGbCVU"</property>
+      <property name="hibernate.show_sql" value="true"></property>
       
-      <property name="javax.persistence.schema-generation.database.action" value="update"/>
+      <property name="javax.persistence.schema-generation.database.action" value="update"></property>
     </properties>
   </persistence-unit>
 </persistence>
